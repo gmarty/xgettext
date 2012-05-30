@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+var parse = require('../lib/handlebars-xgettext'),
+    path = require('path'),
+    argv = process.argv;
+
+if (argv.indexOf('-h') >= 0 || argv.indexOf('--help') >= 0 ||
+    argv[2] == undefined || argv[3] == undefined) {
+  console.log('Usage: ' + path.basename(argv[1]) + ' [INPUTDIR] [OUTPUTFILE]\n' +
+      '\n' +
+      'Extract translatable strings from Handlebars templates.\n');
+} else {
+  parse(argv[2], argv[3]);
+}

@@ -1,0 +1,41 @@
+{
+  "name": "handlebars-xgettext",
+  "description": "Extract translatable text from Handlebars templates.",
+  "version": "0.0.1",
+  "homepage": "https://github.com/gmarty/handlebars-xgettext",
+  "author": {
+    "name": "Guillaume Marty",
+    "email": "edo999@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gmarty/handlebars-xgettext.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gmarty/handlebars-xgettext/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/gmarty/handlebars-xgettext/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "grunt.js",
+  "bin": {
+    "handlebars-xgettext": "handlebars-xgettext"
+  },
+  "engines": {
+    "node": ">=0.6.0"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "keywords": [
+    "Handlebars",
+    "hbs",
+    "Templates",
+    "i18n",
+    "Gettext"
+  ]
+}
