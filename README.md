@@ -15,20 +15,22 @@ This will find all the files located in `path/to/handlebars/templates/`, extract
 The POT file is a catalog model used to update PO files.
 
 Translatable strings should be marked up like this:
-```` handlebars
+```` html
 <button class="btn btn-large">{{gettext "Login"}}</button>
 ````
 
-This is up to you to define the i18n logic. But you should probably do something like this in your JavaScript:
+## Documentation
+
+The `gettext` helper can also be aliased to `_`:
+```` html
+<button class="btn btn-large">{{_ "Login"}}</button>
+````
+
+It is up to you to define the i18n logic. But you should probably do something like this in your JavaScript:
 ```` javascript
 Handlebars.registerHelper('_', function(key) {
   return i18n.gettext(key);
 });
-````
-
-The `gettext` helper can also be aliased to `_`:
-```` handlebars
-<button class="btn btn-large">{{_ "Login"}}</button>
 ````
 
 [Jed](http://slexaxton.github.com/Jed/) is a very convenient library to manage internationalization from JavaScript in the gettext way.
@@ -39,11 +41,11 @@ handlebars-xgettext is at a very early stage of development and may not meet you
 
 A lot of common features of xgettext are not yet implemented.
 
-But we plan on improving stability and functionalities (see @todo annotations). As such, pull requests or issues are greatly appreciated ;-)
+But we plan on improving stability and functionalities (see @todo annotations). As such, pull requests and issues are greatly appreciated ;-)
 
 ## Note
 
-handlebars-xgettext development was founded by [Dijiwan](http://www.dijiwan.com/).
+handlebars-xgettext development was founded by [Dijiwan](http://www.dijiwan.com/). We use it extensively on production.
 
 ## License
 
