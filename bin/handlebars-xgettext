@@ -2,13 +2,18 @@
 
 var parse = require('../lib/handlebars-xgettext'),
     path = require('path'),
-    argv = process.argv;
-
-if (argv.indexOf('-h') >= 0 || argv.indexOf('--help') >= 0 ||
-    argv[2] == undefined || argv[3] == undefined) {
-  console.log('Usage: ' + path.basename(argv[1]) + ' [INPUTDIR] [OUTPUTFILE]\n' +
+    usage = 'Usage: $0 [INPUTDIR] [OUTPUTFILE]\n' +
       '\n' +
-      'Extract translatable strings from Handlebars templates.\n');
-} else {
-  parse(argv[2], argv[3]);
+      'Extract translatable strings from Handlebars templates.\n' +
+      '--from_code [CHARSET]: Charset of the input file. Default: utf-8\n' +
+      '--join_existing [BOOLEAN]: Append generated content to existing content. Default: false\n' +
+      '--keywords [KEYWORDS]: Comma separated list of keywords used on your template helpers. Default: gettext,_\n' +
+      '--split_pattern_prefix [PREFIX]: Prefix of template tag. Default: \\{\\\{\n'
+    argv = require('optimist').usage(usage).argv;
+
+if(argv._.length !== 2) {
+  console.log(usage.replace('$0', path.basename(process.argv[1])));
+  process.exit(1);
 }
+
+parse(argv._[0], argv._[1], argv);

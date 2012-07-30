@@ -28,6 +28,7 @@
     "node": ">=0.6.0"
   },
   "dependencies": {
+    "optimist": "~0.3.4"
   },
   "devDependencies": {
   },
