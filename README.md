@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/gmarty/handlebars-xgettext.png)](http://travis-ci.org/gmarty/handlebars-xgettext)
 handlebars-xgettext
 ===================
 
