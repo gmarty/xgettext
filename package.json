@@ -20,12 +20,12 @@
       "url": "https://github.com/gmarty/handlebars-xgettext/blob/master/LICENSE-MIT"
     }
   ],
-  "main": "grunt.js",
+  "main": "index",
   "bin": {
     "handlebars-xgettext": "bin/handlebars-xgettext"
   },
   "engines": {
-    "node": ">=0.6.0"
+    "node": ">=0.10"
   },
   "dependencies": {
   },
@@ -34,8 +34,8 @@
   "keywords": [
     "Handlebars",
     "hbs",
-    "Templates",
+    "templates",
     "i18n",
-    "Gettext"
+    "gettext"
   ]
 }
