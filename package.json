@@ -28,9 +28,9 @@
     "node": ">=0.10"
   },
   "dependencies": {
+    "readdirp": "~0.2.4"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "keywords": [
     "Handlebars",
     "hbs",
