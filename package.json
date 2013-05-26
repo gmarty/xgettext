@@ -1,7 +1,7 @@
 {
   "name": "handlebars-xgettext",
   "description": "Extract translatable text from Handlebars templates.",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "homepage": "https://github.com/gmarty/handlebars-xgettext",
   "author": {
     "name": "Guillaume Marty",
