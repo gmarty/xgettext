@@ -1,12 +1,31 @@
 #!/usr/bin/env node
 
-var parse = require('../lib/handlebars-xgettext');
+var parse = require('../lib/handlebars-xgettext'),
+  colors = require('colors');
 
 var argv = require('optimist')
-  .usage('Usage: $0 inputdir outputfile\n' +
+  .usage('Usage: $0 [options] inputdir outputfile\n' +
     '\n' +
     'Extract translatable strings from Handlebars templates.')
   .demand(2)
+  .alias({
+    'j': 'join-existing',
+    'k': 'keyword'
+  })
+  .describe({
+    'from-code': 'Specifies the encoding of the input files.',
+    'j': 'Join messages with existing file.',
+    'k': 'Specify keywordspec as an additional keyword to be looked for. Without a keywordspec, the option means to not use default keywords.'
+  })
+  .default({
+    'from-code': 'utf8',
+    'k': ['gettext', '_']
+  })
+  .check(function (argv) {
+    if (['utf8', 'ascii', 'base64'].indexOf(argv['from-code']) < 0) {
+      throw Error('Parameter from-code must be either utf8, ascii or base64.'.red);
+    }
+  })
   .argv;
 
-parse(argv._[0], argv._[1]);
+parse(argv);
