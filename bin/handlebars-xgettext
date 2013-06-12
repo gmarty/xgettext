@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var parse = require('../lib/handlebars-xgettext'),
+var parse = require('..'),
   colors = require('colors');
 
 var argv = require('optimist')
