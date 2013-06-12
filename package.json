@@ -24,6 +24,9 @@
   "bin": {
     "handlebars-xgettext": "bin/handlebars-xgettext"
   },
+  "scripts": {
+    "test": "mocha"
+  },
   "engines": {
     "node": ">=0.10"
   },
@@ -34,7 +37,9 @@
     "underscore": "~1.4.4",
     "moment": "~2.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "~1.10.0"
+  },
   "keywords": [
     "Handlebars",
     "hbs",
