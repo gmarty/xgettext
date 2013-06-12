@@ -45,7 +45,7 @@ But we plan on improving stability and functionalities (see @todo annotations). 
 
 ## Note
 
-handlebars-xgettext development was founded by [Dijiwan](http://www.dijiwan.com/). We use it extensively on production.
+handlebars-xgettext initial development was founded by Dijiwan.
 
 ## License
 
