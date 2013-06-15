@@ -8,6 +8,7 @@ var argv = require('optimist')
     '\n' +
     'Extract translatable strings from Handlebars templates.')
   .demand(2)
+  .boolean('j')
   .alias({
     'j': 'join-existing',
     'k': 'keyword'
