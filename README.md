@@ -8,7 +8,7 @@ $ npm install handlebars-xgettext
 
 ## Usage
 ``` bash
-$ handlebars-xgettext [options] path/to/handlebars/templates translation.po
+$ handlebars-xgettext [options] path/to/handlebars/templates otherpath/translation.po
 ```
 All files in `path/to/handlebars/templates` and its subdirectories are scanned for translatable strings in Handlebars format and written to the specified gettext PO file.
 **Warning:** currently the PO file is always overwritten.
@@ -25,8 +25,11 @@ Handlebars.registerHelper('_', function(key) {
   return i18n.gettext(key);
 });
 ```
-
 [Jed](http://slexaxton.github.com/Jed/) is a very convenient library to manage internationalization from JavaScript in the gettext way.
+
+### Options
+* `-k|-keyword` Custom keyword(s) prefixing translatable strings (default `gettext` and `_`).
+* `-from-code` Template encoding (default `utf8`).
 
 ## Development
 
