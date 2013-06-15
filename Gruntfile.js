@@ -3,6 +3,9 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
+    clean: {
+      tests: ['tmp']
+    },
     // Task configuration.
     jshint: {
       options: {
@@ -39,7 +42,7 @@ module.exports = function(grunt) {
       },
       lib_test: {
         files: '<%= jshint.lib_test.src %>',
-        tasks: ['jshint:lib_test', 'nodeunit']
+        tasks: ['clean', 'jshint:lib_test', 'nodeunit']
       }
     }
   });
@@ -48,7 +51,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'nodeunit']);
+  grunt.registerTask('default', ['clean', 'jshint', 'nodeunit']);
 };
