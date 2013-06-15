@@ -12,7 +12,7 @@ exports.parser = function (test) {
   var result = parser.parse(template);
 
   test.equal(typeof result, 'object', 'no object returned');
-  test.equal(Object.keys(result).length, 2, 'invalid amount of keys returned');
+  test.equal(Object.keys(result).length, 3, 'invalid amount of keys returned');
 
   test.done();
 };
