@@ -1,47 +1,39 @@
-handlebars-xgettext
-===================
+# handlebars-xgettext
+> Extract translatable strings from Handlebars templates.
 
-Extract translatable strings from Handlebars templates.
+## Installation
+``` bash
+$ npm install handlebars-xgettext
+```
 
-## Getting Started
-
-This script is called this way:
-```` bash
-$ node handlebars-xgettext path/to/handlebars/templates/ translation.pot
-````
-
-This will find all the files located in `path/to/handlebars/templates/`, extract translatable strings and create a file called `translation.pot`.
-
-The POT file is a catalog model used to update PO files.
+## Usage
+``` bash
+$ handlebars-xgettext [options] path/to/handlebars/templates translation.po
+```
+All files in `path/to/handlebars/templates` and its subdirectories are scanned for translatable strings in Handlebars format and written to the specified gettext PO file.
+**Warning:** currently the PO file is always overwritten.
 
 Translatable strings should be marked up like this:
-```` html
-<button class="btn btn-large">{{gettext "Login"}}</button>
-````
+``` html
+<button>{{gettext "Login"}}</button>
+```
+By default, `_` can also be used (instead of `gettext`).
 
-## Documentation
-
-The `gettext` helper can also be aliased to `_`:
-```` html
-<button class="btn btn-large">{{_ "Login"}}</button>
-````
-
-It is up to you to define the i18n logic. But you should probably do something like this in your JavaScript:
-```` javascript
+It is up to you to define the Handlebars i18n helper. Your project will need to contain something similar to:
+``` javascript
 Handlebars.registerHelper('_', function(key) {
   return i18n.gettext(key);
 });
-````
+```
 
 [Jed](http://slexaxton.github.com/Jed/) is a very convenient library to manage internationalization from JavaScript in the gettext way.
 
-## Warning
+## Development
 
-handlebars-xgettext is at a very early stage of development and may not meet your requirements at the moment.
+* Run `npm test` or `grunt` to run tests.
+* Run `grunt watch` to watch for file changes and run tests.
 
-A lot of common features of xgettext are not yet implemented.
-
-But we plan on improving stability and functionalities (see @todo annotations). As such, pull requests and issues are greatly appreciated ;-)
+Pull requests and issues are greatly appreciated ;-)
 
 ## Note
 
