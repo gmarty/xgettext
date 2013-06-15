@@ -25,7 +25,7 @@
     "handlebars-xgettext": "bin/handlebars-xgettext"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "grunt"
   },
   "engines": {
     "node": ">=0.10"
@@ -35,11 +35,13 @@
     "optimist": "~0.5.0",
     "moment": "~2.0.0",
     "colors": "~0.6.0-1",
-    "underscore": "~1.4.4",
-    "moment": "~2.0.0"
+    "underscore": "~1.4.4"
   },
   "devDependencies": {
-    "mocha": "~1.10.0"
+    "grunt": "~0.4.1",
+    "grunt-contrib-watch": "~0.4.4",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-jshint": "~0.6.0"
   },
   "keywords": [
     "Handlebars",
