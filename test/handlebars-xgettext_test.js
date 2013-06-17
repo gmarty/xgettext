@@ -14,7 +14,7 @@ function inFile(path, string) {
 
 // test with minimum parameters
 exports.basic = function (test) {
-  test.expect(3);
+  test.expect(6);
 
   test.throws(parse);
 
@@ -29,11 +29,14 @@ exports.basic = function (test) {
     _: [source, destination]
   }, function () {
     test.ok(inFile(destination, 'Image description'), 'Result does not contain expected msgid');
+    test.ok(inFile(destination, 'dir\\\\template.hbs'), 'Result does not contain subdir file');
+    test.ok(!inFile(destination, 'empty.hbs'), 'Result contains empty template');
+    test.ok(!inFile(destination, 'fixed.hbs'), 'Result contains template without translatable strings');
     test.done();
   });
 };
 
-// test with custom keyword (handlebars helper name)
+// test with custom keyword parameter (the handlebars helper name)
 exports.keyword = function (test) {
   test.expect(1);
 
