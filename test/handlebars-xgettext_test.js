@@ -29,7 +29,7 @@ exports.basic = function (test) {
     _: [source, destination]
   }, function () {
     test.ok(inFile(destination, 'Image description'), 'Result does not contain expected msgid');
-    test.ok(inFile(destination, 'dir\\\\template.hbs'), 'Result does not contain subdir file');
+    test.ok(inFile(destination, 'dir/template.hbs'), 'Result does not contain subdir file');
     test.ok(!inFile(destination, 'empty.hbs'), 'Result contains empty template');
     test.ok(!inFile(destination, 'fixed.hbs'), 'Result contains template without translatable strings');
     test.done();
