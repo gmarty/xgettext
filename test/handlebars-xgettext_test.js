@@ -1,4 +1,5 @@
 var parse = require('..'),
+  Gettext = require('node-gettext'),
   fs = require('fs'),
   path = require('path');
 
@@ -7,47 +8,92 @@ if (!fs.existsSync(tmpDir)) {
   fs.mkdirSync(tmpDir);
 }
 
-function inFile(path, string) {
-  var content = fs.readFileSync(path, 'utf8');
-  return !!content.match(string);
-}
+var source,
+  destination,
+  gettext,
+  keys,
+  comment;
 
-// test with minimum parameters
-exports.basic = function (test) {
-  test.expect(6);
+exports.PARAMETER = {
+  "default": function (test) {
+    test.expect(6);
 
-  test.throws(parse);
+    test.throws(parse);
 
-  test.throws(function () {
-    parse(__dirname + '/fixtures');
-  });
+    test.throws(function () {
+      parse(__dirname + '/fixtures');
+    });
 
-  var source = __dirname + '/fixtures/basic',
-    destination = tmpDir + '/basic.po';
+    source = __dirname + '/fixtures/default';
+    destination = tmpDir + '/default.po';
 
-  parse({
-    _: [source, destination]
-  }, function () {
-    test.ok(inFile(destination, 'Image description'), 'Result does not contain expected msgid');
-    test.ok(inFile(destination, 'dir/template.hbs'), 'Result does not contain subdir file');
-    test.ok(!inFile(destination, 'empty.hbs'), 'Result contains empty template');
-    test.ok(!inFile(destination, 'fixed.hbs'), 'Result contains template without translatable strings');
-    test.done();
-  });
-};
+    parse({
+      _: [source, destination]
+    }, function () {
+      gettext = new Gettext();
+      gettext.addTextdomain(null, fs.readFileSync(destination));
+      keys = gettext.listKeys(null);
 
-// test with custom keyword parameter (the handlebars helper name)
-exports.keyword = function (test) {
-  test.expect(1);
+      test.ok(keys.indexOf('Image description') >= 0, 'Result does not contain expected msgid');
 
-  var source = __dirname + '/fixtures/keyword',
+      comment = gettext.getComment(null, false, 'Image description');
+      test.deepEqual(comment.code.split('\n'), ['template.hbs:4', 'template.hbs:7'], 'Repeated msgid in one file is not tracked');
+
+      comment = gettext.getComment(null, false, 'This is a fixed sentence');
+      test.deepEqual(comment.code.split('\n'), ['repeat.hbs:2', 'template.hbs:2'], 'Repeated msgid in different files not tracked');
+
+      comment = gettext.getComment(null, false, 'Inside subdir');
+      test.equal(comment.code, 'dir/template.hbs:2', 'Subdir result missing or at wrong line number');
+
+      test.done();
+    });
+  },
+  "keyword": function (test) {
+    test.expect(1);
+
+    source = __dirname + '/fixtures/keyword';
     destination = tmpDir + '/keyword.po';
 
-  parse({
-    _: [source, destination],
-    keyword: 'i18n'
-  }, function () {
-    test.ok(inFile(destination, 'Image description'), 'Result does not contain expected msgid');
-    test.done();
-  });
+    parse({
+      _: [source, destination],
+      keyword: 'i18n'
+    }, function () {
+      gettext = new Gettext();
+      gettext.addTextdomain(null, fs.readFileSync(destination));
+      keys = gettext.listKeys(null);
+
+      test.ok(keys.indexOf('Image description') >= 0, 'Result does not contain expected msgid');
+
+      test.done();
+    });
+  },
+  "join-existing": function (test) {
+    test.expect(3);
+
+    source = __dirname + '/fixtures/join';
+    destination = tmpDir + '/default.po';
+
+    gettext = new Gettext();
+    gettext.addTextdomain(null, fs.readFileSync(destination));
+    gettext.setTranslation(null, false, "This is a fixed sentence", "This is the translation of the sentence");
+    fs.writeFileSync(destination, gettext.compilePO(null));
+
+    parse({
+      _: [source, destination],
+      'join-existing': true
+    }, function () {
+      gettext = new Gettext();
+      gettext.addTextdomain(null, fs.readFileSync(destination));
+      keys = gettext.listKeys(null);
+
+      comment = gettext.getComment(null, false, 'This is a fixed sentence');
+      test.equal(comment.code, 'template.hbs:4', 'Result does not have msgid at new line number');
+
+      test.ok(keys.indexOf('This is a new sentence') >= 0, 'Result does not contain expected msgid');
+
+      test.equal(gettext.gettext('This is a fixed sentence'), 'This is the translation of the sentence', 'Translation is no longer available');
+
+      test.done();
+    });
+  }
 };
