@@ -1,12 +1,18 @@
 {
   "name": "handlebars-xgettext",
   "description": "Extract translatable text from Handlebars templates.",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "homepage": "https://github.com/gmarty/handlebars-xgettext",
   "author": {
     "name": "Guillaume Marty",
     "email": "edo999@gmail.com"
   },
+  "contributors": [
+    {
+      "name": "Sam Hauglustaine",
+      "email": "sam@strictlyphp.com"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/gmarty/handlebars-xgettext.git"
