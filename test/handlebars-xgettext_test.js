@@ -8,90 +8,107 @@ if (!fs.existsSync(tmpDir)) {
   fs.mkdirSync(tmpDir);
 }
 
-var source,
-  destination,
-  gettext,
+var gt,
   keys,
   comment;
 
-exports.PARAMETER = {
-  "default": function (test) {
-    test.expect(6);
+exports.INPUT = {
+  'default': function (test) {
+    test.expect(4);
 
-    test.throws(parse);
-
-    test.throws(function () {
-      parse(__dirname + '/fixtures');
-    });
-
-    source = __dirname + '/fixtures/default';
-    destination = tmpDir + '/default.po';
-
-    parse({
-      _: [source, destination]
-    }, function () {
-      gettext = new Gettext();
-      gettext.addTextdomain(null, fs.readFileSync(destination));
-      keys = gettext.listKeys(null);
+    parse('test/fixtures/default/template.hbs', null, function (po) {
+      gt = new Gettext();
+      gt.addTextdomain(null, po);
+      keys = gt.listKeys(null);
 
       test.ok(keys.indexOf('Image description') >= 0, 'Result does not contain expected msgid');
 
-      comment = gettext.getComment(null, false, 'Image description');
-      test.deepEqual(comment.code.split('\n'), ['template.hbs:4', 'template.hbs:7'], 'Repeated msgid in one file is not tracked');
+      comment = gt.getComment(null, false, 'This is a fixed sentence');
+      test.ok(comment.code, 'Source (path + line number) reference missing');
+      test.equal(comment.code, 'test/fixtures/default/template.hbs:2', 'Source (path + line number) mismatch');
 
-      comment = gettext.getComment(null, false, 'This is a fixed sentence');
-      test.deepEqual(comment.code.split('\n'), ['repeat.hbs:2', 'template.hbs:2'], 'Repeated msgid in different files not tracked');
-
-      comment = gettext.getComment(null, false, 'Inside subdir');
-      test.equal(comment.code, 'dir/template.hbs:2', 'Subdir result missing or at wrong line number');
+      comment = gt.getComment(null, false, 'Image description');
+      test.deepEqual(comment.code.split('\n'), [
+          'test/fixtures/default/template.hbs:4',
+          'test/fixtures/default/template.hbs:7'
+        ], 'Repeated msgid in one file is not tracked');
 
       test.done();
     });
+
   },
-  "keyword": function (test) {
+  'multiple files': function (test) {
+    test.expect(4);
+
+    parse([
+      'test/fixtures/default/template.hbs',
+      'test/fixtures/default/dir/template.hbs',
+      'test/fixtures/default/empty.hbs',
+      'test/fixtures/default/fixed.hbs',
+      'test/fixtures/default/repeat.hbs'
+    ], null, function (po) {
+      gt = new Gettext();
+      gt.addTextdomain(null, po);
+      keys = gt.listKeys(null);
+
+      test.ok(po.toString('utf8').indexOf('test/fixtures/default/empty.hbs') < 0, 'Reference to empty template found');
+      test.ok(po.toString('utf8').indexOf('test/fixtures/default/fixed.hbs') < 0, 'Reference to template without translatable content found');
+
+      test.ok(keys.indexOf('Inside subdir') >= 0, 'Result does not contain msgid from subdir');
+
+      comment = gt.getComment(null, false, 'This is a fixed sentence');
+      test.deepEqual(comment.code.split('\n'), [
+          'test/fixtures/default/template.hbs:2',
+          'test/fixtures/default/repeat.hbs:2'
+        ], 'Repeated msgid is not tracked');
+
+      test.done();
+    });
+  }
+};
+
+exports.PARAMETER = {
+  'directory': function (test) {
     test.expect(1);
 
-    source = __dirname + '/fixtures/keyword';
-    destination = tmpDir + '/keyword.po';
-
-    parse({
-      _: [source, destination],
-      keyword: 'i18n'
-    }, function () {
-      gettext = new Gettext();
-      gettext.addTextdomain(null, fs.readFileSync(destination));
-      keys = gettext.listKeys(null);
+    parse(null, {
+      directory: 'test/fixtures/default'
+    }, function (po) {
+      gt = new Gettext();
+      gt.addTextdomain(null, po);
+      keys = gt.listKeys(null);
 
       test.ok(keys.indexOf('Image description') >= 0, 'Result does not contain expected msgid');
 
       test.done();
     });
   },
-  "join-existing": function (test) {
-    test.expect(3);
+  'output': function (test) {
+    test.expect(1);
 
-    source = __dirname + '/fixtures/join';
-    destination = tmpDir + '/default.po';
-
-    gettext = new Gettext();
-    gettext.addTextdomain(null, fs.readFileSync(destination));
-    gettext.setTranslation(null, false, "This is a fixed sentence", "This is the translation of the sentence");
-    fs.writeFileSync(destination, gettext.compilePO(null));
-
-    parse({
-      _: [source, destination],
-      'join-existing': true
+    parse('test/fixtures/default/template.hbs', {
+      output: 'tmp/output.po'
     }, function () {
-      gettext = new Gettext();
-      gettext.addTextdomain(null, fs.readFileSync(destination));
-      keys = gettext.listKeys(null);
+      gt = new Gettext();
+      gt.addTextdomain(null, fs.readFileSync('tmp/output.po'));
+      keys = gt.listKeys(null);
 
-      comment = gettext.getComment(null, false, 'This is a fixed sentence');
-      test.equal(comment.code, 'template.hbs:4', 'Result does not have msgid at new line number');
+      test.ok(keys.indexOf('Image description') >= 0, 'Result does not contain expected msgid');
 
-      test.ok(keys.indexOf('This is a new sentence') >= 0, 'Result does not contain expected msgid');
+      test.done();
+    });
+  },
+  'keyword': function (test) {
+    test.expect(1);
 
-      test.equal(gettext.gettext('This is a fixed sentence'), 'This is the translation of the sentence', 'Translation is no longer available');
+    parse('test/fixtures/keyword/template.hbs', {
+      keyword: 'i18n'
+    }, function (po) {
+      gt = new Gettext();
+      gt.addTextdomain(null, po);
+      keys = gt.listKeys(null);
+
+      test.ok(keys.indexOf('Image description') >= 0, 'Result does not contain expected msgid');
 
       test.done();
     });

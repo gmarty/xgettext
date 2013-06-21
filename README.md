@@ -1,18 +1,18 @@
 [![build status](https://secure.travis-ci.org/gmarty/handlebars-xgettext.png)](http://travis-ci.org/gmarty/handlebars-xgettext)
 
 # handlebars-xgettext
-> Extract translatable strings from Handlebars templates.
+> Extract strings from Handlebars source
+`xgettext(1)` clone for Handlebars files
 
 ## Installation
 ``` bash
-$ npm install handlebars-xgettext
+$ npm install -g handlebars-xgettext
 ```
 
 ## Usage
 ``` bash
-$ handlebars-xgettext [options] path/to/handlebars/templates otherpath/translation.po
+$ handlebars-xgettext [OPTION] [INPUTFILE]...
 ```
-All files in `path/to/handlebars/templates` and its subdirectories are scanned for translatable strings in Handlebars format and written to the specified gettext PO file.
 
 Translatable strings should be marked up like this:
 ``` html
@@ -29,9 +29,10 @@ Handlebars.registerHelper('_', function(key) {
 [Jed](http://slexaxton.github.com/Jed/) is a very convenient library to manage internationalization from JavaScript in the gettext way.
 
 ### Options
-* `-k|--keyword` Custom keyword(s) prefixing translatable strings (default `gettext` and `_`).
-* `--from-code` Template encoding (default `utf8`).
-* `-j|--join-existing` Use translations from existing file if applicable (default `false`).
+* `-d|--directory` add directory to list for input files search.
+* `-o|--output` write output to specified file (default stdout).
+* `-k|--keyword` additional keyword to be looked for (default `gettext` and `_`).
+* `--from-code` encoding of input files (default `ascii`).
 
 ## Development
 
