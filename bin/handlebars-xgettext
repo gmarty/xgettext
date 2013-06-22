@@ -1,27 +1,32 @@
 #!/usr/bin/env node
 
 var parse = require('..'),
-  colors = require('colors');
+  colors = require('colors'),
+  pkg = require('../package.json');
 
 var argv = require('optimist')
   .usage([
-    'Extract strings from Handlebars source',
+    pkg.description,
     '',
-    'handlebars-xgettext [OPTION] [INPUTFILE]...'
+    Object.keys(pkg.bin)[0] + ' [OPTION] [INPUTFILE]...'
   ].join('\n'))
   .alias({
     'k': 'keyword',
-    'o': 'output'
+    'o': 'output',
+    'V': 'version'
   })
   .describe({
     'directory': 'add directory to list for input files search',
     'output': 'write output to specified file',
     'from-code': 'encoding of input files',
-    'keyword': 'additional keyword to be looked for'
+    'keyword': 'additional keyword to be looked for',
+    'force-po': 'write PO file even if empty',
+    'version': 'output version information and exit'
   })
   .default({
     'from-code': 'ascii',
-    'keyword': ['gettext', '_']
+    'keyword': ['gettext', '_'],
+    'force-po': false
   })
   .check(function (argv) {
     argv['from-code'] = argv['from-code'].toLowerCase().replace(/\W/g, '');
@@ -34,11 +39,16 @@ var argv = require('optimist')
   })
   .argv;
 
+if (argv.version) {
+  console.log(pkg.version);
+  process.exit();
+}
+
 input = argv._;
 delete argv._;
 
 parse(input, argv, function (po) {
-  if (!argv.output) {
+  if (po) {
     process.stdout.write(po);
   }
 });

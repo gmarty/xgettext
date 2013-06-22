@@ -7,11 +7,26 @@ if (!fs.existsSync(tmpDir)) {
   fs.mkdirSync(tmpDir);
 }
 
+var bin = path.resolve(__dirname + '/../bin/handlebars-xgettext');
+
 exports.cli = {
-  'minimum parameters': function (test) {
+  'no parameters': function (test) {
     test.expect(1);
 
-    var bin = path.resolve(__dirname + '/../bin/handlebars-xgettext');
+    var child = spawn('node', [
+      bin
+    ], {
+      cwd: __dirname,
+      stdio: ['ignore', null, null]
+    });
+
+    child.on('exit', function (code) {
+      test.equal(code, 0, 'Unable to run without parameters');
+      test.done();
+    });
+  },
+  'minimum parameters': function (test) {
+    test.expect(1);
 
     var child = spawn('node', [
       bin,

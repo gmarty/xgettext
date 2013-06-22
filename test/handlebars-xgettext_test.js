@@ -37,6 +37,15 @@ exports.INPUT = {
     });
 
   },
+  'empty': function (test) {
+    test.expect(1);
+
+    parse('test/fixtures/fixed.hbs', null, function (po) {
+      test.ok(!po, 'No output expected');
+
+      test.done();
+    });
+  },
   'multiple files': function (test) {
     test.expect(4);
 
@@ -109,6 +118,17 @@ exports.PARAMETER = {
       keys = gt.listKeys(null);
 
       test.ok(keys.indexOf('Image description') >= 0, 'Result does not contain expected msgid');
+
+      test.done();
+    });
+  },
+  'force-po': function (test) {
+    test.expect(1);
+
+    parse('test/fixtures/fixed.hbs', {
+      'force-po': true
+    }, function (po) {
+      test.ok(po, 'No output returned');
 
       test.done();
     });
