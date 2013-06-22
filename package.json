@@ -1,7 +1,7 @@
 {
   "name": "handlebars-xgettext",
   "description": "Extract strings from Handlebars source",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "homepage": "https://github.com/gmarty/handlebars-xgettext",
   "author": {
     "name": "Guillaume Marty",
