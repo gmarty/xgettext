@@ -3,7 +3,7 @@ var Parser = require('../lib/parser'),
 
 var parser = new Parser();
 
-var templatePath = __dirname + '/fixtures/default/template.hbs',
+var templatePath = __dirname + '/fixtures/template.hbs',
   template = fs.readFileSync(templatePath, 'utf8');
 
 exports.parser = function (test) {

@@ -15,7 +15,7 @@ exports.cli = {
 
     var child = spawn('node', [
       bin,
-      'fixtures/default/template.hbs'
+      'fixtures/template.hbs'
     ], {
       cwd: __dirname,
       stdio: ['ignore', null, null]

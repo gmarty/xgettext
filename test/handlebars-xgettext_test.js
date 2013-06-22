@@ -16,7 +16,7 @@ exports.INPUT = {
   'default': function (test) {
     test.expect(4);
 
-    parse('test/fixtures/default/template.hbs', null, function (po) {
+    parse('test/fixtures/template.hbs', null, function (po) {
       gt = new Gettext();
       gt.addTextdomain(null, po);
       keys = gt.listKeys(null);
@@ -25,12 +25,12 @@ exports.INPUT = {
 
       comment = gt.getComment(null, false, 'This is a fixed sentence');
       test.ok(comment.code, 'Source (path + line number) reference missing');
-      test.equal(comment.code, 'test/fixtures/default/template.hbs:2', 'Source (path + line number) mismatch');
+      test.equal(comment.code, 'test/fixtures/template.hbs:2', 'Source (path + line number) mismatch');
 
       comment = gt.getComment(null, false, 'Image description');
       test.deepEqual(comment.code.split('\n'), [
-          'test/fixtures/default/template.hbs:4',
-          'test/fixtures/default/template.hbs:7'
+          'test/fixtures/template.hbs:4',
+          'test/fixtures/template.hbs:7'
         ], 'Repeated msgid in one file is not tracked');
 
       test.done();
@@ -41,25 +41,25 @@ exports.INPUT = {
     test.expect(4);
 
     parse([
-      'test/fixtures/default/template.hbs',
-      'test/fixtures/default/dir/template.hbs',
-      'test/fixtures/default/empty.hbs',
-      'test/fixtures/default/fixed.hbs',
-      'test/fixtures/default/repeat.hbs'
+      'test/fixtures/template.hbs',
+      'test/fixtures/dir/template.hbs',
+      'test/fixtures/empty.hbs',
+      'test/fixtures/fixed.hbs',
+      'test/fixtures/repeat.hbs'
     ], null, function (po) {
       gt = new Gettext();
       gt.addTextdomain(null, po);
       keys = gt.listKeys(null);
 
-      test.ok(po.toString('utf8').indexOf('test/fixtures/default/empty.hbs') < 0, 'Reference to empty template found');
-      test.ok(po.toString('utf8').indexOf('test/fixtures/default/fixed.hbs') < 0, 'Reference to template without translatable content found');
+      test.ok(po.toString('utf8').indexOf('test/fixtures/empty.hbs') < 0, 'Reference to empty template found');
+      test.ok(po.toString('utf8').indexOf('test/fixtures/fixed.hbs') < 0, 'Reference to template without translatable content found');
 
       test.ok(keys.indexOf('Inside subdir') >= 0, 'Result does not contain msgid from subdir');
 
       comment = gt.getComment(null, false, 'This is a fixed sentence');
       test.deepEqual(comment.code.split('\n'), [
-          'test/fixtures/default/template.hbs:2',
-          'test/fixtures/default/repeat.hbs:2'
+          'test/fixtures/template.hbs:2',
+          'test/fixtures/repeat.hbs:2'
         ], 'Repeated msgid is not tracked');
 
       test.done();
@@ -72,7 +72,7 @@ exports.PARAMETER = {
     test.expect(1);
 
     parse(null, {
-      directory: 'test/fixtures/default'
+      directory: 'test/fixtures'
     }, function (po) {
       gt = new Gettext();
       gt.addTextdomain(null, po);
@@ -86,7 +86,7 @@ exports.PARAMETER = {
   'output': function (test) {
     test.expect(1);
 
-    parse('test/fixtures/default/template.hbs', {
+    parse('test/fixtures/template.hbs', {
       output: 'tmp/output.po'
     }, function () {
       gt = new Gettext();
@@ -101,7 +101,7 @@ exports.PARAMETER = {
   'keyword': function (test) {
     test.expect(1);
 
-    parse('test/fixtures/keyword/template.hbs', {
+    parse('test/fixtures/keyword.hbs', {
       keyword: 'i18n'
     }, function (po) {
       gt = new Gettext();
