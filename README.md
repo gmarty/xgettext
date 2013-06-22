@@ -2,7 +2,8 @@
 
 # handlebars-xgettext
 > Extract strings from Handlebars source
-`xgettext(1)` clone for Handlebars files
+
+`xgettext(1)` clone for Handlebars templates
 
 ## Installation
 ``` bash
