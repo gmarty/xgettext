@@ -1,35 +1,48 @@
 [![build status](https://secure.travis-ci.org/gmarty/handlebars-xgettext.png)](http://travis-ci.org/gmarty/handlebars-xgettext)
-
 # handlebars-xgettext
 > Extract strings from Handlebars source
 
-`xgettext(1)` clone for Handlebars templates
+This is a `xgettext(1)` replacement for Handlebars templates
 
-## Installation
+## Background
+
+When creating Handlebars templates that require translatable strings, you probably set up a helper similar to this:
+``` javascript
+Handlebars.registerHelper('_', function(msgid) {
+  return i18n.gettext(msgid);
+});
+```
+What this i18n object refers to is up to you. For server-side templates it is best to use a gettext implementation that reads binary gettext sources (MO files, see below). [node-gettext](https://github.com/andris9/node-gettext) is a good option in that case.
+
+For client-side templates you probably need to read from JSON data, [Jed](http://slexaxton.github.io/Jed/) can do that.
+
+Independent from the gettext implementation, your templates can contain translatable strings like so:
+``` html
+<button>{{_ "Sign in"}}</button>
+```
+
+Now, you need to get these strings into a translation application. This is where **handlebars-xgettext** comes in. It generates gettext (PO) files by parsing these strings out of your templates.
+It are these PO files that are read by translation applications. The most common of them: [Poedit](http://www.poedit.net).
+
+These applications should both generate PO and binary MO files as the end result. These files are then typically passed to your i18n library.
+
+## Usage
+#### With Poedit
+Install handlebars-xgettext globally:
 ``` bash
 $ npm install -g handlebars-xgettext
 ```
+Configure [Poedit](http://www.poedit.net/) under *File* - *Preferences...* by adding a new parser in the *Parsers* tab with these settings:
+![Poedit parser configuration](http://gmarty.github.io/handlebars-xgettext/Poedit.png)
 
-## Usage
+Please note that in this Windows example you have to use `handlebars-xgettext.cmd`, while the extension should of course not be there on *nix platforms.
+
+#### General
+You can of course use handlebars-xgettext independent from a translation application.
 ``` bash
 $ handlebars-xgettext [OPTION] [INPUTFILE]...
 ```
-
-Translatable strings should be marked up like this:
-``` html
-<button>{{gettext "Login"}}</button>
-```
-By default, `_` can also be used (instead of `gettext`).
-
-It is up to you to define the Handlebars i18n helper. Your project will need to contain something similar to:
-``` javascript
-Handlebars.registerHelper('_', function(key) {
-  return i18n.gettext(key);
-});
-```
-[Jed](http://slexaxton.github.com/Jed/) is a very convenient library to manage internationalization from JavaScript in the gettext way.
-
-### Options
+##### Options
 * `-d|--directory` add directory to list for input files search.
 * `-o|--output` write output to specified file (default stdout).
 * `-k|--keyword` additional keyword to be looked for (default `gettext` and `_`).
