@@ -43,7 +43,7 @@ You can of course use handlebars-xgettext independent from a translation applica
 $ handlebars-xgettext [OPTION] [INPUTFILE]...
 ```
 ##### Options
-* `-d|--directory` add directory to list for input files search.
+* `-D|--directory` add directory to list for input files search.
 * `-o|--output` write output to specified file (default stdout).
 * `-k|--keyword` additional keyword to be looked for (default `gettext` and `_`).
 * `--from-code` encoding of input files (default `ascii`).
