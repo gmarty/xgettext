@@ -13,7 +13,8 @@ var argv = require('optimist')
   .alias({
     'k': 'keyword',
     'o': 'output',
-    'V': 'version'
+    'V': 'version',
+    'D': 'directory'
   })
   .describe({
     'directory': 'add directory to list for input files search',
