@@ -36,6 +36,7 @@
   "engines": {
     "node": ">=0.10"
   },
+  "preferGlobal": "true",
   "dependencies": {
     "readdirp": "~0.2.4",
     "optimist": "~0.5.2",
