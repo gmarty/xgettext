@@ -1,3 +1,4 @@
+[![NPM](https://nodei.co/npm/handlebars-xgettext.png?downloads=true)](https://nodei.co/npm/handlebars-xgettext/)
 [![build status](https://secure.travis-ci.org/gmarty/handlebars-xgettext.png)](http://travis-ci.org/gmarty/handlebars-xgettext)
 # handlebars-xgettext
 > Extract strings from Handlebars source
