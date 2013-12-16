@@ -45,7 +45,7 @@
     "optimist": "~0.5.2",
     "colors": "~0.6.1",
     "underscore": "~1.4.4",
-    "node-gettext": "~0.2.14"
+    "gettext-parser": "~0.1.9"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

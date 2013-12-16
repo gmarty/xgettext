@@ -1,5 +1,5 @@
 var parse = require('..'),
-  Gettext = require('node-gettext'),
+  gt = require('gettext-parser'),
   fs = require('fs'),
   path = require('path');
 
@@ -8,34 +8,27 @@ if (!fs.existsSync(tmpDir)) {
   fs.mkdirSync(tmpDir);
 }
 
-var gt,
-  keys,
-  comment;
-
 exports.INPUT = {
   'default': function (test) {
     test.expect(4);
 
     parse('test/fixtures/template.hbs', null, function (po) {
-      gt = new Gettext();
-      gt.addTextdomain(null, po);
-      keys = gt.listKeys(null);
+      var context = gt.po.parse(po).translations[''];
 
-      test.ok(keys.indexOf('Image description') >= 0, 'Result does not contain expected msgid');
+      test.ok('Image description' in context, 'Result does not contain expected msgid');
 
-      comment = gt.getComment(null, false, 'This is a fixed sentence');
-      test.ok(comment.code, 'Source (path + line number) reference missing');
-      test.equal(comment.code, 'test/fixtures/template.hbs:2', 'Source (path + line number) mismatch');
+      var comment = context['This is a fixed sentence'].comments;
+      test.ok(comment.reference, 'Source (path + line number) reference missing');
+      test.equal(comment.reference, 'test/fixtures/template.hbs:2', 'Source (path + line number) mismatch');
 
-      comment = gt.getComment(null, false, 'Image description');
-      test.deepEqual(comment.code.split('\n'), [
+      comment = context['Image description'].comments;
+      test.deepEqual(comment.reference.split('\n'), [
           'test/fixtures/template.hbs:4',
           'test/fixtures/template.hbs:7'
         ], 'Repeated msgid in one file is not tracked');
 
       test.done();
     });
-
   },
   'empty': function (test) {
     test.expect(1);
@@ -56,17 +49,16 @@ exports.INPUT = {
       'test/fixtures/fixed.hbs',
       'test/fixtures/repeat.hbs'
     ], null, function (po) {
-      gt = new Gettext();
-      gt.addTextdomain(null, po);
-      keys = gt.listKeys(null);
+      var context = gt.po.parse(po).translations[''];
+      var str = JSON.stringify(context);
 
-      test.ok(po.toString('utf8').indexOf('test/fixtures/empty.hbs') < 0, 'Reference to empty template found');
-      test.ok(po.toString('utf8').indexOf('test/fixtures/fixed.hbs') < 0, 'Reference to template without translatable content found');
+      test.ok(str.indexOf('test/fixtures/empty.hbs') < 0, 'Reference to empty template found');
+      test.ok(str.indexOf('test/fixtures/fixed.hbs') < 0, 'Reference to template without translatable content found');
 
-      test.ok(keys.indexOf('Inside subdir') >= 0, 'Result does not contain msgid from subdir');
+      test.ok('Inside subdir' in context, 'Result does not contain msgid from subdir');
 
-      comment = gt.getComment(null, false, 'This is a fixed sentence');
-      test.deepEqual(comment.code.split('\n'), [
+      var comment = context['This is a fixed sentence'].comments;
+      test.deepEqual(comment.reference.split('\n'), [
           'test/fixtures/template.hbs:2',
           'test/fixtures/repeat.hbs:2'
         ], 'Repeated msgid is not tracked');
@@ -75,7 +67,6 @@ exports.INPUT = {
     });
   }
 };
-
 exports.PARAMETER = {
   'directory': function (test) {
     test.expect(1);
@@ -83,11 +74,9 @@ exports.PARAMETER = {
     parse(null, {
       directory: 'test/fixtures'
     }, function (po) {
-      gt = new Gettext();
-      gt.addTextdomain(null, po);
-      keys = gt.listKeys(null);
+      var context = gt.po.parse(po).translations[''];
 
-      test.ok(keys.indexOf('Image description') >= 0, 'Result does not contain expected msgid');
+      test.ok('Image description' in context, 'Result does not contain expected msgid');
 
       test.done();
     });
@@ -98,11 +87,9 @@ exports.PARAMETER = {
     parse('test/fixtures/template.hbs', {
       output: 'tmp/output.po'
     }, function () {
-      gt = new Gettext();
-      gt.addTextdomain(null, fs.readFileSync('tmp/output.po'));
-      keys = gt.listKeys(null);
+      var context = gt.po.parse(fs.readFileSync('tmp/output.po')).translations[''];
 
-      test.ok(keys.indexOf('Image description') >= 0, 'Result does not contain expected msgid');
+      test.ok('Image description' in context, 'Result does not contain expected msgid');
 
       test.done();
     });
@@ -113,11 +100,9 @@ exports.PARAMETER = {
     parse('test/fixtures/keyword.hbs', {
       keyword: 'i18n'
     }, function (po) {
-      gt = new Gettext();
-      gt.addTextdomain(null, po);
-      keys = gt.listKeys(null);
+      var context = gt.po.parse(po).translations[''];
 
-      test.ok(keys.indexOf('Image description') >= 0, 'Result does not contain expected msgid');
+      test.ok('Image description' in context, 'Result does not contain expected msgid');
 
       test.done();
     });
