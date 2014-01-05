@@ -44,7 +44,6 @@
     "readdirp": "0.3.*",
     "optimist": "0.6.*",
     "colors": "0.6.*",
-    "underscore": "1.5.*",
     "gettext-parser": "0.2.*"
   },
   "devDependencies": {
