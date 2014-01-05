@@ -65,6 +65,18 @@ exports.INPUT = {
 
       test.done();
     });
+  },
+  'plural': function (test) {
+    test.expect(2);
+
+    parse('test/fixtures/plural.hbs', null, function (po) {
+      var context = gt.po.parse(po).translations[''];
+
+      test.ok(context !== undefined, 'Result should not be empty');
+      test.equal(context['book'].msgid_plural, 'books', 'Result should contain plural form');
+
+      test.done();
+    });
   }
 };
 exports.PARAMETER = {

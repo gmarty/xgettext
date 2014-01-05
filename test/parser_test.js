@@ -3,17 +3,29 @@ var Parser = require('../lib/parser'),
 
 var parser = new Parser();
 
-var templatePath = __dirname + '/fixtures/template.hbs',
-  template = fs.readFileSync(templatePath, 'utf8');
+exports.parser = {
+  'default': function (test) {
+    test.expect(3);
 
-exports.parser = function (test) {
-  test.expect(3);
+    var templatePath = __dirname + '/fixtures/template.hbs',
+      template = fs.readFileSync(templatePath, 'utf8'),
+      result = parser.parse(template);
 
-  var result = parser.parse(template);
+    test.equal(typeof result, 'object', 'No object returned');
+    test.equal(Object.keys(result).length, 5, 'Invalid amount of strings returned');
+    test.equal(result['Image description'].line.length, 2, 'Invalid amount of lines returned for string');
 
-  test.equal(typeof result, 'object', 'No object returned');
-  test.equal(Object.keys(result).length, 5, 'Invalid amount of strings returned');
-  test.equal(result['Image description'].length, 2, 'Invalid amount of lines returned for string');
+    test.done();
+  },
+  'plural': function (test) {
+    test.expect(1);
 
-  test.done();
+    var templatePath = __dirname + '/fixtures/plural.hbs',
+      template = fs.readFileSync(templatePath, 'utf8'),
+      result = parser.parse(template);
+
+    test.equal(Object.keys(result).length, 1, 'Invalid amount of strings returned');
+
+    test.done();
+  }
 };
