@@ -77,6 +77,17 @@ exports.INPUT = {
 
       test.done();
     });
+  },
+  'nonAscii': function (test) {
+    test.expect(1);
+
+    parse('test/fixtures/non-ascii.hbs', null, function (po) {
+      var context = gt.po.parse(po).translations[''];
+
+      test.ok('Строка' in context, 'Result does not contain expected msgid');
+
+      test.done();
+    });
   }
 };
 exports.PARAMETER = {
