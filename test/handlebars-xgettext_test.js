@@ -73,7 +73,7 @@ exports.INPUT = {
       var context = gt.po.parse(po).translations[''];
 
       test.ok(context !== undefined, 'Result should not be empty');
-      test.equal(context['book'].msgid_plural, 'books', 'Result should contain plural form');
+      test.equal(context.book.msgid_plural, 'books', 'Result should contain plural form');
 
       test.done();
     });
@@ -82,7 +82,7 @@ exports.INPUT = {
     test.expect(1);
 
     parse('test/fixtures/non-ascii.hbs', null, function (po) {
-      var context = gt.po.parse(po).translations[''];
+      var context = gt.po.parse(po, 'utf-8').translations[''];
 
       test.ok('Строка' in context, 'Result does not contain expected msgid');
 
