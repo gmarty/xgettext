@@ -1,5 +1,4 @@
-[![build status](https://secure.travis-ci.org/gmarty/handlebars-xgettext.png)](http://travis-ci.org/gmarty/handlebars-xgettext)
-# handlebars-xgettext
+# handlebars-xgettext [![build status](https://secure.travis-ci.org/gmarty/handlebars-xgettext.png)](http://travis-ci.org/gmarty/handlebars-xgettext)
 > Extract strings from Handlebars source
 
 This is a `xgettext(1)` replacement for Handlebars templates
