@@ -35,7 +35,7 @@ exports.parser = {
       template = fs.readFileSync(templatePath, 'utf8'),
       result = parser.parse(template);
 
-    test.equal(Object.keys(result).length, 1, 'Invalid amount of strings returned');
+    test.equal(Object.keys(result).length, 2, 'Invalid amount of strings returned');
 
     test.done();
 
