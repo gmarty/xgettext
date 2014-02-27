@@ -18,6 +18,9 @@ For client-side templates you probably need to read from JSON data, [Jed](http:/
 Independent from the gettext implementation, your templates can contain translatable strings like so:
 ``` html
 <button>{{_ "Sign in"}}</button>
+
+<!-- and a simple plural example: -->
+<p>{{count}} {{_ "country" "countries" count}}</p>
 ```
 
 Now, you need to get these strings into a translation application. This is where **handlebars-xgettext** comes in. It generates gettext (PO) files by parsing these strings out of your templates.
