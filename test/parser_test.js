@@ -27,5 +27,17 @@ exports.parser = {
     test.equal(Object.keys(result).length, 1, 'Invalid amount of strings returned');
 
     test.done();
+  },
+  'arguments': function (test) {
+    test.expect(1);
+
+    var templatePath = __dirname + '/fixtures/arguments.hbs',
+      template = fs.readFileSync(templatePath, 'utf8'),
+      result = parser.parse(template);
+
+    test.equal(Object.keys(result).length, 1, 'Invalid amount of strings returned');
+
+    test.done();
+
   }
 };
