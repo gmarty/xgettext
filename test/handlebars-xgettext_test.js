@@ -130,6 +130,20 @@ exports.PARAMETER = {
       test.done();
     });
   },
+  'no-location': function (test) {
+    test.expect(1);
+
+    parse('test/fixtures/repeat.hbs', {
+      'no-location': true
+    }, function (po) {
+      var context = gt.po.parse(po).translations[''];
+      var comment = context['This is a fixed sentence'].comments || {};
+
+      test.ok(comment.reference === undefined, 'Reference is skipped');
+
+      test.done();
+    });
+  },
   'force-po': function (test) {
     test.expect(1);
 

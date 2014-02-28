@@ -22,7 +22,8 @@ var argv = require('optimist')
     'from-code': 'encoding of input files',
     'keyword': 'additional keyword to be looked for',
     'force-po': 'write PO file even if empty',
-    'version': 'output version information and exit'
+    'version': 'output version information and exit',
+    'no-location': 'don\'t write location information'
   })
   .default({
     'from-code': 'ascii',
