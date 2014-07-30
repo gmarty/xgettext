@@ -50,7 +50,7 @@ input = argv._;
 delete argv._;
 
 parse(input, argv, function (po) {
-  if (po) {
+  if (!argv.output && po) {
     process.stdout.write(po);
   }
 });

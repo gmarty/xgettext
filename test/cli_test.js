@@ -1,7 +1,13 @@
 var spawn = require('child_process').spawn,
+  fs = require('fs'),
   path = require('path');
 
 var bin = path.resolve(__dirname + '/../bin/handlebars-xgettext');
+
+var tmpDir = path.resolve(__dirname + '/../tmp');
+if (!fs.existsSync(tmpDir)) {
+  fs.mkdirSync(tmpDir);
+}
 
 exports.cli = {
   'no parameters': function (test) {
@@ -63,6 +69,32 @@ exports.cli = {
     child.stdout.on('data', function (data) {
       test.ok(data.match('This is a fixed sentence'), data);
       test.ok(data.match('Image description'), data);
+    });
+
+    child.stderr.on('data', function (err) {
+      throw err;
+    });
+
+    child.on('exit', function () {
+      test.done();
+    });
+  },
+  'output': function (test) {
+    test.expect(0);
+
+    var child = spawn('node', [
+      bin,
+      '--output=../tmp/cli-output.po',
+      'fixtures/template.hbs'
+    ], {
+      cwd: __dirname,
+      stdio: ['ignore', null, null]
+    });
+
+    child.stdout.setEncoding('utf8');
+
+    child.stdout.on('data', function () {
+      throw 'There should not be any output';
     });
 
     child.stderr.on('data', function (err) {
