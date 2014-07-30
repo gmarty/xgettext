@@ -23,8 +23,8 @@ exports.INPUT = {
 
       comment = context['Image description'].comments;
       test.deepEqual(comment.reference.split('\n'), [
-          'test/fixtures/template.hbs:4',
-          'test/fixtures/template.hbs:7'
+          'test/fixtures/template.hbs:5',
+          'test/fixtures/template.hbs:8'
         ], 'Repeated msgid in one file is not tracked');
 
       test.done();
