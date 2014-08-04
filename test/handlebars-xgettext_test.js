@@ -122,18 +122,18 @@ exports.PARAMETER = {
     test.expect(3);
 
     parse('test/fixtures/keyword.hbs', {
-      keyword: 'i18n'
+      keyword: ['i18n', '$']
     }, function (po) {
       var context = gt.po.parse(po).translations[''];
 
       test.ok('Image description' in context, 'Result does not contain expected msgid');
+      test.ok('regex escaped keyword' in context, 'Result does not contain expected msgid');
 
       parse('test/fixtures/plural.hbs', {
-        keyword: ['_', 'i18n']
+        keyword: 'i18n'
       }, function (po) {
         var context = gt.po.parse(po).translations[''];
 
-        test.ok(context !== undefined, 'Result should not be empty');
         test.equal(context.keyword.msgid_plural, 'keywords', 'Result should contain plural form');
 
         test.done();
