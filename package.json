@@ -41,17 +41,17 @@
   },
   "preferGlobal": "true",
   "dependencies": {
-    "readdirp": "0.3.*",
-    "optimist": "0.6.*",
-    "colors": "0.6.*",
-    "gettext-parser": "0.2.*"
+    "readdirp": "1.1.x",
+    "optimist": "0.6.x",
+    "colors": "0.6.x",
+    "gettext-parser": "0.2.x"
   },
   "devDependencies": {
-    "grunt": "0.4.*",
-    "grunt-contrib-watch": "*",
-    "grunt-contrib-nodeunit": "*",
-    "grunt-contrib-jshint": "*",
-    "grunt-contrib-clean": "*"
+    "grunt": "0.4.x",
+    "grunt-contrib-watch": "x",
+    "grunt-contrib-nodeunit": "x",
+    "grunt-contrib-jshint": "x",
+    "grunt-contrib-clean": "x"
   },
   "keywords": [
     "Handlebars",
