@@ -118,7 +118,7 @@ exports.PARAMETER = {
     });
   },
   'keyword': function (test) {
-    test.expect(1);
+    test.expect(3);
 
     parse('test/fixtures/keyword.hbs', {
       keyword: 'i18n'
@@ -127,7 +127,16 @@ exports.PARAMETER = {
 
       test.ok('Image description' in context, 'Result does not contain expected msgid');
 
-      test.done();
+      parse('test/fixtures/plural.hbs', {
+        keyword: ['_', 'i18n']
+      }, function (po) {
+        var context = gt.po.parse(po).translations[''];
+
+        test.ok(context !== undefined, 'Result should not be empty');
+        test.equal(context.keyword.msgid_plural, 'keywords', 'Result should contain plural form');
+
+        test.done();
+      });
     });
   },
   'no-location': function (test) {
