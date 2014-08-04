@@ -67,13 +67,14 @@ exports.INPUT = {
     });
   },
   'plural': function (test) {
-    test.expect(2);
+    test.expect(3);
 
     parse('test/fixtures/plural.hbs', null, function (po) {
       var context = gt.po.parse(po).translations[''];
 
       test.ok(context !== undefined, 'Result should not be empty');
       test.equal(context.book.msgid_plural, 'books', 'Result should contain plural form');
+      test.equal(context.book.msgstr.length, 2, 'Result should contain 2 empty translation placeholders');
 
       test.done();
     });
