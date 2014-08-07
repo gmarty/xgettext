@@ -73,8 +73,8 @@ exports.INPUT = {
       var context = gt.po.parse(po).translations[''];
 
       test.ok(context !== undefined, 'Result should not be empty');
-      test.equal(context.book.msgid_plural, 'books', 'Result should contain plural form');
-      test.equal(context.book.msgstr.length, 2, 'Result should contain 2 empty translation placeholders');
+      test.equal(context.quote.msgid_plural, 'quotes', 'Result should contain plural form');
+      test.equal(context.quote.msgstr.length, 2, 'Result should contain 2 empty translation placeholders');
 
       test.done();
     });
@@ -119,7 +119,7 @@ exports.PARAMETER = {
     });
   },
   'keyword': function (test) {
-    test.expect(3);
+    test.expect(4);
 
     parse('test/fixtures/keyword.hbs', {
       keyword: ['i18n', '$']
@@ -130,11 +130,12 @@ exports.PARAMETER = {
       test.ok('regex escaped keyword' in context, 'Result does not contain expected msgid');
 
       parse('test/fixtures/plural.hbs', {
-        keyword: 'i18n'
+        keyword: ['i18n:1,2', 'order:2,3']
       }, function (po) {
         var context = gt.po.parse(po).translations[''];
 
         test.equal(context.keyword.msgid_plural, 'keywords', 'Result should contain plural form');
+        test.equal(context.difference.msgid_plural, 'differences', 'Result should contain plural form');
 
         test.done();
       });

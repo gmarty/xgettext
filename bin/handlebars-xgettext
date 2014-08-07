@@ -27,7 +27,7 @@ var argv = require('optimist')
   })
   .default({
     'from-code': 'ascii',
-    'keyword': ['gettext', '_'],
+    'keyword': ['_', 'gettext', 'ngettext:1,2'],
     'force-po': false
   })
   .check(function (argv) {
