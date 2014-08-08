@@ -35,6 +35,7 @@ Install handlebars-xgettext globally:
 $ npm install -g handlebars-xgettext
 ```
 Configure [Poedit](http://www.poedit.net/) under *File* - *Preferences...* by adding a new parser in the *Parsers* tab with these settings:
+
 ![Poedit parser configuration](http://gmarty.github.io/handlebars-xgettext/Poedit.png)
 
 Please note that in this Windows example you have to use `handlebars-xgettext.cmd`, while the extension should of course not be there on *nix platforms.
