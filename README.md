@@ -48,7 +48,7 @@ $ handlebars-xgettext [OPTION] [INPUTFILE]...
 ##### Options
 * `-D|--directory` add directory to list for input files search.
 * `-o|--output` write output to specified file (default stdout).
-* `-k|--keyword` additional keyword to be looked for (default `gettext` and `_`).
+* `-k|--keyword` additional keyword to be looked for (default `_,gettext,ngettext:1,2`).
 * `--from-code` encoding of input files (default `ascii`).
 
 ## Development
