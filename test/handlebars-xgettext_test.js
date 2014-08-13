@@ -12,7 +12,7 @@ exports.INPUT = {
   'default': function (test) {
     test.expect(4);
 
-    parse('test/fixtures/template.hbs', null, function (po) {
+    parse(['test/fixtures/template.hbs'], null, function (po) {
       var context = gt.po.parse(po).translations[''];
 
       test.ok('Image description' in context, 'Result does not contain expected msgid');
@@ -33,7 +33,7 @@ exports.INPUT = {
   'empty': function (test) {
     test.expect(1);
 
-    parse('test/fixtures/fixed.hbs', null, function (po) {
+    parse(['test/fixtures/fixed.hbs'], null, function (po) {
       test.ok(!po, 'No output expected');
 
       test.done();
@@ -69,7 +69,7 @@ exports.INPUT = {
   'plural': function (test) {
     test.expect(3);
 
-    parse('test/fixtures/plural.hbs', null, function (po) {
+    parse(['test/fixtures/plural.hbs'], null, function (po) {
       var context = gt.po.parse(po).translations[''];
 
       test.ok(context !== undefined, 'Result should not be empty');
@@ -82,7 +82,7 @@ exports.INPUT = {
   'nonAscii': function (test) {
     test.expect(1);
 
-    parse('test/fixtures/non-ascii.hbs', null, function (po) {
+    parse(['test/fixtures/non-ascii.hbs'], null, function (po) {
       var context = gt.po.parse(po, 'utf-8').translations[''];
 
       test.ok('Строка' in context, 'Result does not contain expected msgid');
@@ -108,7 +108,7 @@ exports.PARAMETER = {
   'output': function (test) {
     test.expect(1);
 
-    parse('test/fixtures/template.hbs', {
+    parse(['test/fixtures/template.hbs'], {
       output: 'tmp/output.po'
     }, function () {
       var context = gt.po.parse(fs.readFileSync('tmp/output.po')).translations[''];
@@ -121,7 +121,7 @@ exports.PARAMETER = {
   'keyword': function (test) {
     test.expect(4);
 
-    parse('test/fixtures/keyword.hbs', {
+    parse(['test/fixtures/keyword.hbs'], {
       keyword: ['i18n', '$']
     }, function (po) {
       var context = gt.po.parse(po).translations[''];
@@ -129,7 +129,7 @@ exports.PARAMETER = {
       test.ok('Image description' in context, 'Result does not contain expected msgid');
       test.ok('regex escaped keyword' in context, 'Result does not contain expected msgid');
 
-      parse('test/fixtures/plural.hbs', {
+      parse(['test/fixtures/plural.hbs'], {
         keyword: ['i18n:1,2', 'order:2,3']
       }, function (po) {
         var context = gt.po.parse(po).translations[''];
@@ -144,7 +144,7 @@ exports.PARAMETER = {
   'no-location': function (test) {
     test.expect(1);
 
-    parse('test/fixtures/repeat.hbs', {
+    parse(['test/fixtures/repeat.hbs'], {
       'no-location': true
     }, function (po) {
       var context = gt.po.parse(po).translations[''];
@@ -158,7 +158,7 @@ exports.PARAMETER = {
   'force-po': function (test) {
     test.expect(1);
 
-    parse('test/fixtures/fixed.hbs', {
+    parse(['test/fixtures/fixed.hbs'], {
       'force-po': true
     }, function (po) {
       test.ok(po, 'No output returned');

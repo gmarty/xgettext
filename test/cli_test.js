@@ -104,5 +104,35 @@ exports.cli = {
     child.on('exit', function () {
       test.done();
     });
+  },
+  'stdin input': function (test) {
+    test.expect(1);
+
+    var child = spawn('node', [
+      bin,
+      '--from-code=utf8',
+      '-'
+    ], {
+      cwd: __dirname
+    });
+
+    child.stdout.setEncoding('utf8');
+
+    child.stdout.on('data', function (data) {
+      test.ok(data.match('This is a fixed sentence'), data);
+    });
+
+    child.stderr.setEncoding('utf8');
+
+    child.stderr.on('data', function (err) {
+      throw err;
+    });
+
+    child.on('exit', function () {
+      test.done();
+    });
+
+    child.stdin.write(fs.readFileSync('test/fixtures/template.hbs'));
+    child.stdin.end();
   }
 };

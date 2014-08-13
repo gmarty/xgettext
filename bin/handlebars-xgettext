@@ -50,8 +50,29 @@ if (argv.version) {
 input = argv._;
 delete argv._;
 
-parse(input, argv, function (po) {
-  if (!argv.output && po) {
-    process.stdout.write(po);
-  }
-});
+var run = function (subject) {
+  parse(subject, argv, function (po) {
+    if (!argv.output && po) {
+      process.stdout.write(po);
+    }
+  });
+}
+
+if (input[0] === '-') {
+  var data = '';
+
+  process.stdin.setEncoding(argv['from-code']);
+
+  process.stdin.on('readable', function() {
+    var chunk = process.stdin.read();
+    if (chunk !== null) {
+      data += chunk;
+    }
+  });
+
+  process.stdin.on('end', function() {
+    run(data);
+  });
+} else {
+  run(input);
+}
