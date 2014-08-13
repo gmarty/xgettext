@@ -28,7 +28,8 @@ var argv = require('optimist')
   .default({
     'from-code': 'ascii',
     'keyword': ['_', 'gettext', 'ngettext:1,2'],
-    'force-po': false
+    'force-po': false,
+    'no-location': false
   })
   .check(function (argv) {
     argv['from-code'] = argv['from-code'].toLowerCase().replace(/\W/g, '');
