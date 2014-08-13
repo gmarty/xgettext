@@ -1,5 +1,5 @@
 # handlebars-xgettext [![build status](https://secure.travis-ci.org/gmarty/handlebars-xgettext.png)](http://travis-ci.org/gmarty/handlebars-xgettext)
-> Extract strings from Handlebars source. | An `xgettext(1)` replacement for Handlebars templates.
+> Extract strings from Handlebars source. `xgettext(1)` replacement for Handlebars templates.
 
 *tl;dr* **Get translatable strings from templates into Poedit.**
 
