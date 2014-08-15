@@ -3,22 +3,12 @@ var Parser = require('../lib/parser'),
 
 exports.parser = {
   'constructor': function (test) {
+    test.expect(1);
+
     var parser;
 
     parser = new Parser();
-    test.equal(typeof parser.keywords, 'object', 'Keywords have not been set');
-
-    parser = new Parser('gettext:1');
-    test.equal(typeof parser.keywords, 'object', 'Keywords have not been set');
-    test.ok(parser.keywords.gettext, 'Keywords have not been set');
-
-    parser = new Parser(['ngettext:1,3']);
-    test.equal(typeof parser.keywords, 'object', 'Keywords have not been set');
-    test.equal(parser.keywords.ngettext.length, 2, 'Spec parameter has not been parsed');
-
-    parser = new Parser(['i18n', 'ngettext:1,3']);
-    test.equal(typeof parser.keywords, 'object', 'Keywords have not been set');
-    test.ok(parser.keywords.i18n && parser.keywords.ngettext, 'Keywords have not been set');
+    test.ok(parser.keywordSpec.gettext.length > 0, 'Default keyword spec was not set');
 
     test.done();
   },
