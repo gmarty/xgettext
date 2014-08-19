@@ -1,8 +1,8 @@
 {
   "name": "handlebars-xgettext",
   "description": "Extract strings from Handlebars source",
-  "version": "1.4.0",
-  "homepage": "https://github.com/gmarty/handlebars-xgettext",
+  "version": "1.4.1",
+  "homepage": "https://github.com/gmarty/xgettext",
   "author": {
     "name": "Guillaume Marty",
     "email": "edo999@gmail.com"
@@ -18,15 +18,15 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/gmarty/handlebars-xgettext.git"
+    "url": "git://github.com/gmarty/xgettext.git"
   },
   "bugs": {
-    "url": "https://github.com/gmarty/handlebars-xgettext/issues"
+    "url": "https://github.com/gmarty/xgettext/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/gmarty/handlebars-xgettext/blob/master/LICENSE-MIT"
+      "url": "https://github.com/gmarty/xgettext/blob/master/LICENSE-MIT"
     }
   ],
   "main": "index",
