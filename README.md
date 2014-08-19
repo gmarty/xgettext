@@ -1,4 +1,4 @@
-# handlebars-xgettext [![build status](https://secure.travis-ci.org/gmarty/handlebars-xgettext.png)](http://travis-ci.org/gmarty/handlebars-xgettext)
+# handlebars-xgettext [![build status](https://secure.travis-ci.org/gmarty/xgettext.png)](http://travis-ci.org/gmarty/xgettext)
 > Extract strings from Handlebars source. `xgettext(1)` replacement for Handlebars templates.
 
 *tl;dr* **Get translatable strings from templates into Poedit.**
@@ -36,7 +36,7 @@ $ npm install -g handlebars-xgettext
 ```
 Configure [Poedit](http://www.poedit.net/) under *File* - *Preferences...* by adding a new parser in the *Parsers* tab with these settings:
 
-![Poedit parser configuration](http://gmarty.github.io/handlebars-xgettext/Poedit.png)
+![Poedit parser configuration](http://gmarty.github.io/xgettext/Poedit.png)
 
 Please note that in this Windows example you have to use `handlebars-xgettext.cmd`, while the extension should of course not be there on *nix platforms.
 
