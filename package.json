@@ -50,10 +50,10 @@
   },
   "devDependencies": {
     "grunt": "0.4.x",
-    "grunt-contrib-watch": "x",
-    "grunt-contrib-nodeunit": "x",
+    "grunt-contrib-clean": "x",
     "grunt-contrib-jshint": "x",
-    "grunt-contrib-clean": "x"
+    "grunt-contrib-watch": "x",
+    "grunt-mocha-cli": "x"
   },
   "keywords": [
     "Handlebars",

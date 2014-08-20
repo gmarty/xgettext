@@ -29,10 +29,10 @@ module.exports = function(grunt) {
         src: 'Gruntfile.js'
       },
       lib_test: {
-        src: ['lib/**/*.js', 'test/**/*.js']
+        src: ['bin/**', 'index.js', 'test/**/*.js']
       }
     },
-    nodeunit: {
+    mochacli: {
       files: ['test/**/*_test.js']
     },
     watch: {
@@ -42,17 +42,20 @@ module.exports = function(grunt) {
       },
       lib_test: {
         files: ['bin/*', '<%= jshint.lib_test.src %>'],
-        tasks: ['clean', 'jshint:lib_test', 'nodeunit']
+        tasks: ['clean', 'jshint:lib_test', 'mochacli']
       }
     }
   });
 
   // These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+  grunt.loadNpmTasks('grunt-mocha-cli');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-clean');
 
+  // Alias
+  grunt.registerTask('test', ['mochacli']);
+
   // Default task.
-  grunt.registerTask('default', ['clean', 'jshint', 'nodeunit']);
+  grunt.registerTask('default', ['clean', 'jshint', 'mochacli']);
 };
