@@ -1,5 +1,4 @@
 var spawn = require('child_process').spawn,
-  exec = require('child_process').exec,
   fs = require('fs'),
   path = require('path'),
   assert = require('assert');
