@@ -56,7 +56,7 @@ var argv = require('optimist')
   .argv;
 
 if (argv.version) {
-  console.log(pkg.version);
+  process.stdout.write(pkg.version + '\n');
   process.exit();
 }
 
