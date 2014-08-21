@@ -77,7 +77,7 @@ describe('CLI', function () {
 
   describe('output', function () {
       it('should handle --output parameter', function (done) {
-          var child = run(['--output=../tmp/cli-output.po', 'fixtures/template.hbs'], function (err) {
+          run(['--output=../tmp/cli-output.po', 'fixtures/template.hbs'], function (err) {
               assert.ifError(err);
             }, function (code, data) {
               assert.equal(0, code);

@@ -34,7 +34,7 @@
     "handlebars-xgettext": "bin/handlebars-xgettext"
   },
   "scripts": {
-    "test": "grunt"
+    "test": "jshint bin test index.js && mocha"
   },
   "engines": {
     "node": ">=0.10"
@@ -48,18 +48,15 @@
     "optimist": "~0.6.1",
     "readdirp": "~1.1.0"
   },
-  "devDependencies": {
-    "grunt": "0.4.x",
-    "grunt-contrib-clean": "x",
-    "grunt-contrib-jshint": "x",
-    "grunt-contrib-watch": "x",
-    "grunt-mocha-cli": "x"
-  },
   "keywords": [
     "Handlebars",
     "hbs",
     "templates",
     "i18n",
     "gettext"
-  ]
+  ],
+  "devDependencies": {
+    "jshint": "~2.5.4",
+    "mocha": "~1.21.4"
+  }
 }
