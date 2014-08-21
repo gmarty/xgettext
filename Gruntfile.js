@@ -33,6 +33,9 @@ module.exports = function(grunt) {
       }
     },
     mochacli: {
+      options: {
+          reporter: 'spec'
+      },
       files: ['test/**/*_test.js']
     },
     watch: {

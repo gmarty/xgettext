@@ -12,23 +12,23 @@ if (!fs.existsSync(tmpDir)) {
 }
 
 var run = function (args, onErr, onEnd) {
-  var child = spawn('node', [bin].concat(args), {cwd: __dirname}),
-    data = '';
+    var child = spawn('node', [bin].concat(args), {cwd: __dirname}),
+      data = '';
 
-  child.stdout.setEncoding('utf8');
-  child.stdout.on('data', function (chunk) {
-      data += chunk;
+    child.stdout.setEncoding('utf8');
+    child.stdout.on('data', function (chunk) {
+        data += chunk;
+      });
+
+    child.stderr.setEncoding('utf8');
+    child.stderr.on('data', onErr);
+
+    child.on('close', function (code) {
+      onEnd(code, data);
     });
 
-  child.stderr.setEncoding('utf8');
-  child.stderr.on('data', onErr);
-
-  child.on('close', function (code) {
-    onEnd(code, data);
-  });
-
-  return child;
-}
+    return child;
+  };
 
 describe('CLI', function () {
   it('should run without parameters', function (done) {
