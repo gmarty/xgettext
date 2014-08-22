@@ -56,8 +56,8 @@ $ handlebars-xgettext [OPTION] [INPUTFILE]...
  
 ## Development
 
-* Run `npm test` or `grunt` to run tests.
-* Run `grunt watch` to watch for file changes and run tests.
+* Clone repository and run `npm install`.
+* Run `npm test` to lint & test.
 
 Pull requests and issues are greatly appreciated ;-)
 
