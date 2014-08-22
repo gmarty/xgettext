@@ -11,7 +11,7 @@ if (!fs.existsSync(tmpDir)) {
 
 describe('API', function () {
     it('should run with default parameters', function (done) {
-        xgettext(['test/fixtures/template.hbs'], null, function (po) {
+        xgettext(['test/fixtures/template.hbs'], function (po) {
             var context = gt.po.parse(po).translations[''];
 
             assert('Image description' in context);
@@ -30,7 +30,7 @@ describe('API', function () {
           });
       });
     it('should parse an empty template', function (done) {
-        xgettext(['test/fixtures/fixed.hbs'], null, function (po) {
+        xgettext(['test/fixtures/fixed.hbs'], function (po) {
             assert(!po);
 
             done();
@@ -61,7 +61,7 @@ describe('API', function () {
           });
       });
     it('should handle plural expressions', function (done) {
-        xgettext(['test/fixtures/plural.hbs'], null, function (po) {
+        xgettext(['test/fixtures/plural.hbs'], function (po) {
             var context = gt.po.parse(po).translations[''];
 
             assert(context !== undefined);
@@ -72,7 +72,7 @@ describe('API', function () {
           });
       });
     it('should handle non-ascii input', function (done) {
-        xgettext(['test/fixtures/non-ascii.hbs'], null, function (po) {
+        xgettext(['test/fixtures/non-ascii.hbs'], function (po) {
             var context = gt.po.parse(po, 'utf-8').translations[''];
 
             assert('Строка' in context);

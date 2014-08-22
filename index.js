@@ -12,6 +12,11 @@ var fs = require('fs'),
  * @param Function cb Callback
  */
 function xgettext(input, options, cb) {
+  if (typeof options === 'function') {
+    cb = options;
+    options = {};
+  }
+
   options = options || {};
 
   if (!input && !options.directory && !options['files-from']) {
