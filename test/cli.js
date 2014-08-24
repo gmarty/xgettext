@@ -3,7 +3,7 @@ var spawn = require('child_process').spawn,
   path = require('path'),
   assert = require('assert');
 
-var bin = path.resolve(__dirname + '/../bin/handlebars-xgettext');
+var bin = path.resolve(__dirname + '/../bin/xgettext-template');
 
 var tmpDir = path.resolve(__dirname + '/../tmp');
 if (!fs.existsSync(tmpDir)) {

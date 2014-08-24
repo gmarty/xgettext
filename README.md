@@ -1,4 +1,4 @@
-# handlebars-xgettext [![build status](https://secure.travis-ci.org/gmarty/xgettext.png)](http://travis-ci.org/gmarty/xgettext)
+# xgettext-template [![build status](https://secure.travis-ci.org/gmarty/xgettext.png)](http://travis-ci.org/gmarty/xgettext)
 > Extract strings from Handlebars source. `xgettext(1)` replacement for Handlebars templates.
 
 *tl;dr* **Get translatable strings from templates into Poedit.**
@@ -23,27 +23,27 @@ Independent from the gettext implementation, your templates can contain translat
 <p>{{count}} {{ngettext "country" "countries" count}}</p>
 ```
 
-Now, you need to get these strings into a translation application. This is where **handlebars-xgettext** comes in. It generates gettext (PO) files by parsing these strings out of your templates.
+Now, you need to get these strings into a translation application. This is where **xgettext-template** comes in. It generates gettext (PO) files by parsing these strings out of your templates.
 It are these PO files that are read by translation applications. The most common of them: [Poedit](http://www.poedit.net).
 
 These applications should both generate PO and binary MO files as the end result. These files are then typically passed to your i18n library.
 
 ## Usage
 #### With Poedit
-Install handlebars-xgettext globally:
+Install xgettext-template globally:
 ``` bash
-$ npm install -g handlebars-xgettext
+$ npm install -g xgettext-template
 ```
 Configure [Poedit](http://www.poedit.net/) under *File* - *Preferences...* by adding a new parser in the *Parsers* tab with these settings:
 
 ![Poedit parser configuration](http://gmarty.github.io/xgettext/Poedit.png)
 
-Please note that in this Windows example you have to use `handlebars-xgettext.cmd`, while the extension should of course not be there on *nix platforms.
+Please note that in this Windows example you have to use `xgettext-template.cmd`, while the extension should of course not be there on *nix platforms.
 
 #### General
-You can of course use handlebars-xgettext independent from a translation application.
+You can of course use xgettext-template independent from a translation application.
 ``` bash
-$ handlebars-xgettext [OPTION] [INPUTFILE]...
+$ xgettext-template [OPTION] [INPUTFILE]...
 ```
 ##### Options
 * `-D|--directory` add directory to list for input files search.
@@ -63,29 +63,4 @@ Pull requests and issues are greatly appreciated ;-)
 
 ## Note
 
-handlebars-xgettext initial development was founded by Dijiwan.
-
-## License
-
-Copyright (c) 2012 Guillaume Marty
-
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
+xgettext-template initial development was founded by Dijiwan.

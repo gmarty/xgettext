@@ -1,7 +1,7 @@
 {
-  "name": "handlebars-xgettext",
-  "description": "Extract strings from Handlebars source",
-  "version": "1.4.1",
+  "name": "xgettext-template",
+  "description": "Extract translatable strings from templates",
+  "version": "2.0.0",
   "homepage": "https://github.com/gmarty/xgettext",
   "author": {
     "name": "Guillaume Marty",
@@ -11,9 +11,6 @@
     {
       "name": "Sam Hauglustaine",
       "email": "sam@strictlyphp.com"
-    },
-    {
-      "name": "Herman Schaaf"
     }
   ],
   "repository": {
@@ -31,7 +28,7 @@
   ],
   "main": "index",
   "bin": {
-    "handlebars-xgettext": "bin/handlebars-xgettext"
+    "xgettext-template": "bin/xgettext-template"
   },
   "scripts": {
     "test": "jshint bin test index.js && mocha"
