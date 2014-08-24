@@ -1,78 +1,10 @@
 #!/usr/bin/env node
 
-var parse = require('..'),
-  colors = require('colors'),
-  pkg = require('../package.json');
+require('colors');
 
-var argv = require('optimist')
-  .usage([
-    pkg.description,
-    '',
-    Object.keys(pkg.bin)[0] + ' [OPTION] [INPUTFILE]...'
-  ].join('\n'))
-  .alias({
-    'k': 'keyword',
-    'o': 'output',
-    'V': 'version',
-    'D': 'directory'
-  })
-  .describe({
-    'directory': 'add directory to list for input files search',
-    'output': 'write output to specified file',
-    'from-code': 'encoding of input files',
-    'keyword': 'additional keyword to be looked for',
-    'force-po': 'write PO file even if empty',
-    'version': 'output version information and exit',
-    'no-location': 'don\'t write location information'
-  })
-  .default({
-    'from-code': 'ascii',
-    'keyword': ['_', 'gettext', 'ngettext:1,2'],
-    'force-po': false,
-    'no-location': false
-  })
-  .check(function (argv) {
-    argv['from-code'] = argv['from-code'].toLowerCase().replace(/\W/g, '');
-    if (['utf8', 'ascii', 'base64'].indexOf(argv['from-code']) < 0) {
-      throw 'Encoding of input files must be either utf8, ascii or base64.'.red;
-    }
-    if (!argv._ && !argv['files-from'] && !argv.directory) {
-      throw 'No input specified.'.red;
-    }
-  })
-  .argv;
-
-if (argv.version) {
-  console.log(pkg.version);
-  process.exit();
-}
-
-input = argv._;
-delete argv._;
-
-var run = function (subject) {
-  parse(subject, argv, function (po) {
-    if (!argv.output && po) {
-      process.stdout.write(po);
-    }
-  });
-}
-
-if (input[0] === '-') {
-  var data = '';
-
-  process.stdin.setEncoding(argv['from-code']);
-
-  process.stdin.on('readable', function() {
-    var chunk = process.stdin.read();
-    if (chunk !== null) {
-      data += chunk;
-    }
-  });
-
-  process.stdin.on('end', function() {
-    run(data);
-  });
-} else {
-  run(input);
-}
+console.log(['Warning!'.red + ' handlebars-xgettext was renamed to xgettext-template\n',
+  'Please run ',
+  'npm remove -g handlebars-xgettext'.grey,
+  '; '.grey,
+  'npm install -g xgettext-template'.grey,
+  ' to update.'].join(''));
