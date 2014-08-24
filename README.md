@@ -4,7 +4,7 @@ Extracts translatable strings from source. Identical to [xgettext(1)](http://www
 *tl;dr* **Get translatable strings from templates into Poedit.**
 
 ## Template language support
-Currently, only Handlebars templates are parsed (with (gettext-handlebars)[https://github.com/smhg/gettext-handlebars]).
+Currently, only Handlebars templates are parsed (using [gettext-handlebars](https://github.com/smhg/gettext-handlebars)).
 
 React's **JSX** and **Jade** are todos (PRs are much appreciated).
 
@@ -32,7 +32,7 @@ What this `i18n` object refers to is up to you. Some (client/server) options are
 
 **xgettext-template** parses the strings above out of your templates into gettext's PO files.
 These PO files are then translated and compiled to binary MO files using applications like [Poedit](http://www.poedit.net).
-The MO files are passed to your i18n library (see above).
+The MO files are passed as input the i18n library (above).
 
 ## Installation
 ``` bash
