@@ -46,11 +46,9 @@
     "readdirp": "~1.1.0"
   },
   "keywords": [
-    "Handlebars",
-    "hbs",
-    "templates",
-    "i18n",
-    "gettext"
+    "template",
+    "gettext",
+    "i18n"
   ],
   "devDependencies": {
     "jshint": "~2.5.4",
