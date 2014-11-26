@@ -38,12 +38,12 @@
   },
   "preferGlobal": "true",
   "dependencies": {
-    "async": "~0.9.0",
-    "colors": "~0.6.2",
+    "async": "0.9.0",
+    "colors": "1.0.3",
     "gettext-handlebars": "0.2.2",
-    "gettext-parser": "~0.2.0",
-    "optimist": "~0.6.1",
-    "readdirp": "~1.1.0"
+    "gettext-parser": "0.2.0",
+    "optimist": "0.6.1",
+    "readdirp": "1.1.0"
   },
   "keywords": [
     "template",
@@ -51,7 +51,7 @@
     "i18n"
   ],
   "devDependencies": {
-    "jshint": "~2.5.4",
-    "mocha": "~1.21.4"
+    "jshint": "2.5.10",
+    "mocha": "2.0.1"
   }
 }
