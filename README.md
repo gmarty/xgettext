@@ -4,7 +4,8 @@ Extracts translatable strings from source. Identical to [xgettext(1)](http://www
 *tl;dr* **Get translatable strings from templates into Poedit.**
 
 ## Template language support
-Currently, only Handlebars (using [gettext-handlebars](https://github.com/smhg/gettext-handlebars)) and Swig (using [gettext-swig](https://github.com/smhg/gettext-swig)) templates are parsed.
+* Handlebars (using [gettext-handlebars](https://github.com/smhg/gettext-handlebars))
+* Swig (using [gettext-swig](https://github.com/smhg/gettext-swig))
 
 React's **JSX** and **Jade** are todos (PRs are much appreciated).
 
