@@ -40,7 +40,7 @@ var argv = require('optimist')
         };
 
       if (argv.language && !Object.keys(xgettext.languages).some(equalsLanguage)) {
-        throw 'Language \'' + argv.language + '\' is not supported.'.red;
+        throw ('Language \'' + argv.language + '\' is not supported.').red;
       }
 
       argv['from-code'] = argv['from-code'].toLowerCase().replace(/\W/g, '');
