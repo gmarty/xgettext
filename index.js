@@ -167,7 +167,8 @@ function xgettext(input, options, cb) {
 }
 
 xgettext.languages = {
-  '.hbs': 'Handlebars'
+  '.hbs': 'Handlebars',
+  '.swig': 'Swig'
 };
 
 module.exports = xgettext;
