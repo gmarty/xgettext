@@ -47,7 +47,7 @@ $ xgettext-template [OPTION] [INPUTFILE]...
 #### Options
 * `-D|--directory` add directory to list for input files search.
 * `-o|--output` write output to specified file (default: stdout).
-* `-L|--language` specifies the language of the input files (default: determine from file extension).
+* `-L|--language` specifies the language of the input files (default: determine from file extension). Use the language's full name from the **template language support** list above.
 * `--from-code` encoding of input files (default: `ascii`).
 * `-k|--keyword` additional keyword to be looked for (default: `_,gettext,ngettext:1,2`).
 * `--force-po` write PO file even if empty (default: `false`).
