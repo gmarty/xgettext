@@ -106,7 +106,8 @@ function xgettext(input, options, cb) {
                     language = options.language || xgettext.languages[extension];
 
                   if (!language) {
-                    throw 'No language specified for extension \'' + extension + '\'.';
+                    console.log('No language specified for extension \'' + extension + '\'.');
+                    return cb();
                   }
 
                   parseTemplate(getParser(language, spec), res, addPath(file.replace(/\\/, '/')));
