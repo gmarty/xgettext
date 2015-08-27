@@ -168,6 +168,7 @@ function xgettext(input, options, cb) {
 
 xgettext.languages = {
   '.hbs': 'Handlebars',
+  '.handlebars': 'Handlebars',
   '.swig': 'Swig'
 };
 
