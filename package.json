@@ -31,7 +31,10 @@
     "xgettext-template": "bin/xgettext-template"
   },
   "scripts": {
-    "test": "jshint bin test index.js && mocha"
+    "lint": "eslint bin test index.js",
+    "test": "mocha",
+    "preversion": "npm run lint && npm test",
+    "postversion": "git push && git push --tags"
   },
   "engines": {
     "node": ">=0.10"
@@ -52,7 +55,7 @@
     "i18n"
   ],
   "devDependencies": {
-    "jshint": "^2.8.0",
+    "eslint": "^1.7.3",
     "mocha": "^2.3.3"
   }
 }
