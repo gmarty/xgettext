@@ -46,6 +46,7 @@
     "gettext-handlebars": "0.4.0",
     "gettext-parser": "1.1.2",
     "gettext-swig": "0.2.0",
+    "gettext-volt": "0.2.2",
     "optimist": "0.6.1",
     "readdirp": "2.0.0"
   },
