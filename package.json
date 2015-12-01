@@ -54,7 +54,7 @@
     "i18n"
   ],
   "devDependencies": {
-    "eslint": "^1.7.3",
-    "mocha": "^2.3.3"
+    "eslint": "1.10.2",
+    "mocha": "2.3.4"
   }
 }
