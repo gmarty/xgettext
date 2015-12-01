@@ -24,7 +24,7 @@
       "url": "https://github.com/gmarty/xgettext/blob/master/LICENSE-MIT"
     }
   ],
-  "main": "index",
+  "main": "index.js",
   "bin": {
     "xgettext-template": "bin/xgettext-template"
   },
@@ -33,9 +33,6 @@
     "test": "mocha",
     "preversion": "npm run lint && npm test",
     "postversion": "git push && git push --tags"
-  },
-  "engines": {
-    "node": ">=0.10"
   },
   "preferGlobal": "true",
   "dependencies": {
