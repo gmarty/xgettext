@@ -12,7 +12,8 @@ if (!fs.existsSync(tmpDir)) {
 
 var run = function (args, onErr, onEnd) {
   var child = spawn('node', [bin].concat(args), {cwd: __dirname}),
-    data = '';
+    data = '',
+    err = '';
 
   child.stdout.setEncoding('utf8');
   child.stdout.on('data', function (chunk) {
@@ -20,9 +21,15 @@ var run = function (args, onErr, onEnd) {
   });
 
   child.stderr.setEncoding('utf8');
-  child.stderr.on('data', onErr);
+  child.stderr.on('data', function (chunk) {
+    err += chunk;
+  });
 
   child.on('close', function (code) {
+    if (err) {
+      onErr(err);
+    }
+
     onEnd(code, data);
   });
 
@@ -30,19 +37,17 @@ var run = function (args, onErr, onEnd) {
 };
 
 describe('CLI', function () {
-  it('should run without parameters', function (done) {
-    run([], function (err) {
-      assert.ifError(err);
-    }, function (code, data) {
-      assert.equal(0, code);
-      assert(!data);
+  it('should not run without parameters or input', function (done) {
+    run([], function () {
       done();
+    }, function () {
+      throw new Error('Ran without parameters or input');
     });
   });
 
   it('should handle --keyword parameter', function (done) {
     run(['--from-code=utf8', '--keyword=translate', '--keyword=i18n', 'fixtures/keyword.hbs'], function (err) {
-      assert.ifError(err);
+      throw err;
     }, function (code, data) {
       assert.equal(0, code);
       assert(data.match('This is a fixed sentence'));
@@ -54,7 +59,7 @@ describe('CLI', function () {
   describe('input', function () {
     it('should parse a single file', function (done) {
       run(['fixtures/template.hbs'], function (err) {
-        assert.ifError(err);
+        throw err;
       }, function (code, data) {
         assert.equal(0, code);
         assert(data.match('This is a fixed sentence'));
@@ -63,7 +68,7 @@ describe('CLI', function () {
     });
     it('should handle stdin input', function (done) {
       var child = run(['--language=Handlebars', '--from-code=utf8', '-'], function (err) {
-        assert.ifError(err);
+        throw err;
       }, function (code, data) {
         assert.equal(0, code);
         assert(data.match('This is a fixed sentence'));
@@ -78,7 +83,7 @@ describe('CLI', function () {
   describe('output', function () {
     it('should handle --output parameter', function (done) {
       run(['--output=../tmp/cli-output.po', 'fixtures/template.hbs'], function (err) {
-        assert.ifError(err);
+        throw err;
       }, function (code, data) {
         assert.equal(0, code);
         assert(!data);
