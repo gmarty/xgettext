@@ -1,6 +1,6 @@
 {
   "name": "xgettext-template",
-  "description": "Extract translatable strings from templates",
+  "description": "Extract translatable strings from templates.",
   "version": "2.3.1",
   "homepage": "https://github.com/gmarty/xgettext",
   "author": {
@@ -42,8 +42,8 @@
     "gettext-parser": "1.1.2",
     "gettext-swig": "0.2.0",
     "gettext-volt": "0.2.2",
-    "optimist": "0.6.1",
-    "readdirp": "2.0.0"
+    "readdirp": "2.0.0",
+    "yargs": "3.30.0"
   },
   "keywords": [
     "template",

@@ -1,15 +1,16 @@
 #!/usr/bin/env node
 
 var xgettext = require('..'),
-  pkg = require('../package.json');
+  pkg = require('../package.json'),
+  name = Object.keys(pkg.bin)[0];
 
 require('colors');
 
-var argv = require('optimist')
+var argv = require('yargs')
   .usage([
-    pkg.description,
+    'Usage: ' + name + ' [OPTION] [INPUTFILE]...',
     '',
-    Object.keys(pkg.bin)[0] + ' [OPTION] [INPUTFILE]...'
+    pkg.description
   ].join('\n'))
   .alias({
     'D': 'directory',
@@ -25,8 +26,7 @@ var argv = require('optimist')
     'from-code': 'encoding of input files',
     'keyword': 'additional keyword to be looked for',
     'force-po': 'write PO file even if empty',
-    'no-location': 'don\'t write location information',
-    'version': 'output version information and exit'
+    'no-location': 'don\'t write location information'
   })
   .default({
     'from-code': 'ascii',
@@ -34,55 +34,65 @@ var argv = require('optimist')
     'force-po': false,
     'no-location': false
   })
+  .version(function() {
+    return pkg.version;
+  })
+  .help('help')
   .check(function (argv) {
-      var equalsLanguage = function (ext) {
-          return argv.language === xgettext.languages[ext];
-        };
+    var equalsLanguage = function (ext) {
+      return argv.language === xgettext.languages[ext];
+    };
 
-      if (argv.language && !Object.keys(xgettext.languages).some(equalsLanguage)) {
-        throw ('Language \'' + argv.language + '\' is not supported.').red;
-      }
+    if (argv.language && !Object.keys(xgettext.languages).some(equalsLanguage)) {
+      throw new Error(('Language \'' + argv.language + '\' is not supported.').red);
+    }
 
-      argv['from-code'] = argv['from-code'].toLowerCase().replace(/\W/g, '');
+    argv['from-code'] = argv['from-code'].toLowerCase().replace(/\W/g, '');
 
-      if (['utf8', 'ascii', 'base64'].indexOf(argv['from-code']) < 0) {
-        throw 'Encoding of input files must be either utf8, ascii or base64.'.red;
-      }
+    if (['utf8', 'ascii', 'base64'].indexOf(argv['from-code']) < 0) {
+      throw new Error('Encoding of input files must be either utf8, ascii or base64.'.red);
+    }
 
-      if (!argv._ && !argv['files-from'] && !argv.directory) {
-        throw 'No input specified.'.red;
-      }
-    })
+    if (!argv._ && !argv['files-from'] && !argv.directory) {
+      throw new Error('No input specified.'.red);
+    }
+
+    return true;
+  })
   .argv;
-
-if (argv.version) {
-  process.stdout.write(pkg.version + '\n');
-  process.exit();
-}
 
 var input = argv._;
 delete argv._;
 
 var run = function (subject) {
-    xgettext(subject, argv, function (po) {
-        if (!argv.output && po) {
-          process.stdout.write(po);
-        }
-      });
-  };
+  xgettext(subject, argv, function (po) {
+    if (!argv.output && po) {
+      process.stdout.write(po);
+    }
+  });
+};
 
 if (input[0] === '-') {
   var stdin = process.stdin;
 
   input = '';
 
-  stdin.setEncoding(argv['from-code']);
-  stdin.on('data', function (chunk) {
-        input += chunk;
-      })
+  stdin
+    .on('data', function (chunk) {
+      input += chunk;
+    })
     .on('end', function () {
-        run(input);
-      });
+      run(input);
+    })
+    .setEncoding(argv['from-code']);
 } else {
+  if (input.length === 0) {
+    process.stderr.write([
+      name + ': no input file given',
+      'Try \'' + name + ' --help\' for more information.',
+      ''
+    ].join('\n'));
+  }
+
   run(input);
 }
