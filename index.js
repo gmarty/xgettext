@@ -2,7 +2,8 @@ var fs = require('fs'),
   path = require('path'),
   readdirp = require('readdirp'),
   gt = require('gettext-parser'),
-  async = require('async');
+  async = require('async'),
+  Keywordspec = require('./src/keywordspec');
 
 /**
  * Parse input and save the i18n strings to a PO file.
@@ -47,22 +48,7 @@ function xgettext(input, options, cb) {
 
       return parsers[name];
     },
-    specPattern = /([^:]+)(?::(\d)(?:,(\d))?)?/,
-    indexify = function (idx) {
-      return parseInt(idx, 10) - 1;
-    },
-    addToSpec = function (spec, keyword) {
-      var parts = keyword.match(specPattern);
-
-      spec[parts[1]] = [parts[2] ? indexify(parts[2]) : 0];
-
-      if (parts[3]) {
-        spec[parts[1]].push(indexify(parts[3]));
-      }
-
-      return spec;
-    },
-    spec = options.keyword.reduce(addToSpec, {}),
+    spec = Keywordspec(options.keyword),
     context = {};
 
   var parseTemplate = function (parser, template, linePrefixer) {
