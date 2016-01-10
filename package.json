@@ -18,12 +18,7 @@
   "bugs": {
     "url": "https://github.com/gmarty/xgettext/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/gmarty/xgettext/blob/master/LICENSE-MIT"
-    }
-  ],
+  "license": "MIT",
   "main": "index.js",
   "bin": {
     "xgettext-template": "bin/xgettext-template"
