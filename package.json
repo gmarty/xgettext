@@ -31,14 +31,14 @@
   },
   "preferGlobal": "true",
   "dependencies": {
-    "async": "1.5.0",
+    "async": "1.5.2",
     "colors": "1.1.2",
-    "gettext-handlebars": "0.4.0",
+    "gettext-handlebars": "0.4.1",
     "gettext-parser": "1.1.2",
     "gettext-swig": "0.2.0",
     "gettext-volt": "0.2.2",
     "readdirp": "2.0.0",
-    "yargs": "3.30.0"
+    "yargs": "3.31.0"
   },
   "keywords": [
     "template",
@@ -46,7 +46,7 @@
     "i18n"
   ],
   "devDependencies": {
-    "eslint": "1.10.2",
+    "eslint": "1.10.3",
     "mocha": "2.3.4"
   }
 }
