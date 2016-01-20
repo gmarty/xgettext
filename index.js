@@ -156,7 +156,8 @@ function xgettext(input, options, cb) {
 xgettext.languages = {
   '.hbs': 'Handlebars',
   '.swig': 'Swig',
-  '.volt': 'Volt'
+  '.volt': 'Volt',
+  '.ejs': 'EJS'
 };
 
 module.exports = xgettext;

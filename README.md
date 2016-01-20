@@ -7,6 +7,7 @@ Extracts translatable strings from source. Identical to [xgettext(1)](http://www
 * Handlebars (using [gettext-handlebars](https://github.com/smhg/gettext-handlebars))
 * Swig (using [gettext-swig](https://github.com/smhg/gettext-swig))
 * Volt (using [gettext-volt](https://github.com/perchlayer/gettext-volt))
+* EJS (using [gettext-ejs](https://github.com/pekala/gettext-ejs))
 
 React's **JSX** and **Jade** are todos (PRs are much appreciated).
 
