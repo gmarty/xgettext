@@ -39,7 +39,7 @@
     "gettext-swig": "0.2.0",
     "gettext-volt": "0.2.2",
     "readdirp": "2.0.0",
-    "yargs": "3.31.0"
+    "yargs": "3.32.0"
   },
   "keywords": [
     "template",
