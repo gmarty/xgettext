@@ -53,10 +53,6 @@ var argv = require('yargs')
       throw new Error('Encoding of input files must be either utf8, ascii or base64.'.red);
     }
 
-    if (argv._.length === 0 && !argv['files-from'] && !argv.directory) {
-      throw new Error('No input file given.'.red);
-    }
-
     return true;
   })
   .argv;

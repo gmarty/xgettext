@@ -37,11 +37,13 @@ var run = function (args, onErr, onEnd) {
 };
 
 describe('CLI', function () {
-  it('should not run without parameters or input', function (done) {
+  it('should run without parameters or input', function (done) {
     run([], function () {
+      throw new Error('Errored out for no parameters or input');
+    }, function (code, data) {
+      assert.equal(0, code);
+      assert.equal(data, '');
       done();
-    }, function () {
-      throw new Error('Ran without parameters or input');
     });
   });
 
