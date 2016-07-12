@@ -108,6 +108,9 @@ function xgettext(input, options, cb) {
       if (Object.keys(context).length > 0 || options['force-po']) {
         var po = gt.po.compile({
           charset: options['from-code'],
+          headers: {
+            'content-type': 'text/plain; charset=' + options['from-code']
+          },
           translations: {
             '': context
           }
