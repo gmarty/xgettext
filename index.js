@@ -20,7 +20,7 @@ function xgettext(input, options, cb) {
 
   options = options || {};
 
-  if (!input && !options.directory && !options['files-from']) {
+  if (!input && !options.directory) {
     throw 'No input specified';
   }
 
