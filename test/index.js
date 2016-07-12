@@ -80,9 +80,9 @@ describe('API', function () {
       done();
     });
   });
-  it('should traverse a directory of input files', function (done) {
-    xgettext(null, {
-      directory: 'test/fixtures'
+  it('should traverse files relative to different root directories', function (done) {
+    xgettext(['template.hbs'], {
+      directory: ['test/fixtures']
     }, function (po) {
       var context = gt.po.parse(po).translations[''];
 

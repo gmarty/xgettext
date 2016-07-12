@@ -66,6 +66,15 @@ describe('CLI', function () {
         done();
       });
     });
+    it('should parse a single file in a different root directory', function (done) {
+      run(['template.hbs', '--directory=fixtures'], function (err) {
+        throw err;
+      }, function (code, data) {
+        assert.equal(0, code);
+        assert(data.match('This is a fixed sentence'));
+        done();
+      });
+    });
     it('should handle stdin input', function (done) {
       var child = run(['--language=Handlebars', '--from-code=utf8', '-'], function (err) {
         throw err;

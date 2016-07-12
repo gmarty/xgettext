@@ -19,8 +19,9 @@ var argv = require('yargs')
     'k': 'keyword',
     'V': 'version'
   })
+  .array('directory')
   .describe({
-    'directory': 'add directory to list for input files search',
+    'directory': 'source files are searched relative to this list of directories',
     'output': 'write output to specified file',
     'language': 'specifies the language of the input files',
     'from-code': 'encoding of input files',
@@ -53,7 +54,7 @@ var argv = require('yargs')
       throw new Error('Encoding of input files must be either utf8, ascii or base64.'.red);
     }
 
-    if (argv._.length === 0 && !argv.directory) {
+    if (argv._.length === 0) {
       throw new Error('No input file given.'.red);
     }
 

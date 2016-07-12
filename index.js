@@ -1,6 +1,5 @@
 var fs = require('fs'),
   path = require('path'),
-  readdirp = require('readdirp'),
   gt = require('gettext-parser'),
   async = require('async'),
   Keywordspec = require('./src/keywordspec');
@@ -20,7 +19,7 @@ function xgettext(input, options, cb) {
 
   options = options || {};
 
-  if (!input && !options.directory) {
+  if (!input) {
     throw 'No input specified';
   }
 
@@ -74,35 +73,6 @@ function xgettext(input, options, cb) {
     }
   };
 
-  var parseFiles = function (files, cb) {
-    var addPath = function (path) {
-      return function (line) {
-        return path + ':' + line;
-      };
-    };
-
-    async.parallel(files.map(function (file) {
-      return function (cb) {
-        fs.readFile(path.resolve(file), options['from-code'], function (err, res) {
-          if (err) {
-            throw err;
-          }
-
-          var extension = path.extname(file),
-            language = options.language || xgettext.languages[extension];
-
-          if (!language) {
-            throw 'No language specified for extension \'' + extension + '\'.';
-          }
-
-          parseTemplate(getParser(language, spec), res, addPath(file.replace(/\\/, '/')));
-
-          cb();
-        });
-      };
-    }), cb);
-  };
-
   var output = function () {
     if (cb) {
       if (Object.keys(context).length > 0 || options['force-po']) {
@@ -133,26 +103,45 @@ function xgettext(input, options, cb) {
     }
   };
 
-  if (options.directory) {
-    readdirp({root: options.directory}, function(err, res) {
-      if (err) {
-        throw err;
-      }
-
-      parseFiles(res.files.map(function (file) {
-        return file.fullPath;
-      }), output);
+  if (typeof input === 'string') {
+    parseTemplate(getParser(options.language, spec), input, function (line) {
+      return 'standard input:' + line;
     });
-  } else {
-    if (typeof input === 'string') {
-      parseTemplate(getParser(options.language, spec), input, function (line) {
-        return 'standard input:' + line;
-      });
 
-      output();
-    } else {
-      parseFiles(input, output);
-    }
+    output();
+  } else {
+    var addPath = function (path) {
+      return function (line) {
+        return path + ':' + line;
+      };
+    };
+
+    var files = (options.directory || ['.']).reduce(function (result, directory) {
+      return result.concat(input.map(function (file) {
+        return path.join(directory, file);
+      }));
+    }, []);
+
+    async.parallel(files.map(function (file) {
+      return function (cb) {
+        fs.readFile(path.resolve(file), options['from-code'], function (err, res) {
+          if (err) {
+            throw err;
+          }
+
+          var extension = path.extname(file),
+            language = options.language || xgettext.languages[extension];
+
+          if (!language) {
+            throw 'No language specified for extension \'' + extension + '\'.';
+          }
+
+          parseTemplate(getParser(language, spec), res, addPath(file.replace(/\\/, '/')));
+
+          cb();
+        });
+      };
+    }), output);
   }
 }
 
