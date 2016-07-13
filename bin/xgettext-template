@@ -6,6 +6,8 @@ var xgettext = require('..'),
 
 require('colors');
 
+var supported = xgettext.languages;
+
 var argv = require('yargs')
   .usage([
     'Usage: ' + name + ' [OPTION] [INPUTFILE]...',
@@ -21,30 +23,37 @@ var argv = require('yargs')
   })
   .array('directory')
   .describe({
-    'directory': 'source files are searched relative to this list of directories',
+    'directory': 'add DIRECTORY to list for input files search',
     'output': 'write output to specified file',
-    'language': 'specifies the language of the input files',
+    'language': [
+      'recognise the specified language\n',
+      '(',
+      Object.keys(supported).map(function (key) { return supported[key]; }).join(', '),
+      ')'
+    ].join(''),
     'from-code': 'encoding of input files',
-    'keyword': 'additional keyword to be looked for',
+    'keyword': 'look for WORD as an additional keyword',
     'force-po': 'write PO file even if empty',
-    'no-location': 'don\'t write location information'
+    'no-location': 'do not write \'#: filename:line\' lines'
   })
   .default({
+    'directory': ['.'],
+    'output': 'messages.po',
     'from-code': 'ascii',
     'keyword': ['_', 'gettext', 'ngettext:1,2'],
     'force-po': false,
     'no-location': false
   })
   .version(function() {
-    return pkg.version;
+    return pkg.name + ' ' + pkg.version;
   })
   .help('help')
   .check(function (argv) {
     var equalsLanguage = function (ext) {
-      return argv.language === xgettext.languages[ext];
+      return argv.language === supported[ext];
     };
 
-    if (argv.language && !Object.keys(xgettext.languages).some(equalsLanguage)) {
+    if (argv.language && !Object.keys(supported).some(equalsLanguage)) {
       throw new Error(('Language \'' + argv.language + '\' is not supported.').red);
     }
 
