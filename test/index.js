@@ -105,6 +105,21 @@ describe('API', function () {
       });
     });
   });
+  it('should merge output with an existing file', function (done) {
+    xgettext(['test/fixtures/dir/template.hbs'], {
+      output: 'tmp/output.po',
+      'join-existing': true
+    }, function () {
+      fs.readFile('tmp/output.po', 'utf8', function (err, data) {
+        var context = gt.po.parse(data).translations[''];
+
+        assert('Image description' in context);
+        assert('Inside subdir' in context);
+
+        done();
+      });
+    });
+  });
   it('should handle keywordspec', function (done) {
     xgettext(['test/fixtures/keyword.hbs'], {
       keyword: ['i18n', '$'],

@@ -33,6 +33,9 @@ Choice of input file language:
 Input file interpretation:
   --from-code  encoding of input files                        [default: "ascii"]
 
+Operation mode:
+  -j, --join-existing  join messages with existing file         [default: false]
+
 Language specific options:
   -k, --keyword  look for WORD as an additional keyword
                                        [default: ["_","gettext","ngettext:1,2"]]

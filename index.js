@@ -32,6 +32,7 @@ function xgettext(input, options, cb) {
   options.keyword = options.keyword || [];
   options['from-code'] = options['from-code'] || 'utf8';
   options['force-po'] = options['force-po'] || false;
+  options['join-existing'] = options['join-existing'] || false;
 
   if (typeof options.keyword === 'string') {
     options.keyword = [options.keyword];
@@ -82,6 +83,22 @@ function xgettext(input, options, cb) {
   var output = function () {
     if (cb) {
       if (Object.keys(context).length > 0 || options['force-po']) {
+        var existing = {},
+          writeToStdout = options.output === '-' || options.output === '/dev/stdout';
+
+        if (!writeToStdout && options['join-existing']) {
+          try {
+            fs.accessSync(options.output, fs.F_OK);
+            existing = gt.po.parse(fs.readFileSync(options.output, {
+              encoding: options['from-code']
+            }));
+
+            Object.assign(context, existing.translations['']);
+          } catch (e) {
+            // ignore non-existing file
+          }
+        }
+
         var po = gt.po.compile({
           charset: options['from-code'],
           headers: {
@@ -92,7 +109,7 @@ function xgettext(input, options, cb) {
           }
         });
 
-        if (options.output === '-' || options.output === '/dev/stdout') {
+        if (writeToStdout) {
           cb(po);
         } else {
           fs.writeFile(options.output, po, function (err) {
