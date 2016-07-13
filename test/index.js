@@ -11,7 +11,7 @@ if (!fs.existsSync(tmpDir)) {
 
 describe('API', function () {
   it('should run with default parameters', function (done) {
-    xgettext(['test/fixtures/template.hbs'], function (po) {
+    xgettext(['test/fixtures/template.hbs'], {output: '-'}, function (po) {
       var context = gt.po.parse(po).translations[''];
 
       assert('Image description' in context);
@@ -30,7 +30,7 @@ describe('API', function () {
     });
   });
   it('should parse an empty template', function (done) {
-    xgettext(['test/fixtures/fixed.hbs'], function (po) {
+    xgettext(['test/fixtures/fixed.hbs'], {output: '-'}, function (po) {
       assert(!po);
 
       done();
@@ -43,7 +43,7 @@ describe('API', function () {
       'test/fixtures/empty.hbs',
       'test/fixtures/fixed.hbs',
       'test/fixtures/repeat.hbs'
-    ], null, function (po) {
+    ], {output: '-'}, function (po) {
       var context = gt.po.parse(po).translations[''];
       var str = JSON.stringify(context);
 
@@ -61,7 +61,7 @@ describe('API', function () {
     });
   });
   it('should handle plural expressions', function (done) {
-    xgettext(['test/fixtures/plural.hbs'], function (po) {
+    xgettext(['test/fixtures/plural.hbs'], {output: '-'}, function (po) {
       var context = gt.po.parse(po).translations[''];
 
       assert(context !== undefined);
@@ -72,7 +72,7 @@ describe('API', function () {
     });
   });
   it('should handle non-ascii input', function (done) {
-    xgettext(['test/fixtures/non-ascii.hbs'], function (po) {
+    xgettext(['test/fixtures/non-ascii.hbs'], {output: '-'}, function (po) {
       var context = gt.po.parse(po, 'utf-8').translations[''];
 
       assert('Строка' in context);
@@ -82,7 +82,8 @@ describe('API', function () {
   });
   it('should traverse files relative to different root directories', function (done) {
     xgettext(['template.hbs'], {
-      directory: ['test/fixtures']
+      directory: ['test/fixtures'],
+      output: '-'
     }, function (po) {
       var context = gt.po.parse(po).translations[''];
 
@@ -106,7 +107,8 @@ describe('API', function () {
   });
   it('should handle keywordspec', function (done) {
     xgettext(['test/fixtures/keyword.hbs'], {
-      keyword: ['i18n', '$']
+      keyword: ['i18n', '$'],
+      output: '-'
     }, function (po) {
       var context = gt.po.parse(po).translations[''];
 
@@ -114,7 +116,8 @@ describe('API', function () {
       assert('regex escaped keyword' in context);
 
       xgettext(['test/fixtures/plural.hbs'], {
-        keyword: ['i18n:1,2', 'order:2,3']
+        keyword: ['i18n:1,2', 'order:2,3'],
+        output: '-'
       }, function (po) {
         var context = gt.po.parse(po).translations[''];
 
@@ -127,7 +130,8 @@ describe('API', function () {
   });
   it('should handle no-location option', function (done) {
     xgettext(['test/fixtures/repeat.hbs'], {
-      'no-location': true
+      'no-location': true,
+      output: '-'
     }, function (po) {
       var context = gt.po.parse(po).translations[''];
       var comment = context['This is a fixed sentence'].comments || {};
@@ -139,7 +143,8 @@ describe('API', function () {
   });
   it('should handle force-po option', function (done) {
     xgettext(['test/fixtures/fixed.hbs'], {
-      'force-po': true
+      'force-po': true,
+      output: '-'
     }, function (po) {
       assert(po);
 

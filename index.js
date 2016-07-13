@@ -27,12 +27,18 @@ function xgettext(input, options, cb) {
     throw 'Language is required';
   }
 
+  options['output'] = options['output'] || 'messages.po';
+  options.directory = options.directory || ['.'];
+  options.keyword = options.keyword || [];
   options['from-code'] = options['from-code'] || 'utf8';
   options['force-po'] = options['force-po'] || false;
-  options.keyword = options.keyword || [];
 
   if (typeof options.keyword === 'string') {
     options.keyword = [options.keyword];
+  }
+
+  if (typeof options.directory === 'string') {
+    options.directory = [options.directory];
   }
 
   var parsers = {},
@@ -86,7 +92,9 @@ function xgettext(input, options, cb) {
           }
         });
 
-        if (options.output) {
+        if (options.output === '-' || options.output === '/dev/stdout') {
+          cb(po);
+        } else {
           fs.writeFile(options.output, po, function (err) {
             if (err) {
               throw err;
@@ -94,8 +102,6 @@ function xgettext(input, options, cb) {
 
             cb(po);
           });
-        } else {
-          cb(po);
         }
       } else {
         cb();
@@ -116,7 +122,7 @@ function xgettext(input, options, cb) {
       };
     };
 
-    var files = (options.directory || ['.']).reduce(function (result, directory) {
+    var files = options.directory.reduce(function (result, directory) {
       return result.concat(input.map(function (file) {
         return path.join(directory, file);
       }));
