@@ -4,9 +4,8 @@ var xgettext = require('..'),
   pkg = require('../package.json'),
   name = Object.keys(pkg.bin)[0];
 
-require('colors');
-
-var supported = xgettext.languages;
+var languages = xgettext.languages,
+  encodings = ['utf8', 'ascii', 'base64'];
 
 var argv = require('yargs')
   .usage([
@@ -19,16 +18,16 @@ var argv = require('yargs')
     'o': 'output',
     'L': 'language',
     'k': 'keyword',
+    'h': 'help',
     'V': 'version'
   })
-  .array('directory')
   .describe({
     'directory': 'add DIRECTORY to list for input files search',
     'output': 'write output to specified file',
     'language': [
       'recognise the specified language\n',
       '(',
-      Object.keys(supported).map(function (key) { return supported[key]; }).join(', '),
+      Object.keys(languages).map(function (key) { return languages[key]; }).join(', '),
       ')'
     ].join(''),
     'from-code': 'encoding of input files',
@@ -44,31 +43,40 @@ var argv = require('yargs')
     'force-po': false,
     'no-location': false
   })
-  .version(function() {
+  .group(['directory'], 'Input file location:')
+  .group(['output'], 'Output file location:')
+  .group(['language'], 'Choice of input file language:')
+  .group(['from-code'], 'Input file interpretation:')
+  .group(['keyword'], 'Language specific options:')
+  .group(['force-po', 'no-location'], 'Output details:')
+  .group(['help', 'version'], 'Informative output:')
+  .version('version', 'output version information and exit', function() {
     return pkg.name + ' ' + pkg.version;
   })
-  .help('help')
+  .help('help', 'display this help and exit')
   .check(function (argv) {
     var equalsLanguage = function (ext) {
-      return argv.language === supported[ext];
+      return argv.language === languages[ext];
     };
 
-    if (argv.language && !Object.keys(supported).some(equalsLanguage)) {
-      throw new Error(('Language \'' + argv.language + '\' is not supported.').red);
+    if (argv.language && !Object.keys(languages).some(equalsLanguage)) {
+      pkg.name + ': language \'' + argv.language + '\' is not supported';
     }
 
     argv['from-code'] = argv['from-code'].toLowerCase().replace(/\W/g, '');
 
-    if (['utf8', 'ascii', 'base64'].indexOf(argv['from-code']) < 0) {
-      throw new Error('Encoding of input files must be either utf8, ascii or base64.'.red);
+    if (encodings.indexOf(argv['from-code']) < 0) {
+      throw pkg.name + ': encoding of input files must be either utf8, ascii or base64';
     }
 
     if (argv._.length === 0) {
-      throw new Error('No input file given.'.red);
+      return pkg.name + ': no input file given';
     }
 
     return true;
   })
+  .epilogue('Report bugs to ' + pkg.bugs.url)
+  .showHelpOnFail(false, 'Try \'' + pkg.name + ' --help\' for more information.')
   .argv;
 
 var input = argv._;
@@ -76,7 +84,7 @@ delete argv._;
 
 var run = function (subject) {
   xgettext(subject, argv, function (po) {
-    if (!argv.output && po) {
+    if (po && (argv.output === '-' || argv.output === '/dev/stdout')) {
       process.stdout.write(po);
     }
   });
