@@ -1,8 +1,6 @@
 # xgettext-template [![build status](https://secure.travis-ci.org/gmarty/xgettext.png)](http://travis-ci.org/gmarty/xgettext)
 Extracts translatable strings from source. Identical to [xgettext(1)](http://www.gnu.org/software/gettext/manual/gettext.html#xgettext-Invocation) but for template languages.
 
-*tl;dr* **Get translatable strings from templates into Poedit.**
-
 ## Template language support
 * Handlebars (using [gettext-handlebars](https://github.com/smhg/gettext-handlebars))
 * Swig (using [gettext-swig](https://github.com/smhg/gettext-swig))
@@ -10,6 +8,50 @@ Extracts translatable strings from source. Identical to [xgettext(1)](http://www
 * EJS (using [gettext-ejs](https://github.com/pekala/gettext-ejs))
 
 React's **JSX** and **Jade** are todos (PRs are much appreciated).
+
+## Installation
+``` bash
+$ npm install -g xgettext-template
+```
+
+## Usage
+``` bash
+$ xgettext-template [OPTION] [INPUTFILE]...
+```
+#### Options
+```
+Input file location:
+  -D, --directory  add DIRECTORY to list for input files search [default: ["."]]
+
+Output file location:
+  -o, --output  write output to specified file          [default: "messages.po"]
+
+Choice of input file language:
+  -L, --language  recognise the specified language
+                  (Handlebars, Swig, Volt, EJS)
+
+Input file interpretation:
+  --from-code  encoding of input files                        [default: "ascii"]
+
+Language specific options:
+  -k, --keyword  look for WORD as an additional keyword
+                                       [default: ["_","gettext","ngettext:1,2"]]
+
+Output details:
+  --force-po     write PO file even if empty                    [default: false]
+  --no-location  do not write '#: filename:line' lines          [default: false]
+
+Informative output:
+  -h, --help     display this help and exit                            [boolean]
+  -V, --version  output version information and exit                   [boolean]
+```
+
+#### In Poedit
+Go to *File* - *Preferences...* in Poedit and add a new parser in the *Parsers* tab:
+
+![Poedit parser configuration](http://gmarty.github.io/xgettext/Poedit.png)
+
+Please note that in this Windows example you have to use `xgettext-template.cmd`. The `.cmd` extension should not be there on *nix platforms.
 
 ## General workflow
 In the following Handlebars example translatable content is passed to helpers (`_` and `ngettext`):
@@ -36,31 +78,6 @@ What this `i18n` object refers to is up to you. Some (client/server) options are
 **xgettext-template** parses the strings above out of your templates into gettext's PO files.
 These PO files are then translated and compiled to binary MO files using applications like [Poedit](http://www.poedit.net).
 The MO files are passed as input the i18n library (above).
-
-## Installation
-``` bash
-$ npm install -g xgettext-template
-```
-
-## Usage
-``` bash
-$ xgettext-template [OPTION] [INPUTFILE]...
-```
-#### Options
-* `-D|--directory` add directory to list for input files search.
-* `-o|--output` write output to specified file (default: stdout).
-* `-L|--language` specifies the language of the input files (default: determine from file extension). Use the language's full name from the **template language support** list above.
-* `--from-code` encoding of input files (default: `ascii`).
-* `-k|--keyword` additional keyword to be looked for (default: `_,gettext,ngettext:1,2`).
-* `--force-po` write PO file even if empty (default: `false`).
-* `--no-location` don't add file and line references (default: `false`).
-
-#### In Poedit
-Go to *File* - *Preferences...* in Poedit and add a new parser in the *Parsers* tab:
-
-![Poedit parser configuration](http://gmarty.github.io/xgettext/Poedit.png)
-
-Please note that in this Windows example you have to use `xgettext-template.cmd`. The `.cmd` extension should not be there on *nix platforms.
 
 ## Development
 
