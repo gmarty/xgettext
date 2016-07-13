@@ -2,7 +2,8 @@ var fs = require('fs'),
   path = require('path'),
   gt = require('gettext-parser'),
   async = require('async'),
-  Keywordspec = require('./src/keywordspec');
+  Keywordspec = require('./src/keywordspec'),
+  objectAssign = require('object-assign');
 
 /**
  * Parse input and save the i18n strings to a PO file.
@@ -92,11 +93,11 @@ function xgettext(input, options, cb) {
             existing = gt.po.parse(fs.readFileSync(options.output, {
               encoding: options['from-code']
             }));
-
-            Object.assign(context, existing.translations['']);
           } catch (e) {
             // ignore non-existing file
           }
+
+          objectAssign(context, existing.translations['']);
         }
 
         var po = gt.po.compile({
