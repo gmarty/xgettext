@@ -21,7 +21,8 @@ $ xgettext-template [OPTION] [INPUTFILE]...
 #### Options
 ```
 Input file location:
-  -D, --directory  add DIRECTORY to list for input files search [default: ["."]]
+  -f, --files-from  get list of input files from FILE
+  -D, --directory   add DIRECTORY to list for input files search[default: ["."]]
 
 Output file location:
   -o, --output  write output to specified file          [default: "messages.po"]
@@ -48,6 +49,7 @@ Informative output:
   -h, --help     display this help and exit                            [boolean]
   -V, --version  output version information and exit                   [boolean]
 ```
+More information about each option can be found in the [xgettext manual](https://www.gnu.org/software/gettext/manual/html_node/xgettext-Invocation.html).
 
 #### In Poedit
 Go to *File* - *Preferences...* in Poedit and add a new parser in the *Parsers* tab:

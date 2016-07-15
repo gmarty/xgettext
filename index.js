@@ -140,6 +140,14 @@ function xgettext(input, options, cb) {
       };
     };
 
+    if (options['files-from']) {
+      input = fs.readFileSync(options['files-from'], options['from-code'])
+        .split('\n')
+        .filter(function (line) {
+          return line.trim().length > 0;
+        });
+    }
+
     var files = options.directory.reduce(function (result, directory) {
       return result.concat(input.map(function (file) {
         return path.join(directory, file);
