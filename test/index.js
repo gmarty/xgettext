@@ -71,6 +71,36 @@ describe('API', function () {
       done();
     });
   });
+  it('should handle different translation contexts in single file', function (done) {
+    xgettext(['test/fixtures/contexts.hbs'], {output: '-'}, function (po) {
+      var translations = gt.po.parse(po).translations;
+
+      assert(translations !== undefined);
+      assert('menu' in translations);
+      assert('body' in translations);
+      assert('Localized string' in translations.menu);
+      assert('Localized string' in translations.body);
+      assert.equal(translations.menu['Localized string'].msgctxt, 'menu');
+      assert.equal(translations.body['Localized string'].msgctxt, 'body');
+
+      done();
+    });
+  });
+  it('should handle translation contexts along with simple strings', function (done) {
+    xgettext(['test/fixtures/contexts-mixed.hbs'], {output: '-'}, function (po) {
+      var translations = gt.po.parse(po).translations;
+
+      assert(translations !== undefined);
+      assert('menu' in translations);
+      assert('' in translations);
+      assert('Localized string' in translations.menu);
+      assert('Localized string' in translations['']);
+      assert.equal(translations.menu['Localized string'].msgctxt, 'menu');
+      assert(!translations['']['Localized string'].msgctxt);
+
+      done();
+    });
+  });
   it('should handle non-ascii input', function (done) {
     xgettext(['test/fixtures/non-ascii.hbs'], {output: '-'}, function (po) {
       var context = gt.po.parse(po, 'utf-8').translations[''];

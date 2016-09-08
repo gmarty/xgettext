@@ -6,6 +6,43 @@ var fs = require('fs'),
   objectAssign = require('object-assign');
 
 /**
+ * Simple is object check.
+ * 
+ * @param item
+ * @returns {boolean}
+ */
+function isObject(item) {
+  return (item && typeof item === 'object' && !Array.isArray(item));
+}
+
+/**
+ * Deep merge two objects.
+ * 
+ * @param target
+ * @param source
+ */
+function mergeDeep(target, source) {
+  var dummy;
+  if (isObject(target) && isObject(source)) {
+    for (var key in source) {
+      if (isObject(source[key])) {
+        if (!target[key]) {
+          dummy = {};
+          dummy[key] = {};
+          objectAssign(target, dummy);
+        }
+        mergeDeep(target[key], source[key]);
+      } else {
+        dummy = {};
+        dummy[key] = source[key];
+        objectAssign(target, dummy);
+      }
+    }
+  }
+  return target;
+}
+
+/**
  * Parse input and save the i18n strings to a PO file.
  *
  * @param Array|String input Array of files to parse or input string
@@ -56,24 +93,31 @@ function xgettext(input, options, cb) {
       return parsers[name];
     },
     spec = Keywordspec(options.keyword),
-    context = {};
+    translations = Object.create(null);
 
   var parseTemplate = function (parser, template, linePrefixer) {
     var strings = parser.parse(template);
 
-    for (var msgid in strings) {
-      if (strings.hasOwnProperty(msgid)) {
-        context[msgid] = context[msgid] || {msgid: msgid, comments: {}};
+    for (var key in strings) {
+      if (strings.hasOwnProperty(key)) {
+        var msgctxt = strings[key].msgctxt || '';
+        var context = translations[msgctxt] || (translations[msgctxt] = {});
+        var msgid = strings[key].msgid || key;
+        context[key] = context[key] || {msgid: msgid, comments: {}};
 
-        if (strings[msgid].plural) {
-          context[msgid].msgid_plural = context[msgid].msgid_plural || strings[msgid].plural;
-          context[msgid].msgstr = ['', ''];
+        if (msgctxt) {
+          context[key].msgctxt = strings[key].msgctxt;
+        }
+
+        if (strings[key].plural) {
+          context[key].msgid_plural = context[key].msgid_plural || strings[key].plural;
+          context[key].msgstr = ['', ''];
         }
 
         if (!options['no-location']) {
-          context[msgid].comments.reference = (context[msgid].comments.reference || '')
+          context[key].comments.reference = (context[key].comments.reference || '')
             .split('\n')
-            .concat(strings[msgid].line.map(linePrefixer))
+            .concat(strings[key].line.map(linePrefixer))
             .join('\n')
             .trim('\n');
         }
@@ -83,7 +127,7 @@ function xgettext(input, options, cb) {
 
   var output = function () {
     if (cb) {
-      if (Object.keys(context).length > 0 || options['force-po']) {
+      if (Object.keys(translations).length > 0 || options['force-po']) {
         var existing = {},
           writeToStdout = options.output === '-' || options.output === '/dev/stdout';
 
@@ -97,7 +141,8 @@ function xgettext(input, options, cb) {
             // ignore non-existing file
           }
 
-          objectAssign(context, existing.translations['']);
+
+          mergeDeep(translations, existing.translations);
         }
 
         var po = gt.po.compile({
@@ -105,9 +150,7 @@ function xgettext(input, options, cb) {
           headers: {
             'content-type': 'text/plain; charset=' + options['from-code']
           },
-          translations: {
-            '': context
-          }
+          translations: translations
         });
 
         if (writeToStdout) {
