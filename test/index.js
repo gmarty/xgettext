@@ -101,6 +101,21 @@ describe('API', function () {
       done();
     });
   });
+  it('should handle plural strings with translation contexts', function (done) {
+    xgettext(['test/fixtures/contexts-plural.hbs'], {output: '-'}, function (po) {
+      var translations = gt.po.parse(po).translations;
+
+      assert(translations !== undefined);
+      assert('menu' in translations);
+      assert('item' in translations.menu);
+      assert.equal(translations.menu.item.msgid, 'item');
+      assert.equal(translations.menu.item.msgid_plural, 'items');
+      assert.equal(translations.menu.item.msgstr.length, 2);
+      assert.equal(translations.menu.item.msgctxt, 'menu');
+
+      done();
+    });
+  });
   it('should handle non-ascii input', function (done) {
     xgettext(['test/fixtures/non-ascii.hbs'], {output: '-'}, function (po) {
       var context = gt.po.parse(po, 'utf-8').translations[''];
