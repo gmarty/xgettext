@@ -12,7 +12,7 @@ function addToSpec (spec, item) {
 
   while ((parts = specPattern.exec(item)) !== null) {
     var keyword = parts[1];
-    var positions = {position: 0};
+    var positions = {msgid: 0};
 
     if (parts[2]) {
       positions = parts[2]
@@ -22,11 +22,11 @@ function addToSpec (spec, item) {
           var context = position.match(contextPattern);
 
           if (context) {
-            positions.context = indexify(context[1]);
-          } else if (!('position' in positions)) {
-            positions.position = indexify(position);
+            positions.msgctxt = indexify(context[1]);
+          } else if (!('msgid' in positions)) {
+            positions.msgid = indexify(position);
           } else {
-            positions.plural = indexify(position);
+            positions.msgid_plural = indexify(position);
           }
 
           return positions;
@@ -34,10 +34,10 @@ function addToSpec (spec, item) {
     }
 
     // support <= 3.1 position array format
-    spec[keyword] = [positions.position];
+    spec[keyword] = [positions.msgid];
 
-    if (positions.plural) {
-      spec[keyword].push(positions.plural);
+    if (positions.msgid_plural) {
+      spec[keyword].push(positions.msgid_plural);
     }
 
     objectAssign(spec[keyword], positions);

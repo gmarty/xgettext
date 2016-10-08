@@ -37,9 +37,9 @@ describe('Keywordspec', function () {
 
     assert('pgettext' in spec);
     assert.deepEqual(spec.pgettext.slice(0), [1]);
-    assert(spec.pgettext.context === 0);
+    assert(spec.pgettext.msgctxt === 0);
     assert('npgettext' in spec);
     assert.deepEqual(spec.npgettext.slice(0), [2, 3]);
-    assert(spec.npgettext.context === 1);
+    assert(spec.npgettext.msgctxt === 1);
   });
 });
