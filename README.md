@@ -7,7 +7,7 @@ Extracts translatable strings from source. Identical to [xgettext(1)](http://www
 * Volt (using [gettext-volt](https://github.com/perchlayer/gettext-volt))
 * EJS (using [gettext-ejs](https://github.com/pekala/gettext-ejs))
 
-React's **JSX** and **Jade** are todos (PRs are much appreciated).
+React's **JSX** and **Pug** are todos (PRs are much appreciated).
 
 ## Installation
 ``` bash
