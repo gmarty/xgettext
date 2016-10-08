@@ -1,3 +1,5 @@
+var objectAssign = require('object-assign');
+
 var specPattern = / *([^:,]+) *(?::([^, ]+(?:,[^, ]+)*))? */g,
   contextPattern = /^(\d)+c$/;
 
@@ -38,7 +40,7 @@ function addToSpec (spec, item) {
       spec[keyword].push(positions.plural);
     }
 
-    Object.assign(spec[keyword], positions);
+    objectAssign(spec[keyword], positions);
   }
 
   return spec;
