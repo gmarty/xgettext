@@ -33,7 +33,7 @@
   "dependencies": {
     "async": "2.0.1",
     "gettext-ejs": "0.1.1",
-    "gettext-handlebars": "0.5.0",
+    "gettext-handlebars": "0.6.0",
     "gettext-parser": "1.2.0",
     "gettext-swig": "0.2.0",
     "gettext-volt": "0.2.2",

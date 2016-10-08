@@ -102,7 +102,10 @@ describe('API', function () {
     });
   });
   it('should handle plural strings with translation contexts', function (done) {
-    xgettext(['test/fixtures/contexts-plural.hbs'], {output: '-'}, function (po) {
+    xgettext(['test/fixtures/contexts-plural.hbs'], {
+      output: '-',
+      keyword: 'npgettext:1c,2,3'
+    }, function (po) {
       var translations = gt.po.parse(po).translations;
 
       assert(translations !== undefined);
