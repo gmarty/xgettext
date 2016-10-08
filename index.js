@@ -7,7 +7,7 @@ var fs = require('fs'),
 
 /**
  * Simple is object check.
- * 
+ *
  * @param item
  * @returns {boolean}
  */
@@ -17,7 +17,7 @@ function isObject(item) {
 
 /**
  * Deep merge two objects.
- * 
+ *
  * @param target
  * @param source
  */
