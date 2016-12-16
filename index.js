@@ -103,19 +103,19 @@ function xgettext(input, options, cb) {
         var msgctxt = strings[key].msgctxt || '';
         var context = translations[msgctxt] || (translations[msgctxt] = {});
         var msgid = strings[key].msgid || key;
-        context[key] = context[key] || {msgid: msgid, comments: {}};
+        context[msgid] = context[msgid] || {msgid: msgid, comments: {}};
 
         if (msgctxt) {
-          context[key].msgctxt = strings[key].msgctxt;
+          context[msgid].msgctxt = strings[key].msgctxt;
         }
 
         if (strings[key].plural) {
-          context[key].msgid_plural = context[key].msgid_plural || strings[key].plural;
-          context[key].msgstr = ['', ''];
+          context[msgid].msgid_plural = context[msgid].msgid_plural || strings[key].plural;
+          context[msgid].msgstr = ['', ''];
         }
 
         if (!options['no-location']) {
-          context[key].comments.reference = (context[key].comments.reference || '')
+          context[msgid].comments.reference = (context[msgid].comments.reference || '')
             .split('\n')
             .concat(strings[key].line.map(linePrefixer))
             .join('\n')
@@ -140,7 +140,6 @@ function xgettext(input, options, cb) {
           } catch (e) {
             // ignore non-existing file
           }
-
 
           mergeDeep(translations, existing.translations);
         }
