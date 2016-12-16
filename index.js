@@ -224,7 +224,8 @@ xgettext.languages = {
   '.hbs': 'Handlebars',
   '.swig': 'Swig',
   '.volt': 'Volt',
-  '.ejs': 'EJS'
+  '.ejs': 'EJS',
+  '.njk': 'Nunjucks'
 };
 
 module.exports = xgettext;
