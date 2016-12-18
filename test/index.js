@@ -168,6 +168,20 @@ describe('API', function () {
       });
     });
   });
+  it('should merge output with contexts with an existing file', function (done) {
+    xgettext(['test/fixtures/contexts-mixed.hbs'], {
+      output: 'tmp/output.po',
+    }, function (po1) {
+      xgettext(['test/fixtures/contexts-mixed.hbs'], {
+        output: 'tmp/output.po',
+        'join-existing': true
+      }, function (po2) {
+        assert(po1.toString('utf8') === po2.toString('utf8'));
+
+        done();
+      });
+    });
+  });
   it('should handle keywordspec', function (done) {
     xgettext(['test/fixtures/keyword.hbs'], {
       keyword: ['i18n', '$'],
