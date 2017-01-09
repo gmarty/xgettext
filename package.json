@@ -36,7 +36,7 @@
     "gettext-handlebars": "0.7.0",
     "gettext-nunjucks": "0.0.1",
     "gettext-parser": "1.2.1",
-    "gettext-swig": "0.2.0",
+    "gettext-swig": "0.3.0",
     "gettext-volt": "0.2.2",
     "object-assign": "4.1.0",
     "yargs": "6.6.0"
