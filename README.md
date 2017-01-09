@@ -40,7 +40,6 @@ Operation mode:
 
 Language specific options:
   -k, --keyword  look for WORD as an additional keyword
-                                       [default: ["_","gettext","ngettext:1,2"]]
 
 Output details:
   --force-po     write PO file even if empty                    [default: false]
