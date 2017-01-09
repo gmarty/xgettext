@@ -45,7 +45,6 @@ var argv = require('yargs')
     'output': 'messages.po',
     'from-code': 'ascii',
     'join-existing': false,
-    'keyword': ['_', 'gettext', 'ngettext:1,2'],
     'force-po': false,
     'no-location': false
   })

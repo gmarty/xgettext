@@ -90,11 +90,18 @@ function xgettext(input, options, cb) {
     if (!parsers[name]) {
       var Parser = require('gettext-' + name);
 
-      parsers[name] = Object.keys(keywordSpec).length > 0 ? new Parser(keywordSpec) : new Parser();
+      if (Object.keys(keywordSpec).length > 0) {
+        parsers[name] = new Parser(keywordSpec);
+      } else if (Parser.keywordSpec) {
+        parsers[name] = new Parser(Parser.keywordSpec);
+      } else {
+        parsers[name] = new Parser();
+      }
     }
 
     return parsers[name];
   };
+
   var keywordSpec = createKeywordSpec(options.keyword);
   var translations = Object.create(null);
 
