@@ -1,9 +1,11 @@
-var fs = require('fs'),
-  path = require('path'),
-  gt = require('gettext-parser'),
-  async = require('async'),
-  createKeywordSpec = require('./src/keyword-spec'),
-  objectAssign = require('object-assign');
+'use strict';
+
+var fs = require('fs');
+var path = require('path');
+var gt = require('gettext-parser');
+var async = require('async');
+var createKeywordSpec = require('./src/keyword-spec');
+var objectAssign = require('object-assign');
 
 /**
  * Simple is object check.
@@ -23,6 +25,7 @@ function isObject(item) {
  */
 function mergeDeep(target, source) {
   var dummy;
+
   if (isObject(target) && isObject(source)) {
     for (var key in source) {
       if (isObject(source[key])) {
@@ -80,20 +83,20 @@ function xgettext(input, options, cb) {
     options.directory = [options.directory];
   }
 
-  var parsers = {},
-    getParser = function (name, keywordSpec) {
-      name = name.trim().toLowerCase();
+  var parsers = {};
+  var getParser = function (name, keywordSpec) {
+    name = name.trim().toLowerCase();
 
-      if (!parsers[name]) {
-        var Parser = require('gettext-' + name);
+    if (!parsers[name]) {
+      var Parser = require('gettext-' + name);
 
-        parsers[name] = Object.keys(keywordSpec).length > 0 ? new Parser(keywordSpec) : new Parser();
-      }
+      parsers[name] = Object.keys(keywordSpec).length > 0 ? new Parser(keywordSpec) : new Parser();
+    }
 
-      return parsers[name];
-    },
-    keywordSpec = createKeywordSpec(options.keyword),
-    translations = Object.create(null);
+    return parsers[name];
+  };
+  var keywordSpec = createKeywordSpec(options.keyword);
+  var translations = Object.create(null);
 
   var parseTemplate = function (parser, template, linePrefixer) {
     var strings = parser.parse(template);
@@ -128,8 +131,8 @@ function xgettext(input, options, cb) {
   var output = function () {
     if (cb) {
       if (Object.keys(translations).length > 0 || options['force-po']) {
-        var existing = {},
-          writeToStdout = options.output === '-' || options.output === '/dev/stdout';
+        var existing = {};
+        var writeToStdout = options.output === '-' || options.output === '/dev/stdout';
 
         if (!writeToStdout && options['join-existing']) {
           try {
@@ -203,8 +206,8 @@ function xgettext(input, options, cb) {
             throw err;
           }
 
-          var extension = path.extname(file),
-            language = options.language || xgettext.languages[extension];
+          var extension = path.extname(file);
+          var language = options.language || xgettext.languages[extension];
 
           if (!language) {
             throw 'No language specified for extension \'' + extension + '\'.';

@@ -1,3 +1,5 @@
+'use strict';
+
 var objectAssign = require('object-assign');
 
 var specPattern = / *([^:,]+) *(?::([^, ]+(?:,[^, ]+)*))? */g,

@@ -1,11 +1,12 @@
 #!/usr/bin/env node
+'use strict';
 
-var xgettext = require('..'),
-  pkg = require('../package.json'),
-  name = Object.keys(pkg.bin)[0];
+var xgettext = require('..');
+var pkg = require('../package.json');
+var name = Object.keys(pkg.bin)[0];
 
-var languages = xgettext.languages,
-  encodings = ['utf8', 'ascii', 'base64'];
+var languages = xgettext.languages;
+var encodings = ['utf8', 'ascii', 'base64'];
 
 var argv = require('yargs')
   .usage([
