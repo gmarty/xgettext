@@ -2,7 +2,7 @@ var fs = require('fs'),
   path = require('path'),
   gt = require('gettext-parser'),
   async = require('async'),
-  Keywordspec = require('./src/keywordspec'),
+  createKeywordSpec = require('./src/keyword-spec'),
   objectAssign = require('object-assign');
 
 /**
@@ -81,18 +81,18 @@ function xgettext(input, options, cb) {
   }
 
   var parsers = {},
-    getParser = function (name, spec) {
+    getParser = function (name, keywordSpec) {
       name = name.trim().toLowerCase();
 
       if (!parsers[name]) {
         var Parser = require('gettext-' + name);
 
-        parsers[name] = Object.keys(spec).length > 0 ? new Parser(spec) : new Parser();
+        parsers[name] = Object.keys(keywordSpec).length > 0 ? new Parser(keywordSpec) : new Parser();
       }
 
       return parsers[name];
     },
-    spec = Keywordspec(options.keyword),
+    keywordSpec = createKeywordSpec(options.keyword),
     translations = Object.create(null);
 
   var parseTemplate = function (parser, template, linePrefixer) {
@@ -170,7 +170,7 @@ function xgettext(input, options, cb) {
   };
 
   if (typeof input === 'string') {
-    parseTemplate(getParser(options.language, spec), input, function (line) {
+    parseTemplate(getParser(options.language, keywordSpec), input, function (line) {
       return 'standard input:' + line;
     });
 
@@ -210,7 +210,7 @@ function xgettext(input, options, cb) {
             throw 'No language specified for extension \'' + extension + '\'.';
           }
 
-          parseTemplate(getParser(language, spec), res, addPath(file.replace(/\\/, '/')));
+          parseTemplate(getParser(language, keywordSpec), res, addPath(file.replace(/\\/, '/')));
 
           cb();
         });

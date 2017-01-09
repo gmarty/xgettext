@@ -1,4 +1,4 @@
-var Keywordspec = require('../src/keywordspec'),
+var Keywordspec = require('../src/keyword-spec'),
   assert = require('assert');
 
 describe('Keywordspec', function () {
