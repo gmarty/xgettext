@@ -1,3 +1,5 @@
+'use strict';
+
 var objectAssign = require('object-assign');
 
 var specPattern = / *([^:,]+) *(?::([^, ]+(?:,[^, ]+)*))? */g,
@@ -46,7 +48,7 @@ function addToSpec (spec, item) {
   return spec;
 }
 
-module.exports = function createKeywordspec (spec) {
+module.exports = function createKeywordSpec (spec) {
   if (typeof spec === 'string') {
     spec = [spec];
   }
