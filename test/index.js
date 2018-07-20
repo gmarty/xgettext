@@ -218,6 +218,18 @@ describe('API', function () {
       done();
     });
   });
+  it('should handle windows-style paths', function (done) {
+    xgettext(['test\\fixtures\\repeat.hbs'], {
+      output: '-'
+    }, function (po) {
+      var context = gt.po.parse(po).translations[''];
+      var comment = context['This is a fixed sentence'].comments || {};
+
+      assert(comment.reference === 'test/fixtures/repeat.hbs:2');
+
+      done();
+    });
+  });
   it('should handle force-po option', function (done) {
     xgettext(['test/fixtures/fixed.hbs'], {
       'force-po': true,

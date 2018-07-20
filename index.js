@@ -220,7 +220,7 @@ function xgettext(input, options, cb) {
             throw 'No language specified for extension \'' + extension + '\'.';
           }
 
-          parseTemplate(getParser(language, keywordSpec), res, addPath(file.replace(/\\/, '/')));
+          parseTemplate(getParser(language, keywordSpec), res, addPath(file.replace(/\\/g, '/')));
 
           cb();
         });
