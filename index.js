@@ -202,7 +202,7 @@ function xgettext(input, options, cb) {
 
     var files = options.directory.reduce(function (result, directory) {
       return result.concat(input.map(function (file) {
-        return path.join(directory, file);
+        return path.join(directory, file.replace(/\\/g, path.sep));
       }));
     }, []);
 
@@ -220,7 +220,7 @@ function xgettext(input, options, cb) {
             throw 'No language specified for extension \'' + extension + '\'.';
           }
 
-          parseTemplate(getParser(language, keywordSpec), res, addPath(file.replace(/\\/, '/')));
+          parseTemplate(getParser(language, keywordSpec), res, addPath(file.replace(/\\/g, '/')));
 
           cb();
         });
