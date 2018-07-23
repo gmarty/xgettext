@@ -28,9 +28,9 @@ var run = function (args, onErr, onEnd) {
   child.on('close', function (code) {
     if (err) {
       onErr(err);
+    } else {
+      onEnd(code, data);
     }
-
-    onEnd(code, data);
   });
 
   return child;
