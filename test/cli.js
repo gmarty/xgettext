@@ -87,6 +87,26 @@ describe('CLI', function () {
       });
     });
 
+    it('should read input from a CR LF delimited file', function (done) {
+      run(['--output=-', '--files-from=fixtures/list-crlf.txt'], function (err) {
+        throw new Error(err);
+      }, function (code, data) {
+        assert.equal(0, code);
+        assert(data.match('This is a fixed sentence'));
+        done();
+      });
+    });
+
+    it('should read input from a HT delimited file', function (done) {
+      run(['--output=-', '--files-from=fixtures/list-ht.txt'], function (err) {
+        throw new Error(err);
+      }, function (code, data) {
+        assert.equal(0, code);
+        assert(data.match('This is a fixed sentence'));
+        done();
+      });
+    });
+
     it('should handle stdin input', function (done) {
       var child = run(['--output=-', '--language=Handlebars', '--from-code=utf8', '-'], function (err) {
         throw new Error(err);
