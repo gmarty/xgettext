@@ -195,6 +195,14 @@ function xgettext(input, options, cb) {
     if (options['files-from']) {
       input = fs.readFileSync(options['files-from'], options['from-code'])
         .split('\n')
+        .map(function (line) {
+          return line.split('').reduceRight(function(acc, c) {
+            if (' \t\r'.indexOf(c) === -1 || acc.length > 0) {
+              return c + acc;
+            }
+            return acc;
+          }, '');
+        })
         .filter(function (line) {
           return line.trim().length > 0;
         });
