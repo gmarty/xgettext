@@ -31,7 +31,7 @@
   },
   "preferGlobal": "true",
   "dependencies": {
-    "async": "2.6.2",
+    "async": "^2.6.2",
     "gettext-ejs": "^0.1.1",
     "gettext-handlebars": "^0.7.0",
     "gettext-nunjucks": "^0.0.2",
@@ -47,7 +47,12 @@
     "i18n"
   ],
   "devDependencies": {
-    "eslint": "5.15.1",
+    "eslint": "^5.15.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
     "mocha": "^5.2.0"
   }
 }

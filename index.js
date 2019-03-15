@@ -13,7 +13,7 @@ var objectAssign = require('object-assign');
  * @param item
  * @returns {boolean}
  */
-function isObject(item) {
+function isObject (item) {
   return (item && typeof item === 'object' && !Array.isArray(item));
 }
 
@@ -23,7 +23,7 @@ function isObject(item) {
  * @param target
  * @param source
  */
-function mergeDeep(target, source) {
+function mergeDeep (target, source) {
   var dummy;
 
   if (isObject(target) && isObject(source)) {
@@ -52,7 +52,7 @@ function mergeDeep(target, source) {
  * @param Object options Options
  * @param Function cb Callback
  */
-function xgettext(input, options, cb) {
+function xgettext (input, options, cb) {
   if (typeof options === 'function') {
     cb = options;
     options = {};
@@ -61,11 +61,11 @@ function xgettext(input, options, cb) {
   options = options || {};
 
   if (!input) {
-    throw 'No input specified';
+    throw new Error('No input specified');
   }
 
   if (!options.language && typeof input === 'string') {
-    throw 'Language is required';
+    throw new Error('Language is required');
   }
 
   options['output'] = options['output'] || 'messages.po';
@@ -113,7 +113,7 @@ function xgettext(input, options, cb) {
         var msgctxt = strings[key].msgctxt || '';
         var context = translations[msgctxt] || (translations[msgctxt] = {});
         var msgid = strings[key].msgid || key;
-        context[msgid] = context[msgid] || {msgid: msgid, comments: {}};
+        context[msgid] = context[msgid] || { msgid: msgid, comments: {} };
 
         if (msgctxt) {
           context[msgid].msgctxt = strings[key].msgctxt;
@@ -217,7 +217,7 @@ function xgettext(input, options, cb) {
           var language = options.language || xgettext.languages[extension];
 
           if (!language) {
-            throw 'No language specified for extension \'' + extension + '\'.';
+            throw new Error('No language specified for extension \'' + extension + '\'.');
           }
 
           parseTemplate(getParser(language, keywordSpec), res, addPath(file.replace(/\\/g, '/')));

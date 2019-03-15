@@ -56,7 +56,7 @@ var argv = require('yargs')
   .group(['keyword'], 'Language specific options:')
   .group(['force-po', 'no-location'], 'Output details:')
   .group(['help', 'version'], 'Informative output:')
-  .version('version', 'output version information and exit', function() {
+  .version('version', 'output version information and exit', function () {
     return pkg.name + ' ' + pkg.version;
   })
   .help('help', 'display this help and exit')
@@ -66,13 +66,13 @@ var argv = require('yargs')
     };
 
     if (argv.language && !Object.keys(languages).some(equalsLanguage)) {
-      pkg.name + ': language \'' + argv.language + '\' is not supported';
+      throw new Error(pkg.name + ': language \'' + argv.language + '\' is not supported');
     }
 
     argv['from-code'] = argv['from-code'].toLowerCase().replace(/\W/g, '');
 
     if (encodings.indexOf(argv['from-code']) < 0) {
-      throw pkg.name + ': encoding of input files must be either utf8, ascii or base64';
+      throw new Error(pkg.name + ': encoding of input files must be either utf8, ascii or base64');
     }
 
     if (!argv['files-from'] && argv._.length === 0) {

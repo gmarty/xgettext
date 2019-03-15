@@ -1,19 +1,19 @@
-var spawn = require('child_process').spawn,
-  fs = require('fs'),
-  path = require('path'),
-  assert = require('assert');
+var spawn = require('child_process').spawn;
+var fs = require('fs');
+var path = require('path');
+var assert = require('assert');
 
-var bin = path.resolve(__dirname + '/../bin/xgettext-template');
+var bin = path.resolve(path.join(__dirname, '/../bin/xgettext-template'));
 
-var tmpDir = path.resolve(__dirname + '/../tmp');
+var tmpDir = path.resolve(path.join(__dirname, '/../tmp'));
 if (!fs.existsSync(tmpDir)) {
   fs.mkdirSync(tmpDir);
 }
 
 var run = function (args, onErr, onEnd) {
-  var child = spawn('node', [bin].concat(args), {cwd: __dirname}),
-    data = '',
-    err = '';
+  var child = spawn('node', [bin].concat(args), { cwd: __dirname });
+  var data = '';
+  var err = '';
 
   child.stdout.setEncoding('utf8');
   child.stdout.on('data', function (chunk) {
@@ -49,7 +49,7 @@ describe('CLI', function () {
     run(['--output=-', '--from-code=utf8', '--keyword=translate', '--keyword=i18n', 'fixtures/keyword.hbs'], function (err) {
       throw new Error(err);
     }, function (code, data) {
-      assert.equal(0, code);
+      assert.strictEqual(0, code);
       assert(data.match('This is a fixed sentence'));
       assert(data.match('Image description'));
       done();
@@ -61,7 +61,7 @@ describe('CLI', function () {
       run(['--output=-', 'fixtures/template.hbs'], function (err) {
         throw new Error(err);
       }, function (code, data) {
-        assert.equal(0, code);
+        assert.strictEqual(0, code);
         assert(data.match('This is a fixed sentence'));
         done();
       });
@@ -71,7 +71,7 @@ describe('CLI', function () {
       run(['--output=-', '--directory=fixtures', 'template.hbs'], function (err) {
         throw new Error(err);
       }, function (code, data) {
-        assert.equal(0, code);
+        assert.strictEqual(0, code);
         assert(data.match('This is a fixed sentence'));
         done();
       });
@@ -81,7 +81,7 @@ describe('CLI', function () {
       run(['--output=-', '--files-from=fixtures/list.txt'], function (err) {
         throw new Error(err);
       }, function (code, data) {
-        assert.equal(0, code);
+        assert.strictEqual(0, code);
         assert(data.match('This is a fixed sentence'));
         done();
       });
@@ -91,7 +91,7 @@ describe('CLI', function () {
       var child = run(['--output=-', '--language=Handlebars', '--from-code=utf8', '-'], function (err) {
         throw new Error(err);
       }, function (code, data) {
-        assert.equal(0, code);
+        assert.strictEqual(0, code);
         assert(data.match('This is a fixed sentence'));
         done();
       });
@@ -106,11 +106,15 @@ describe('CLI', function () {
       run(['--output=../tmp/cli-output.po', 'fixtures/template.hbs'], function (err) {
         throw new Error(err);
       }, function (code, data) {
-        assert.equal(0, code);
+        assert.strictEqual(0, code);
         assert(!data);
 
-        fs.exists(path.join(__dirname, '..', 'tmp', 'cli-output.po'), function (exists) {
-          assert(exists);
+        fs.access(path.join(__dirname, '..', 'tmp', 'cli-output.po'), fs.constants.F_OK, function (err) {
+          if (err) {
+            throw err;
+          }
+
+          assert(!err);
           done();
         });
       });
