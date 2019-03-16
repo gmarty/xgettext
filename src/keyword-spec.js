@@ -1,27 +1,27 @@
 'use strict';
 
-var objectAssign = require('object-assign');
+const objectAssign = require('object-assign');
 
-var specPattern = / *([^:,]+) *(?::([^, ]+(?:,[^, ]+)*))? */g,
-  contextPattern = /^(\d)+c$/;
+const specPattern = / *([^:,]+) *(?::([^, ]+(?:,[^, ]+)*))? */g;
+const contextPattern = /^(\d)+c$/;
 
 function indexify (idx) {
   return parseInt(idx, 10) - 1;
 }
 
 function addToSpec (spec, item) {
-  var parts;
+  let parts;
 
   while ((parts = specPattern.exec(item)) !== null) {
-    var keyword = parts[1];
-    var positions = {msgid: 0};
+    const keyword = parts[1];
+    let positions = { msgid: 0 };
 
     if (parts[2]) {
       positions = parts[2]
         .trim()
         .split(/ ?, ?/)
-        .reduce(function (positions, position) {
-          var context = position.match(contextPattern);
+        .reduce((positions, position) => {
+          const context = position.match(contextPattern);
 
           if (context) {
             positions.msgctxt = indexify(context[1]);

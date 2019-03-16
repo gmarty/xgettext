@@ -1,11 +1,11 @@
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
-var gt = require('gettext-parser');
-var async = require('async');
-var createKeywordSpec = require('./src/keyword-spec');
-var objectAssign = require('object-assign');
+const fs = require('fs');
+const path = require('path');
+const gt = require('gettext-parser');
+const async = require('async');
+const createKeywordSpec = require('./src/keyword-spec');
+const objectAssign = require('object-assign');
 
 /**
  * Simple is object check.
@@ -24,10 +24,10 @@ function isObject (item) {
  * @param source
  */
 function mergeDeep (target, source) {
-  var dummy;
+  let dummy;
 
   if (isObject(target) && isObject(source)) {
-    for (var key in source) {
+    for (const key in source) {
       if (isObject(source[key])) {
         if (!target[key]) {
           dummy = {};
@@ -83,12 +83,12 @@ function xgettext (input, options, cb) {
     options.directory = [options.directory];
   }
 
-  var parsers = {};
-  var getParser = function (name, keywordSpec) {
+  const parsers = {};
+  const getParser = function (name, keywordSpec) {
     name = name.trim().toLowerCase();
 
     if (!parsers[name]) {
-      var Parser = require('gettext-' + name);
+      const Parser = require(`gettext-${name}`);
 
       if (Object.keys(keywordSpec).length > 0) {
         parsers[name] = new Parser(keywordSpec);
@@ -102,17 +102,17 @@ function xgettext (input, options, cb) {
     return parsers[name];
   };
 
-  var keywordSpec = createKeywordSpec(options.keyword);
-  var translations = Object.create(null);
+  const keywordSpec = createKeywordSpec(options.keyword);
+  const translations = Object.create(null);
 
-  var parseTemplate = function (parser, template, linePrefixer) {
-    var strings = parser.parse(template);
+  const parseTemplate = function (parser, template, linePrefixer) {
+    const strings = parser.parse(template);
 
-    for (var key in strings) {
+    for (const key in strings) {
       if (strings.hasOwnProperty(key)) {
-        var msgctxt = strings[key].msgctxt || '';
-        var context = translations[msgctxt] || (translations[msgctxt] = {});
-        var msgid = strings[key].msgid || key;
+        const msgctxt = strings[key].msgctxt || '';
+        const context = translations[msgctxt] || (translations[msgctxt] = {});
+        const msgid = strings[key].msgid || key;
         context[msgid] = context[msgid] || { msgid: msgid, comments: {} };
 
         if (msgctxt) {
@@ -135,11 +135,11 @@ function xgettext (input, options, cb) {
     }
   };
 
-  var output = function () {
+  const output = function () {
     if (cb) {
       if (Object.keys(translations).length > 0 || options['force-po']) {
-        var existing = {};
-        var writeToStdout = options.output === '-' || options.output === '/dev/stdout';
+        let existing = {};
+        const writeToStdout = options.output === '-' || options.output === '/dev/stdout';
 
         if (!writeToStdout && options['join-existing']) {
           try {
@@ -154,10 +154,10 @@ function xgettext (input, options, cb) {
           mergeDeep(translations, existing.translations);
         }
 
-        var po = gt.po.compile({
+        const po = gt.po.compile({
           charset: options['from-code'],
           headers: {
-            'content-type': 'text/plain; charset=' + options['from-code']
+            'content-type': `text/plain; charset=${options['from-code']}`
           },
           translations: translations
         });
@@ -165,7 +165,7 @@ function xgettext (input, options, cb) {
         if (writeToStdout) {
           cb(po);
         } else {
-          fs.writeFile(options.output, po, function (err) {
+          fs.writeFile(options.output, po, err => {
             if (err) {
               throw err;
             }
@@ -180,44 +180,41 @@ function xgettext (input, options, cb) {
   };
 
   if (typeof input === 'string') {
-    parseTemplate(getParser(options.language, keywordSpec), input, function (line) {
-      return 'standard input:' + line;
-    });
+    parseTemplate(
+      getParser(options.language, keywordSpec),
+      input,
+      line => `standard input:${line}`
+    );
 
     output();
   } else {
-    var addPath = function (path) {
-      return function (line) {
-        return path + ':' + line;
-      };
-    };
+    const addPath = path => line => `${path}:${line}`;
 
     if (options['files-from']) {
       input = fs.readFileSync(options['files-from'], options['from-code'])
         .split('\n')
-        .filter(function (line) {
-          return line.trim().length > 0;
-        });
+        .filter(line => line.trim().length > 0);
     }
 
-    var files = options.directory.reduce(function (result, directory) {
-      return result.concat(input.map(function (file) {
-        return path.join(directory, file.replace(/\\/g, path.sep));
-      }));
-    }, []);
+    const files = options.directory.reduce(
+      (result, directory) => result.concat(input.map(
+        file => path.join(directory, file.replace(/\\/g, path.sep))
+      )),
+      []
+    );
 
     async.parallel(files.map(function (file) {
       return function (cb) {
-        fs.readFile(path.resolve(file), options['from-code'], function (err, res) {
+        fs.readFile(path.resolve(file), options['from-code'], (err, res) => {
           if (err) {
             throw err;
           }
 
-          var extension = path.extname(file);
-          var language = options.language || xgettext.languages[extension];
+          const extension = path.extname(file);
+          const language = options.language || xgettext.languages[extension];
 
           if (!language) {
-            throw new Error('No language specified for extension \'' + extension + '\'.');
+            throw new Error(`No language specified for extension '${extension}'.`);
           }
 
           parseTemplate(getParser(language, keywordSpec), res, addPath(file.replace(/\\/g, '/')));

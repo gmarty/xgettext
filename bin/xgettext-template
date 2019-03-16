@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 'use strict';
 
-var xgettext = require('..');
-var pkg = require('../package.json');
-var name = Object.keys(pkg.bin)[0];
+const xgettext = require('..');
+const pkg = require('../package.json');
+const name = Object.keys(pkg.bin)[0];
 
-var languages = xgettext.languages;
-var encodings = ['utf8', 'ascii', 'base64'];
+const languages = xgettext.languages;
+const encodings = ['utf8', 'ascii', 'base64'];
 
-var argv = require('yargs')
+const argv = require('yargs')
   .usage([
     'Usage: ' + name + ' [OPTION] [INPUTFILE]...',
     '',
@@ -31,7 +31,7 @@ var argv = require('yargs')
     'language': [
       'recognise the specified language\n',
       '(',
-      Object.keys(languages).map(function (key) { return languages[key]; }).join(', '),
+      Object.keys(languages).map(key => languages[key]).join(', '),
       ')'
     ].join(''),
     'from-code': 'encoding of input files',
@@ -56,23 +56,21 @@ var argv = require('yargs')
   .group(['keyword'], 'Language specific options:')
   .group(['force-po', 'no-location'], 'Output details:')
   .group(['help', 'version'], 'Informative output:')
-  .version('version', 'output version information and exit', function () {
-    return pkg.name + ' ' + pkg.version;
-  })
+  .version('version', 'output version information and exit', () =>
+    `${pkg.name} ${pkg.version}`
+  )
   .help('help', 'display this help and exit')
   .check(function (argv) {
-    var equalsLanguage = function (ext) {
-      return argv.language === languages[ext];
-    };
+    const equalsLanguage = ext => argv.language === languages[ext];
 
     if (argv.language && !Object.keys(languages).some(equalsLanguage)) {
-      throw new Error(pkg.name + ': language \'' + argv.language + '\' is not supported');
+      throw new Error(`${pkg.name}: language '${argv.language}' is not supported`);
     }
 
     argv['from-code'] = argv['from-code'].toLowerCase().replace(/\W/g, '');
 
     if (encodings.indexOf(argv['from-code']) < 0) {
-      throw new Error(pkg.name + ': encoding of input files must be either utf8, ascii or base64');
+      throw new Error(`${pkg.name}: encoding of input files must be either utf8, ascii or base64`);
     }
 
     if (!argv['files-from'] && argv._.length === 0) {
@@ -82,14 +80,14 @@ var argv = require('yargs')
     return true;
   })
   .epilogue('Report bugs to ' + pkg.bugs.url)
-  .showHelpOnFail(false, 'Try \'' + pkg.name + ' --help\' for more information.')
+  .showHelpOnFail(false, `Try '${pkg.name} --help' for more information.`)
   .argv;
 
-var input = argv._;
+let input = argv._;
 delete argv._;
 
-var run = function (subject) {
-  xgettext(subject, argv, function (po) {
+const run = function (subject) {
+  xgettext(subject, argv, po => {
     if (po && (argv.output === '-' || argv.output === '/dev/stdout')) {
       process.stdout.write(po);
     }
@@ -97,15 +95,15 @@ var run = function (subject) {
 };
 
 if (input[0] === '-') {
-  var stdin = process.stdin;
+  const stdin = process.stdin;
 
   input = '';
 
   stdin
-    .on('data', function (chunk) {
+    .on('data', chunk => {
       input += chunk;
     })
-    .on('end', function () {
+    .on('end', () => {
       run(input);
     })
     .setEncoding(argv['from-code']);
