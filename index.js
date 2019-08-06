@@ -109,7 +109,7 @@ function xgettext (input, options, cb) {
     const strings = parser.parse(template);
 
     for (const key in strings) {
-      if (strings.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(strings, key)) {
         const msgctxt = strings[key].msgctxt || '';
         const context = translations[msgctxt] || (translations[msgctxt] = {});
         const msgid = strings[key].msgid || key;

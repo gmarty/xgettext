@@ -15,20 +15,20 @@ const argv = require('yargs')
     pkg.description
   ].join('\n'))
   .alias({
-    'f': 'files-from',
-    'D': 'directory',
-    'o': 'output',
-    'L': 'language',
-    'j': 'join-existing',
-    'k': 'keyword',
-    'h': 'help',
-    'V': 'version'
+    f: 'files-from',
+    D: 'directory',
+    o: 'output',
+    L: 'language',
+    j: 'join-existing',
+    k: 'keyword',
+    h: 'help',
+    V: 'version'
   })
   .describe({
     'files-from': 'get list of input files from FILE',
-    'directory': 'add DIRECTORY to list for input files search',
-    'output': 'write output to specified file',
-    'language': [
+    directory: 'add DIRECTORY to list for input files search',
+    output: 'write output to specified file',
+    language: [
       'recognise the specified language\n',
       '(',
       Object.keys(languages).map(key => languages[key]).join(', '),
@@ -36,13 +36,13 @@ const argv = require('yargs')
     ].join(''),
     'from-code': 'encoding of input files',
     'join-existing': 'join messages with existing file',
-    'keyword': 'look for WORD as an additional keyword',
+    keyword: 'look for WORD as an additional keyword',
     'force-po': 'write PO file even if empty',
     'no-location': 'do not write \'#: filename:line\' lines'
   })
   .default({
-    'directory': ['.'],
-    'output': 'messages.po',
+    directory: ['.'],
+    output: 'messages.po',
     'from-code': 'ascii',
     'join-existing': false,
     'force-po': false,
