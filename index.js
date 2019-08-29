@@ -68,7 +68,7 @@ function xgettext (input, options, cb) {
     throw new Error('Language is required');
   }
 
-  options['output'] = options['output'] || 'messages.po';
+  options.output = options.output || 'messages.po';
   options.directory = options.directory || ['.'];
   options.keyword = options.keyword || [];
   options['from-code'] = options['from-code'] || 'utf8';
