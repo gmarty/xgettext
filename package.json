@@ -1,7 +1,7 @@
 {
   "name": "xgettext-template",
   "description": "Extract translatable strings from templates.",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "homepage": "https://github.com/gmarty/xgettext",
   "author": {
     "name": "Guillaume Marty"
