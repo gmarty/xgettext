@@ -37,7 +37,7 @@ const argv = require('yargs')
     ].join(''),
     'from-code': 'encoding of input files',
     'join-existing': 'join messages with existing file',
-    'sort-output': 'sort output file based on keys',
+    'sort-output': 'generate sorted output',
     keyword: 'look for WORD as an additional keyword',
     'force-po': 'write PO file even if empty',
     'no-location': 'do not write \'#: filename:line\' lines'
