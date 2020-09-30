@@ -20,6 +20,7 @@ const argv = require('yargs')
     o: 'output',
     L: 'language',
     j: 'join-existing',
+    s: 'sort-output',
     k: 'keyword',
     h: 'help',
     V: 'version'
@@ -36,6 +37,7 @@ const argv = require('yargs')
     ].join(''),
     'from-code': 'encoding of input files',
     'join-existing': 'join messages with existing file',
+    'sort-output': 'sort output file based on keys',
     keyword: 'look for WORD as an additional keyword',
     'force-po': 'write PO file even if empty',
     'no-location': 'do not write \'#: filename:line\' lines'
@@ -46,7 +48,8 @@ const argv = require('yargs')
     'from-code': 'ascii',
     'join-existing': false,
     'force-po': false,
-    'no-location': false
+    'no-location': false,
+    'sort-output': false
   })
   .group(['files-from', 'directory'], 'Input file location:')
   .group(['output'], 'Output file location:')
@@ -54,7 +57,7 @@ const argv = require('yargs')
   .group(['from-code'], 'Input file interpretation:')
   .group(['join-existing'], 'Operation mode:')
   .group(['keyword'], 'Language specific options:')
-  .group(['force-po', 'no-location'], 'Output details:')
+  .group(['force-po', 'no-location', 'sort-output'], 'Output details:')
   .group(['help', 'version'], 'Informative output:')
   .version('version', 'output version information and exit', () =>
     `${pkg.name} ${pkg.version}`

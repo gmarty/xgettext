@@ -74,6 +74,7 @@ function xgettext (input, options, cb) {
   options['from-code'] = options['from-code'] || 'utf8';
   options['force-po'] = options['force-po'] || false;
   options['join-existing'] = options['join-existing'] || false;
+  options['sort-output'] = options['sort-output'] || false;
 
   if (typeof options.keyword === 'string') {
     options.keyword = [options.keyword];
@@ -160,7 +161,7 @@ function xgettext (input, options, cb) {
             'content-type': `text/plain; charset=${options['from-code']}`
           },
           translations: translations
-        });
+        }, { sort: options['sort-output'] });
 
         if (writeToStdout) {
           cb(po);
