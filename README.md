@@ -44,6 +44,7 @@ Language specific options:
 Output details:
   --force-po     write PO file even if empty                    [default: false]
   --no-location  do not write '#: filename:line' lines          [default: false]
+  -s, --sort-output  generate sorted output                     [default: false]
 
 Informative output:
   -h, --help     display this help and exit                            [boolean]
