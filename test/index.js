@@ -226,6 +226,18 @@ describe('API', function () {
       done();
     });
   });
+  it('should handle sort-output option', function (done) {
+    xgettext(['test/fixtures/unsorted.hbs'], {
+      'sort-output': true,
+      output: '-'
+    }, function (po) {
+      var poFileContent = po.toString('utf8');
+      assert(poFileContent.indexOf('Text 1') < poFileContent.indexOf('Text 2'));
+      assert(poFileContent.indexOf('Text 2') < poFileContent.indexOf('Text 3'));
+
+      done();
+    });
+  });
   it('should handle windows-style paths', function (done) {
     xgettext(['test\\fixtures\\repeat.hbs'], {
       output: '-'
