@@ -199,6 +199,7 @@ describe('API', function () {
 
       assert('Image description' in context);
       assert('regex escaped keyword' in context);
+      assert(Object.keys(context).length === 4);
 
       xgettext(['test/fixtures/plural.hbs'], {
         keyword: ['i18n:1,2', 'order:2,3'],
@@ -208,6 +209,7 @@ describe('API', function () {
 
         assert.strictEqual(context.keyword.msgid_plural, 'keywords');
         assert.strictEqual(context.difference.msgid_plural, 'differences');
+        assert(Object.keys(context).length === 5);
 
         done();
       });
