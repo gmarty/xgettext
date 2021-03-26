@@ -90,11 +90,22 @@ function xgettext (input, options, cb) {
 
     if (!parsers[name]) {
       const Parser = require(`gettext-${name}`);
+      const combinedSpecs = {};
+      let noDefaults = false;
 
-      if (Object.keys(keywordSpec).length > 0) {
-        parsers[name] = new Parser(keywordSpec);
-      } else if (Parser.keywordSpec) {
-        parsers[name] = new Parser(Parser.keywordSpec);
+      if ('__no_defaults' in keywordSpec) {
+        noDefaults = true;
+        delete keywordSpec.__no_defaults;
+      }
+
+      if (Parser.keywordSpec && !noDefaults) {
+        Object.assign(combinedSpecs, Parser.keywordSpec, keywordSpec);
+      } else {
+        Object.assign(combinedSpecs, keywordSpec);
+      }
+
+      if (Object.keys(combinedSpecs).length > 0) {
+        parsers[name] = new Parser(combinedSpecs);
       } else {
         parsers[name] = new Parser();
       }
