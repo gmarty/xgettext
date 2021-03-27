@@ -59,9 +59,6 @@ const argv = require('yargs')
   .group(['keyword'], 'Language specific options:')
   .group(['force-po', 'no-location', 'sort-output'], 'Output details:')
   .group(['help', 'version'], 'Informative output:')
-  .version('version', 'output version information and exit', () =>
-    `${pkg.name} ${pkg.version}`
-  )
   .help('help', 'display this help and exit')
   .check(function (argv) {
     const equalsLanguage = ext => argv.language === languages[ext];
