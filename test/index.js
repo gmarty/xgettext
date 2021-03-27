@@ -1,10 +1,10 @@
-var xgettext = require('..');
-var assert = require('assert');
-var gt = require('gettext-parser');
-var fs = require('fs');
-var path = require('path');
+const xgettext = require('..');
+const assert = require('assert');
+const gt = require('gettext-parser');
+const fs = require('fs');
+const path = require('path');
 
-var tmpDir = path.resolve(path.join(__dirname, '/../tmp'));
+const tmpDir = path.resolve(path.join(__dirname, '/../tmp'));
 if (!fs.existsSync(tmpDir)) {
   fs.mkdirSync(tmpDir);
 }
@@ -12,11 +12,11 @@ if (!fs.existsSync(tmpDir)) {
 describe('API', function () {
   it('should run with default parameters', function (done) {
     xgettext(['test/fixtures/template.hbs'], { output: '-' }, function (po) {
-      var context = gt.po.parse(po).translations[''];
+      const context = gt.po.parse(po).translations[''];
 
       assert('Image description' in context);
 
-      var comment = context['This is a fixed sentence'].comments;
+      let comment = context['This is a fixed sentence'].comments;
 
       assert(comment.reference);
       assert.strictEqual(comment.reference, 'test/fixtures/template.hbs:2');
@@ -44,15 +44,15 @@ describe('API', function () {
       'test/fixtures/fixed.hbs',
       'test/fixtures/repeat.hbs'
     ], { output: '-' }, function (po) {
-      var context = gt.po.parse(po).translations[''];
-      var str = JSON.stringify(context);
+      const context = gt.po.parse(po).translations[''];
+      const str = JSON.stringify(context);
 
       assert(str.indexOf('test/fixtures/empty.hbs') < 0);
       assert(str.indexOf('test/fixtures/fixed.hbs') < 0);
 
       assert('Inside subdir' in context);
 
-      var comment = context['This is a fixed sentence'].comments;
+      const comment = context['This is a fixed sentence'].comments;
 
       assert(comment.reference.match('test/fixtures/template.hbs:2'));
       assert(comment.reference.match('test/fixtures/repeat.hbs:2'));
@@ -62,7 +62,7 @@ describe('API', function () {
   });
   it('should handle plural expressions', function (done) {
     xgettext(['test/fixtures/plural.hbs'], { output: '-' }, function (po) {
-      var context = gt.po.parse(po).translations[''];
+      const context = gt.po.parse(po).translations[''];
 
       assert(context !== undefined);
       assert.strictEqual(context.quote.msgid_plural, 'quotes');
@@ -73,7 +73,7 @@ describe('API', function () {
   });
   it('should handle different translation contexts in single file', function (done) {
     xgettext(['test/fixtures/contexts.hbs'], { output: '-' }, function (po) {
-      var translations = gt.po.parse(po).translations;
+      const translations = gt.po.parse(po).translations;
 
       assert(translations !== undefined);
       assert('menu' in translations);
@@ -88,7 +88,7 @@ describe('API', function () {
   });
   it('should handle translation contexts along with simple strings', function (done) {
     xgettext(['test/fixtures/contexts-mixed.hbs'], { output: '-' }, function (po) {
-      var translations = gt.po.parse(po).translations;
+      const translations = gt.po.parse(po).translations;
 
       assert(translations !== undefined);
       assert('menu' in translations);
@@ -106,7 +106,7 @@ describe('API', function () {
       output: '-',
       keyword: 'npgettext:1c,2,3'
     }, function (po) {
-      var translations = gt.po.parse(po).translations;
+      const translations = gt.po.parse(po).translations;
 
       assert(translations !== undefined);
       assert('menu' in translations);
@@ -121,7 +121,7 @@ describe('API', function () {
   });
   it('should handle non-ascii input', function (done) {
     xgettext(['test/fixtures/non-ascii.hbs'], { output: '-' }, function (po) {
-      var context = gt.po.parse(po, 'utf-8').translations[''];
+      const context = gt.po.parse(po, 'utf-8').translations[''];
 
       assert('Строка' in context);
 
@@ -133,7 +133,7 @@ describe('API', function () {
       directory: ['test/fixtures'],
       output: '-'
     }, function (po) {
-      var context = gt.po.parse(po).translations[''];
+      const context = gt.po.parse(po).translations[''];
 
       assert('Image description' in context);
 
@@ -149,7 +149,7 @@ describe('API', function () {
           throw err;
         }
 
-        var context = gt.po.parse(data).translations[''];
+        const context = gt.po.parse(data).translations[''];
 
         assert('Image description' in context);
 
@@ -167,7 +167,7 @@ describe('API', function () {
           throw err;
         }
 
-        var context = gt.po.parse(data).translations[''];
+        const context = gt.po.parse(data).translations[''];
 
         assert('Image description' in context);
         assert('Inside subdir' in context);
@@ -195,7 +195,7 @@ describe('API', function () {
       keyword: ['i18n', '$'],
       output: '-'
     }, function (po) {
-      var context = gt.po.parse(po).translations[''];
+      const context = gt.po.parse(po).translations[''];
 
       assert('Image description' in context);
       assert('regex escaped keyword' in context);
@@ -204,7 +204,7 @@ describe('API', function () {
         keyword: ['i18n:1,2', 'order:2,3'],
         output: '-'
       }, function (po) {
-        var context = gt.po.parse(po).translations[''];
+        const context = gt.po.parse(po).translations[''];
 
         assert.strictEqual(context.keyword.msgid_plural, 'keywords');
         assert.strictEqual(context.difference.msgid_plural, 'differences');
@@ -218,8 +218,8 @@ describe('API', function () {
       'no-location': true,
       output: '-'
     }, function (po) {
-      var context = gt.po.parse(po).translations[''];
-      var comment = context['This is a fixed sentence'].comments || {};
+      const context = gt.po.parse(po).translations[''];
+      const comment = context['This is a fixed sentence'].comments || {};
 
       assert(comment.reference === undefined);
 
@@ -231,7 +231,7 @@ describe('API', function () {
       'sort-output': true,
       output: '-'
     }, function (po) {
-      var poFileContent = po.toString('utf8');
+      const poFileContent = po.toString('utf8');
       assert(poFileContent.indexOf('Text 1') < poFileContent.indexOf('Text 2'));
       assert(poFileContent.indexOf('Text 2') < poFileContent.indexOf('Text 3'));
 
@@ -242,8 +242,8 @@ describe('API', function () {
     xgettext(['test\\fixtures\\repeat.hbs'], {
       output: '-'
     }, function (po) {
-      var context = gt.po.parse(po).translations[''];
-      var comment = context['This is a fixed sentence'].comments || {};
+      const context = gt.po.parse(po).translations[''];
+      const comment = context['This is a fixed sentence'].comments || {};
 
       assert(comment.reference === 'test/fixtures/repeat.hbs:2');
 
