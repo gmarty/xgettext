@@ -88,7 +88,7 @@ The MO files are passed as input the i18n library (above).
 ## Development
 
 * Clone repository and run `npm install`.
-* Run `npm test` to lint & test.
+* Run `npm run preversion` to lint & test.
 
 ## Note
 
