@@ -1,6 +1,4 @@
 /test
-/Gruntfile.js
-/.travis.yml
+/.github
 /.gitignore
-/tmp
-/*.sublime-*
+/.eslintrc.js
