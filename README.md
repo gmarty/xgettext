@@ -1,4 +1,4 @@
-# xgettext-template [![build status](https://secure.travis-ci.org/gmarty/xgettext.png)](http://travis-ci.org/gmarty/xgettext)
+# xgettext-template ![CI](https://github.com/gmarty/xgettext/workflows/Node.js CI/badge.svg)
 Extracts translatable strings from source. Identical to [xgettext(1)](http://www.gnu.org/software/gettext/manual/gettext.html#xgettext-Invocation) but for template languages.
 
 ## Template language support
