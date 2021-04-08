@@ -13,8 +13,9 @@ function addToSpec (spec, item) {
   let parts;
 
   if (item === true) {
-    spec['__no_defaults'] = true;
-    return spec
+    spec.__no_defaults = true;
+
+    return spec;
   }
 
   while ((parts = specPattern.exec(item)) !== null) {
