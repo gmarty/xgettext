@@ -1,4 +1,4 @@
-# xgettext-template [![build status](https://secure.travis-ci.org/gmarty/xgettext.png)](http://travis-ci.org/gmarty/xgettext)
+# xgettext-template ![CI](https://github.com/gmarty/xgettext/actions/workflows/node.js.yml/badge.svg)
 Extracts translatable strings from source. Identical to [xgettext(1)](http://www.gnu.org/software/gettext/manual/gettext.html#xgettext-Invocation) but for template languages.
 
 ## Template language support
@@ -88,7 +88,8 @@ The MO files are passed as input the i18n library (above).
 ## Development
 
 * Clone repository and run `npm install`.
-* Run `npm test` to lint & test.
+* Have your editor run eslint or run `npm run lint` to lint.
+* Run `npm test` to run tests.
 
 ## Note
 

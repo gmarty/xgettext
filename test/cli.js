@@ -1,19 +1,19 @@
-var spawn = require('child_process').spawn;
-var fs = require('fs');
-var path = require('path');
-var assert = require('assert');
+const spawn = require('child_process').spawn;
+const fs = require('fs');
+const path = require('path');
+const assert = require('assert');
 
-var bin = path.resolve(path.join(__dirname, '/../bin/xgettext-template'));
+const bin = path.resolve(path.join(__dirname, '/../bin/xgettext-template'));
 
-var tmpDir = path.resolve(path.join(__dirname, '/../tmp'));
+const tmpDir = path.resolve(path.join(__dirname, '/../tmp'));
 if (!fs.existsSync(tmpDir)) {
   fs.mkdirSync(tmpDir);
 }
 
-var run = function (args, onErr, onEnd) {
-  var child = spawn('node', [bin].concat(args), { cwd: __dirname });
-  var data = '';
-  var err = '';
+const run = function (args, onErr, onEnd) {
+  const child = spawn('node', [bin].concat(args), { cwd: __dirname });
+  let data = '';
+  let err = '';
 
   child.stdout.setEncoding('utf8');
   child.stdout.on('data', function (chunk) {
@@ -103,7 +103,7 @@ describe('CLI', function () {
     });
 
     it('should handle stdin input', function (done) {
-      var child = run(['--output=-', '--language=Handlebars', '--from-code=utf8', '-'], function (err) {
+      const child = run(['--output=-', '--language=Handlebars', '--from-code=utf8', '-'], function (err) {
         throw new Error(err);
       }, function (code, data) {
         assert.strictEqual(0, code);

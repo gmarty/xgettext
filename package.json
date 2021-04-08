@@ -31,7 +31,7 @@
   },
   "preferGlobal": "true",
   "dependencies": {
-    "async": "^2.6.3",
+    "async": "^3.2.0",
     "gettext-ejs": "^0.1.1",
     "gettext-handlebars": "^1.0.2",
     "gettext-nunjucks": "^0.0.2",
@@ -39,7 +39,7 @@
     "gettext-swig": "^0.3.0",
     "gettext-volt": "^0.2.5",
     "object-assign": "^4.1.1",
-    "yargs": "^6.6.0"
+    "yargs": "^16.2.0"
   },
   "keywords": [
     "template",
@@ -47,12 +47,12 @@
     "i18n"
   ],
   "devDependencies": {
-    "eslint": "^7.10.0",
-    "eslint-config-standard": "^14.1.1",
+    "eslint": "^7.23.0",
+    "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.1",
-    "mocha": "^8.1.3"
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-standard": "^5.0.0",
+    "mocha": "^8.3.2"
   }
 }
