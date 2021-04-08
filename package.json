@@ -24,7 +24,7 @@
     "xgettext-template": "bin/xgettext-template"
   },
   "scripts": {
-    "lint": "eslint bin/* test index.js",
+    "lint": "eslint bin/* test index.js src",
     "test": "mocha",
     "preversion": "npm run lint && npm test",
     "postversion": "git push && git push --tags"
