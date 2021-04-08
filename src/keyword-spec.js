@@ -54,7 +54,7 @@ function addToSpec (spec, item) {
 }
 
 module.exports = function createKeywordSpec (spec) {
-  if (typeof spec === 'string') {
+  if (typeof spec === 'string' || typeof spec === 'boolean') {
     spec = [spec];
   }
 

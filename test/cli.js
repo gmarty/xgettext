@@ -58,6 +58,26 @@ describe('CLI', function () {
     });
   });
 
+  it('should handle only -k which removing all defaults before --from-code', function (done) {
+    run(['--output=-', '-k', '--from-code=utf8', 'fixtures/keyword.hbs'], function (err) {
+      throw new Error(err);
+    }, function (code, data) {
+      assert.strictEqual(0, code);
+      assert(data.length === 0);
+      done();
+    });
+  });
+
+  it('should handle only -k which removing all defaults at end', function (done) {
+    run(['--output=-', '--from-code=utf8', 'fixtures/keyword.hbs', '-k'], function (err) {
+      throw new Error(err);
+    }, function (code, data) {
+      assert.strictEqual(0, code);
+      assert(data.length === 0);
+      done();
+    });
+  });
+
   it('should handle --keyword parameter removing defaults', function (done) {
     run(['--output=-', '--from-code=utf8', '-k', '--keyword=translate', '--keyword=i18n', 'fixtures/keyword.hbs'], function (err) {
       throw new Error(err);

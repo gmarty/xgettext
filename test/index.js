@@ -190,6 +190,27 @@ describe('API', function () {
       });
     });
   });
+  it('should handle no keywords', function (done) {
+    xgettext(['test/fixtures/keyword.hbs'], {
+      keyword: [true],
+      output: '-'
+    }, function (po) {
+      const context = gt.po.parse(po).translations[''];
+
+      assert(context === undefined);
+
+      xgettext(['test/fixtures/plural.hbs'], {
+        keyword: [true],
+        output: '-'
+      }, function (po) {
+        const context = gt.po.parse(po).translations[''];
+
+        assert(context === undefined);
+
+        done();
+      });
+    });
+  });
   it('should handle keywordspec', function (done) {
     xgettext(['test/fixtures/keyword.hbs'], {
       keyword: ['i18n', '$'],

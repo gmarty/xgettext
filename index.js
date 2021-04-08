@@ -76,7 +76,7 @@ function xgettext (input, options, cb) {
   options['join-existing'] = options['join-existing'] || false;
   options['sort-output'] = options['sort-output'] || false;
 
-  if (typeof options.keyword === 'string') {
+  if (typeof options.keyword === 'string' || typeof options.keyword === 'boolean') {
     options.keyword = [options.keyword];
   }
 
@@ -104,11 +104,7 @@ function xgettext (input, options, cb) {
         Object.assign(combinedSpecs, keywordSpec);
       }
 
-      if (Object.keys(combinedSpecs).length > 0) {
-        parsers[name] = new Parser(combinedSpecs);
-      } else {
-        parsers[name] = new Parser();
-      }
+      parsers[name] = new Parser(combinedSpecs);
     }
 
     return parsers[name];
