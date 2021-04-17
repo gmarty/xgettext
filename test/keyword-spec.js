@@ -10,11 +10,26 @@ describe('Keywordspec', function () {
     assert.deepStrictEqual(spec.spec.gettext.slice(0), [0]);
   });
 
+  it('should parse a boolean', function () {
+    const spec = Keywordspec(true);
+
+    assert(Object.keys(spec.spec).length === 0);
+    assert(spec.noDefaults);
+  });
+
   it('should parse an array', function () {
     const spec = Keywordspec(['gettext']);
 
     assert('gettext' in spec.spec);
     assert(!spec.noDefaults);
+    assert.deepStrictEqual(spec.spec.gettext.slice(0), [0]);
+  });
+
+  it('should parse an array with a boolean', function () {
+    const spec = Keywordspec(['gettext', true]);
+
+    assert('gettext' in spec.spec);
+    assert(spec.noDefaults);
     assert.deepStrictEqual(spec.spec.gettext.slice(0), [0]);
   });
 
