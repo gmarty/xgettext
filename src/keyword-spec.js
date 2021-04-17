@@ -12,8 +12,7 @@ function indexify (idx) {
 function addToSpec (spec, item) {
   let parts;
 
-  if (item === true) {
-    spec['__no_defaults'] = true;
+  if (typeof item === 'boolean') {
     return spec
   }
 
@@ -58,5 +57,7 @@ module.exports = function createKeywordSpec (spec) {
     spec = [spec];
   }
 
-  return spec.reduce(addToSpec, {});
+  let noDefaults = spec.filter(item => typeof item === 'boolean' && item).length > 0;
+
+  return { spec: spec.reduce(addToSpec, {}), noDefaults: noDefaults };
 };
