@@ -29,6 +29,7 @@ describe('API', function () {
       done();
     });
   });
+
   it('should parse an empty template', function (done) {
     xgettext(['test/fixtures/fixed.hbs'], { output: '-' }, function (po) {
       assert(!po);
@@ -36,6 +37,7 @@ describe('API', function () {
       done();
     });
   });
+
   it('should parse multiple files', function (done) {
     xgettext([
       'test/fixtures/template.hbs',
@@ -60,6 +62,7 @@ describe('API', function () {
       done();
     });
   });
+
   it('should handle plural expressions', function (done) {
     xgettext(['test/fixtures/plural.hbs'], { output: '-' }, function (po) {
       const context = gt.po.parse(po).translations[''];
@@ -71,6 +74,7 @@ describe('API', function () {
       done();
     });
   });
+
   it('should handle different translation contexts in single file', function (done) {
     xgettext(['test/fixtures/contexts.hbs'], { output: '-' }, function (po) {
       const translations = gt.po.parse(po).translations;
@@ -86,6 +90,7 @@ describe('API', function () {
       done();
     });
   });
+
   it('should handle translation contexts along with simple strings', function (done) {
     xgettext(['test/fixtures/contexts-mixed.hbs'], { output: '-' }, function (po) {
       const translations = gt.po.parse(po).translations;
@@ -101,6 +106,7 @@ describe('API', function () {
       done();
     });
   });
+
   it('should handle plural strings with translation contexts', function (done) {
     xgettext(['test/fixtures/contexts-plural.hbs'], {
       output: '-',
@@ -119,6 +125,7 @@ describe('API', function () {
       done();
     });
   });
+
   it('should handle non-ascii input', function (done) {
     xgettext(['test/fixtures/non-ascii.hbs'], { output: '-' }, function (po) {
       const context = gt.po.parse(po, 'utf-8').translations[''];
@@ -128,6 +135,7 @@ describe('API', function () {
       done();
     });
   });
+
   it('should traverse files relative to different root directories', function (done) {
     xgettext(['template.hbs'], {
       directory: ['test/fixtures'],
@@ -140,6 +148,7 @@ describe('API', function () {
       done();
     });
   });
+
   it('should write output to a file', function (done) {
     xgettext(['test/fixtures/template.hbs'], {
       output: 'tmp/output.po'
@@ -157,6 +166,7 @@ describe('API', function () {
       });
     });
   });
+
   it('should merge output with an existing file', function (done) {
     xgettext(['test/fixtures/dir/template.hbs'], {
       output: 'tmp/output.po',
@@ -176,6 +186,7 @@ describe('API', function () {
       });
     });
   });
+
   it('should merge output with contexts with an existing file', function (done) {
     xgettext(['test/fixtures/contexts-mixed.hbs'], {
       output: 'tmp/output.po'
@@ -190,6 +201,20 @@ describe('API', function () {
       });
     });
   });
+
+  it('should handle no keywords', function (done) {
+    xgettext(['test/fixtures/keyword.hbs'], {
+      keyword: true,
+      output: '-'
+    }, function (po) {
+      const context = gt.po.parse(po).translations[''];
+
+      assert(context === undefined);
+
+      done();
+    });
+  });
+
   it('should handle keywordspec', function (done) {
     xgettext(['test/fixtures/keyword.hbs'], {
       keyword: ['i18n', '$'],
@@ -199,6 +224,7 @@ describe('API', function () {
 
       assert('Image description' in context);
       assert('regex escaped keyword' in context);
+      assert(Object.keys(context).length === 4);
 
       xgettext(['test/fixtures/plural.hbs'], {
         keyword: ['i18n:1,2', 'order:2,3'],
@@ -208,11 +234,13 @@ describe('API', function () {
 
         assert.strictEqual(context.keyword.msgid_plural, 'keywords');
         assert.strictEqual(context.difference.msgid_plural, 'differences');
+        assert(Object.keys(context).length === 5);
 
         done();
       });
     });
   });
+
   it('should handle no-location option', function (done) {
     xgettext(['test/fixtures/repeat.hbs'], {
       'no-location': true,
@@ -226,6 +254,7 @@ describe('API', function () {
       done();
     });
   });
+
   it('should handle sort-output option', function (done) {
     xgettext(['test/fixtures/unsorted.hbs'], {
       'sort-output': true,
@@ -238,6 +267,7 @@ describe('API', function () {
       done();
     });
   });
+
   it('should handle windows-style paths', function (done) {
     xgettext(['test\\fixtures\\repeat.hbs'], {
       output: '-'
@@ -250,6 +280,7 @@ describe('API', function () {
       done();
     });
   });
+
   it('should handle force-po option', function (done) {
     xgettext(['test/fixtures/fixed.hbs'], {
       'force-po': true,

@@ -45,13 +45,38 @@ describe('CLI', function () {
     });
   });
 
-  it('should handle --keyword parameter', function (done) {
+  it('should handle --keyword parameter adding keywords', function (done) {
     run(['--output=-', '--from-code=utf8', '--keyword=translate', '--keyword=i18n', 'fixtures/keyword.hbs'], function (err) {
       throw new Error(err);
     }, function (code, data) {
       assert.strictEqual(0, code);
       assert(data.match('This is a fixed sentence'));
       assert(data.match('Image description'));
+      assert(data.match('This is a fixed sentence with a default keyword'));
+      assert(data.match(/msgid/g).length === 4);
+      done();
+    });
+  });
+
+  it('should handle --keyword removing all keywords', function (done) {
+    run(['--output=-', '--from-code=utf8', '-k', 'fixtures/keyword.hbs'], function (err) {
+      throw new Error(err);
+    }, function (code, data) {
+      assert.strictEqual(0, code);
+      assert(data.length === 0);
+      done();
+    });
+  });
+
+  it('should handle --keyword parameter removing only defaults', function (done) {
+    run(['--output=-', '--from-code=utf8', '-k', '--keyword=translate', '--keyword=i18n', 'fixtures/keyword.hbs'], function (err) {
+      throw new Error(err);
+    }, function (code, data) {
+      assert.strictEqual(0, code);
+      assert(data.match('This is a fixed sentence'));
+      assert(data.match('Image description'));
+      assert(data.match(/msgid/g).length === 3);
+      assert(!data.match('This is a fixed sentence with a default keyword'));
       done();
     });
   });
