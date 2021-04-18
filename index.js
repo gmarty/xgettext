@@ -70,11 +70,14 @@ function xgettext (input, options, cb) {
 
   options.output = options.output || 'messages.po';
   options.directory = options.directory || ['.'];
-  options.keyword = options.keyword || [];
   options['from-code'] = options['from-code'] || 'utf8';
   options['force-po'] = options['force-po'] || false;
   options['join-existing'] = options['join-existing'] || false;
   options['sort-output'] = options['sort-output'] || false;
+
+  if (typeof options.keyword === 'undefined') {
+    options.keyword = [];
+  }
 
   if (typeof options.keyword === 'string') {
     options.keyword = [options.keyword];
@@ -85,24 +88,22 @@ function xgettext (input, options, cb) {
   }
 
   const parsers = {};
-  const getParser = function (name, keywordSpec) {
+  const getParser = function (name, keywordSpec = {}, resetKeywords = false) {
     name = name.trim().toLowerCase();
 
     if (!parsers[name]) {
       const Parser = require(`gettext-${name}`);
 
-      if (Object.keys(keywordSpec).length > 0) {
-        parsers[name] = new Parser(keywordSpec);
-      } else if (Parser.keywordSpec) {
-        parsers[name] = new Parser(Parser.keywordSpec);
-      } else {
-        parsers[name] = new Parser();
-      }
+      parsers[name] = new Parser({
+        ...(resetKeywords ? {} : (Parser.keywordSpec || {})),
+        ...keywordSpec
+      });
     }
 
     return parsers[name];
   };
 
+  const resetKeywords = options.keyword.some(keyword => keyword === '');
   const keywordSpec = createKeywordSpec(options.keyword);
   const translations = Object.create(null);
 
@@ -182,7 +183,7 @@ function xgettext (input, options, cb) {
 
   if (typeof input === 'string') {
     parseTemplate(
-      getParser(options.language, keywordSpec),
+      getParser(options.language, keywordSpec, resetKeywords),
       input,
       line => `standard input:${line}`
     );
@@ -218,7 +219,11 @@ function xgettext (input, options, cb) {
             throw new Error(`No language specified for extension '${extension}'.`);
           }
 
-          parseTemplate(getParser(language, keywordSpec), res, addPath(file.replace(/\\/g, '/')));
+          parseTemplate(
+            getParser(language, keywordSpec, resetKeywords),
+            res,
+            addPath(file.replace(/\\/g, '/'))
+          );
 
           cb();
         });

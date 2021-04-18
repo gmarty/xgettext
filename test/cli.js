@@ -59,7 +59,7 @@ describe('CLI', function () {
   });
 
   it('should handle --keyword removing all keywords', function (done) {
-    run(['--output=-', '--from-code=utf8', '-k', 'fixtures/keyword.hbs'], function (err) {
+    run(['--output=-', '--from-code=utf8', '--keyword=""', 'fixtures/keyword.hbs'], function (err) {
       throw new Error(err);
     }, function (code, data) {
       assert.strictEqual(0, code);
@@ -69,7 +69,7 @@ describe('CLI', function () {
   });
 
   it('should handle --keyword parameter removing only defaults', function (done) {
-    run(['--output=-', '--from-code=utf8', '-k', '--keyword=translate', '--keyword=i18n', 'fixtures/keyword.hbs'], function (err) {
+    run(['--output=-', '--from-code=utf8', '--keyword=""', '--keyword=translate', '--keyword=i18n', 'fixtures/keyword.hbs'], function (err) {
       throw new Error(err);
     }, function (code, data) {
       assert.strictEqual(0, code);

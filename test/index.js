@@ -204,7 +204,7 @@ describe('API', function () {
 
   it('should handle no keywords', function (done) {
     xgettext(['test/fixtures/keyword.hbs'], {
-      keyword: true,
+      keyword: [''],
       output: '-'
     }, function (po) {
       const context = gt.po.parse(po).translations[''];
