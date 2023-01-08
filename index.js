@@ -114,7 +114,7 @@ function xgettext (input, options, cb) {
         const msgctxt = strings[key].msgctxt || '';
         const context = translations[msgctxt] || (translations[msgctxt] = {});
         const msgid = strings[key].msgid || key;
-        context[msgid] = context[msgid] || { msgid: msgid, comments: {} };
+        context[msgid] = context[msgid] || { msgid, comments: {} };
 
         if (msgctxt) {
           context[msgid].msgctxt = strings[key].msgctxt;
@@ -160,7 +160,7 @@ function xgettext (input, options, cb) {
           headers: {
             'content-type': `text/plain; charset=${options['from-code']}`
           },
-          translations: translations
+          translations
         }, { sort: options['sort-output'] });
 
         if (writeToStdout) {

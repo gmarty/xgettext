@@ -31,15 +31,15 @@
   },
   "preferGlobal": "true",
   "dependencies": {
-    "async": "^3.2.1",
+    "async": "^3.2.4",
     "gettext-ejs": "^0.1.1",
     "gettext-handlebars": "^1.1.0",
     "gettext-nunjucks": "^0.0.2",
-    "gettext-parser": "^4.0.4",
+    "gettext-parser": "^6.0.0",
     "gettext-swig": "^0.3.0",
     "gettext-volt": "^0.2.5",
     "object-assign": "^4.1.1",
-    "yargs": "^17.1.1"
+    "yargs": "^17.6.2"
   },
   "keywords": [
     "template",
@@ -47,12 +47,12 @@
     "i18n"
   ],
   "devDependencies": {
-    "eslint": "^7.32.0",
-    "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.24.2",
+    "eslint": "^8.31.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-standard": "^5.0.0",
-    "mocha": "^9.1.1"
+    "mocha": "^10.2.0"
   }
 }
