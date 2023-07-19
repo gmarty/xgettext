@@ -6,7 +6,6 @@ Extracts translatable strings from source. Identical to [xgettext(1)](http://www
 * Swig (using [gettext-swig](https://github.com/smhg/gettext-swig))
 * Volt (using [gettext-volt](https://github.com/perchlayer/gettext-volt))
 * EJS (using [gettext-ejs](https://github.com/pekala/gettext-ejs))
-* Nunjucks (using [gettext-nunjucks](https://github.com/ministryofprogramming/gettext-nunjucks))
 
 React's **JSX** and **Pug** are todos (PRs are much appreciated).
 
