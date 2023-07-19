@@ -1,4 +1,4 @@
-# xgettext-template ![CI](https://github.com/gmarty/xgettext/actions/workflows/node.js.yml/badge.svg)
+# xgettext-template [![Node.js CI](https://github.com/gmarty/xgettext/actions/workflows/node.js.yml/badge.svg)](https://github.com/gmarty/xgettext/actions/workflows/node.js.yml)
 Extracts translatable strings from source. Identical to [xgettext(1)](http://www.gnu.org/software/gettext/manual/gettext.html#xgettext-Invocation) but for template languages.
 
 ## Template language support
