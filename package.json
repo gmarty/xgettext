@@ -23,6 +23,9 @@
   "bin": {
     "xgettext-template": "bin/xgettext-template"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "lint": "eslint bin/* test index.js src",
     "test": "mocha",
