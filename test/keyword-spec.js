@@ -1,5 +1,5 @@
-const Keywordspec = require('../src/keyword-spec');
-const assert = require('assert');
+import Keywordspec from '../src/keyword-spec.js';
+import assert from 'assert';
 
 describe('Keywordspec', function () {
   it('should parse a string', function () {

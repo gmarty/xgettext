@@ -1,6 +1,6 @@
 'use strict';
 
-const objectAssign = require('object-assign');
+import objectAssign from 'object-assign';
 
 const specPattern = / *([^:,]+) *(?::([^, ]+(?:,[^, ]+)*))? */g;
 const contextPattern = /^(\d)+c$/;
@@ -48,7 +48,7 @@ function addToSpec (spec, item) {
   return spec;
 }
 
-module.exports = function createKeywordSpec (spec) {
+export default function createKeywordSpec (spec) {
   if (typeof spec === 'string') {
     spec = [spec];
   }

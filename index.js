@@ -1,11 +1,23 @@
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const gt = require('gettext-parser');
-const async = require('async');
-const createKeywordSpec = require('./src/keyword-spec');
-const objectAssign = require('object-assign');
+import fs from 'fs';
+import path from 'path';
+import gt from 'gettext-parser';
+import async from 'async';
+import createKeywordSpec from './src/keyword-spec.js';
+import objectAssign from 'object-assign';
+
+import ejs from 'gettext-ejs';
+import handlebars from 'gettext-handlebars';
+import swig from 'gettext-swig';
+import volt from 'gettext-volt';
+
+const PARSERS = {
+  ejs,
+  handlebars,
+  swig,
+  volt
+};
 
 /**
  * Simple is object check.
@@ -89,7 +101,7 @@ function xgettext (input, options, cb) {
     name = name.trim().toLowerCase();
 
     if (!parsers[name]) {
-      const Parser = require(`gettext-${name}`);
+      const Parser = PARSERS[name];
 
       if (Object.keys(keywordSpec).length > 0) {
         parsers[name] = new Parser(keywordSpec);
@@ -234,4 +246,4 @@ xgettext.languages = {
   '.ejs': 'EJS'
 };
 
-module.exports = xgettext;
+export default xgettext;

@@ -23,6 +23,7 @@
   "bin": {
     "xgettext-template": "bin/xgettext-template"
   },
+  "type": "module",
   "engines": {
     "node": ">=18"
   },
@@ -37,7 +38,7 @@
     "async": "^3.2.4",
     "gettext-ejs": "^0.1.1",
     "gettext-handlebars": "^1.1.1",
-    "gettext-parser": "^7.0.1",
+    "gettext-parser": "^8.0.0",
     "gettext-swig": "^0.3.0",
     "gettext-volt": "^0.2.5",
     "object-assign": "^4.1.1",
@@ -49,10 +50,10 @@
     "i18n"
   ],
   "devDependencies": {
-    "eslint": "^8.45.0",
+    "eslint": "^8.56.0",
     "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.1.1",
     "mocha": "^10.2.0"
   }

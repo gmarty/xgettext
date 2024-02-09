@@ -1,19 +1,29 @@
 #!/usr/bin/env node
 'use strict';
 
-const xgettext = require('..');
-const pkg = require('../package.json');
+import xgettext from '../index.js';
+import yargs from 'yargs';
+import { readFile } from 'fs/promises';
+
+const pkg = JSON.parse(
+  await readFile(
+    new URL('../package.json', import.meta.url)
+  )
+);
+
 const name = Object.keys(pkg.bin)[0];
 
 const languages = xgettext.languages;
 const encodings = ['utf8', 'ascii', 'base64'];
 
-const argv = require('yargs')
-  .usage([
-    'Usage: ' + name + ' [OPTION] [INPUTFILE]...',
-    '',
-    pkg.description
-  ].join('\n'))
+const argv = yargs(process.argv.slice(2))
+  .usage(
+    [
+      'Usage: ' + name + ' [OPTION] [INPUTFILE]...',
+      '',
+      pkg.description
+    ].join('\n')
+  )
   .alias({
     f: 'files-from',
     D: 'directory',

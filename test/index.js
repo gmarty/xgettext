@@ -1,8 +1,12 @@
-const xgettext = require('..');
-const assert = require('assert');
-const gt = require('gettext-parser');
-const fs = require('fs');
-const path = require('path');
+import xgettext from '../index.js';
+import assert from 'assert';
+import gt from 'gettext-parser';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const tmpDir = path.resolve(path.join(__dirname, '/../tmp'));
 if (!fs.existsSync(tmpDir)) {
