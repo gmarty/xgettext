@@ -156,7 +156,7 @@ function xgettext (input, options, cb) {
 
         if (!writeToStdout && options['join-existing']) {
           try {
-            fs.accessSync(options.output, fs.F_OK);
+            fs.accessSync(options.output, fs.constants.F_OK);
             existing = gt.po.parse(fs.readFileSync(options.output, {
               encoding: options['from-code']
             }));
