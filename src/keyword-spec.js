@@ -1,7 +1,5 @@
 'use strict';
 
-import objectAssign from 'object-assign';
-
 const specPattern = / *([^:,]+) *(?::([^, ]+(?:,[^, ]+)*))? */g;
 const contextPattern = /^(\d)+c$/;
 
@@ -42,7 +40,7 @@ function addToSpec (spec, item) {
       spec[keyword].push(positions.msgid_plural);
     }
 
-    objectAssign(spec[keyword], positions);
+    Object.assign(spec[keyword], positions);
   }
 
   return spec;

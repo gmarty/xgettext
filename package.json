@@ -28,7 +28,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "lint": "eslint bin/* test index.js src",
+    "lint": "eslint",
     "test": "mocha",
     "preversion": "npm run lint && npm test",
     "postversion": "git push && git push --tags"
@@ -41,7 +41,6 @@
     "gettext-parser": "^9.1.1",
     "gettext-swig": "^0.3.0",
     "gettext-volt": "^0.2.5",
-    "object-assign": "^4.1.1",
     "yargs": "^18.2.0"
   },
   "keywords": [
@@ -50,11 +49,10 @@
     "i18n"
   ],
   "devDependencies": {
-    "eslint": "^8.57.1",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-n": "^16.6.2",
-    "eslint-plugin-promise": "^6.6.0",
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "eslint": "^10.12.0",
+    "globals": "^17.13.0",
     "mocha": "^12.0.3"
   }
 }

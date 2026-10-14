@@ -5,7 +5,6 @@ import path from 'path';
 import gt from 'gettext-parser';
 import async from 'async';
 import createKeywordSpec from './src/keyword-spec.js';
-import objectAssign from 'object-assign';
 
 import ejs from 'gettext-ejs';
 import handlebars from 'gettext-handlebars';
@@ -44,13 +43,13 @@ function mergeDeep (target, source) {
         if (!target[key]) {
           dummy = {};
           dummy[key] = {};
-          objectAssign(target, dummy);
+          Object.assign(target, dummy);
         }
         mergeDeep(target[key], source[key]);
       } else {
         dummy = {};
         dummy[key] = source[key];
-        objectAssign(target, dummy);
+        Object.assign(target, dummy);
       }
     }
   }
@@ -160,7 +159,7 @@ function xgettext (input, options, cb) {
             existing = gt.po.parse(fs.readFileSync(options.output, {
               encoding: options['from-code']
             }));
-          } catch (e) {
+          } catch {
             // ignore non-existing file
           }
 
